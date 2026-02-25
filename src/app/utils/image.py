@@ -9,7 +9,7 @@ from PIL import Image
 
 async def url_to_b64(url: str):
     try:
-        url = url.replace("minio-storage", "localhost").split("?")[0]
+        url = url.split("?")[0]
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(url)
             response.raise_for_status()

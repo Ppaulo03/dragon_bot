@@ -39,6 +39,10 @@ class MessageData(BaseModel):
     def is_media(self) -> bool:
         return self.type in ["image", "video", "audio", "document"]
 
+    @computed_field
+    def is_img(self) -> bool:
+        return self.type in ["image", "sticker"]
+
     @field_validator("cached_hash", mode="before")
     def validate_cached_hash(cls, v):
         if isinstance(v, str):

@@ -10,8 +10,8 @@ from app.utils.image import get_hash_from_b64, url_to_b64
 
 
 class TextMatcher:
-    def __init__(self, config: TextMatchConfig):
-        self.config = config
+    def __init__(self, config: dict):
+        self.config = TextMatchConfig(**config)
 
     async def is_match(self, msg: MessageData) -> bool:
         body = msg.body if self.config.case_sensitive else msg.body.lower()
@@ -24,19 +24,19 @@ class TextMatcher:
 
 
 class RegexMatcher:
-    def __init__(self, config: RegexMatchConfig):
-        self.config = config
+    def __init__(self, config: dict):
+        self.config = RegexMatchConfig(**config)
 
     async def is_match(self, msg: MessageData) -> bool:
         return bool(re.search(self.config.pattern, msg.body, self.config.flags))
 
 
 class ImageSimilarityMatcher:
-    def __init__(self, config: ImageMatchConfig):
-        self.config = config
+    def __init__(self, config: dict):
+        self.config = ImageMatchConfig(**config)
 
     async def is_match(self, msg: MessageData) -> bool:
-        if not msg.is_media:
+        if not msg.is_img:
             return False
 
         if msg.cached_hash is None:
@@ -53,8 +53,8 @@ class ImageSimilarityMatcher:
 
 
 class AlwaysMatcher:
-    def __init__(self, config: AlwaysMatchConfig):
-        self.config = config
+    def __init__(self, config: dict):
+        self.config = AlwaysMatchConfig(**config)
 
     async def is_match(self, msg: MessageData) -> bool:
         return True

@@ -1,0 +1,22 @@
+services:
+  dragon-bot-app:
+    build: .
+    container_name: dragon-bot-app
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-admin}:${DB_PASSWORD:-admin123}@dragon-postgres-db:5432/${DB_NAME:-evolutiondb}
+      - BUCKET_ENDPOINT=${BUCKET_ENDPOINT:-http://dragon-minio-storage.local:9000}
+      - TRANSLATE_URL=${TRANSLATE_URL:-http://dragon-libretranslate:5000}
+      - EVOLUTION_URL=${EVOLUTION_URL:-http://dragon-evolution-api:8080}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config
+    networks:
+      - dragon-bot-network
+
+networks:
+  dragon-bot-network:
+    external: true

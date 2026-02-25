@@ -60,6 +60,8 @@ class EvolutionClient(ChatClient, BaseHttpClient):
         """
         Envia áudio formatado para WhatsApp (PTT).
         """
+        if not audio.startswith("http"):
+            audio = f"{settings.BUCKET_ENDPOINT}/{settings.BUCKET_NAME}/{audio}"
         payload = self._clean_payload({"number": number, "audio": audio, **options})
         return await self._execute_send(instance, "sendWhatsAppAudio", payload)
 
@@ -69,6 +71,8 @@ class EvolutionClient(ChatClient, BaseHttpClient):
         """
         Envia figurinhas (WebP).
         """
+        if not sticker.startswith("http"):
+            sticker = f"{settings.BUCKET_ENDPOINT}/{settings.BUCKET_NAME}/{sticker}"
         payload = self._clean_payload({"number": number, "sticker": sticker, **options})
         return await self._execute_send(instance, "sendSticker", payload)
 
@@ -92,10 +96,10 @@ class EvolutionClient(ChatClient, BaseHttpClient):
         try:
             response = await self.post(endpoint, json=payload)
             return ChatResponse(
-                status="success", message_id=response.get("key", {}).get("id")
+                status="success", id=str(response.get("key", {}).get("id"))
             )
         except Exception as e:
-            return ChatResponse(status="error", error_message=str(e))
+            return ChatResponse(status="error", id="err", error_message=str(e))
 
     def _clean_payload(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Remove Nones e strings vazias que podem confundir a API."""
@@ -104,7 +108,7 @@ class EvolutionClient(ChatClient, BaseHttpClient):
     async def fetch_instance(self, instance: str) -> Dict[str, Any]:
         """Busca detalhes de uma instância específica."""
         try:
-            endpoint = f"instance/fetchInstances"
+            endpoint = "instance/fetchInstances"
             response = await self.get(endpoint, params={"instanceName": instance})
             return response[0]
         except Exception as e:
@@ -114,7 +118,7 @@ class EvolutionClient(ChatClient, BaseHttpClient):
     async def create_instance(self, instance: str) -> Dict[str, Any]:
         """Cria uma nova instância."""
         try:
-            endpoint = f"instance/create"
+            endpoint = "instance/create"
             body = {
                 "instanceName": instance,
                 "integration": "WHATSAPP-BAILEYS",
@@ -125,7 +129,7 @@ class EvolutionClient(ChatClient, BaseHttpClient):
                     "url": settings.EVOLUTION_WEBHOOK_URL,
                     "byEvents": settings.EVOLUTION_WEBHOOK_BY_EVENTS,
                     "base64": settings.EVOLUTION_WEBHOOK_BASE64,
-                    "events": settings.EVOLUTION_WEBHOOK_EVENTS,
+                    "events": settings.EVOLUTION_WEBHOOK_EVENTS.split(","),
                 },
             }
             return await self.post(endpoint, json=body)
@@ -143,7 +147,7 @@ class EvolutionClient(ChatClient, BaseHttpClient):
                     "url": settings.EVOLUTION_WEBHOOK_URL,
                     "webhookByEvents": settings.EVOLUTION_WEBHOOK_BY_EVENTS,
                     "webhookBase64": settings.EVOLUTION_WEBHOOK_BASE64,
-                    "events": settings.EVOLUTION_WEBHOOK_EVENTS,
+                    "events": settings.EVOLUTION_WEBHOOK_EVENTS.split(","),
                 }
             }
 

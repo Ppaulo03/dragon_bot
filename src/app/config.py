@@ -2,7 +2,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from app.utils.logging_config import setup_logging
 from typing import Optional
 from dotenv import load_dotenv
-from typing import List
 
 load_dotenv(override=True)
 
@@ -44,7 +43,7 @@ class Settings(BaseSettings):
     EVOLUTION_INSTANCE_TOKEN: Optional[str] = None
     EVOLUTION_WEBHOOK_BY_EVENTS: bool = False
     EVOLUTION_WEBHOOK_BASE64: bool = False
-    EVOLUTION_WEBHOOK_EVENTS: List[str] = ["MESSAGES_UPSERT"]
+    EVOLUTION_WEBHOOK_EVENTS: str = "MESSAGES_UPSERT"
 
 
 setup_logging()

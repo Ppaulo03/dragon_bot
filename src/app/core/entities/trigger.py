@@ -43,7 +43,7 @@ class TriggerEvent:
         name: str,
         chance: float,
         action_type: MessageType,
-        choices: Union[List[str], Callable[[str], Awaitable[str]]],
+        choices: Union[List[str], Callable[[MessageData], Awaitable[str]]],
         matcher: Matcher,
         action_options: Dict[str, Any] = {},
     ):
@@ -58,12 +58,10 @@ class TriggerEvent:
         """Verifica se o gatilho deve ser acionado."""
         if self.chance < 1.0 and random() >= self.chance:
             return False
-
         return await self.matcher.is_match(msg_data)
 
     async def execute(self, msg_data: MessageData) -> bool:
-
-        selected = await self._resolve_choice(msg_data.body)
+        selected = await self._resolve_choice(msg_data)
         if not selected:
             return False
 
@@ -85,9 +83,9 @@ class TriggerEvent:
             logger.exception(f"Erro ao executar o gatilho {self.name}: {e}")
             return False
 
-    async def _resolve_choice(self, body: str) -> Optional[str]:
+    async def _resolve_choice(self, msg_data: MessageData) -> Optional[str]:
         if callable(self.choices):
-            return await self.choices(body)
+            return await self.choices(msg_data)
         if isinstance(self.choices, list) and self.choices:
             return choice(self.choices)
         return str(self.choices) if self.choices else None

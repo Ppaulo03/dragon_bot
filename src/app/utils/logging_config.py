@@ -5,7 +5,7 @@ from loguru import logger
 
 def setup_logging():
 
-    log_path = Path("logs")
+    log_path = Path("config/logs")
     log_path.mkdir(exist_ok=True)
     logger.remove()
 

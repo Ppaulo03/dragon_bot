@@ -1,5 +1,5 @@
 import re
-from typing import Dict, Any
+from typing import Dict, Any, List
 from app.core.interfaces import MessageData
 
 PADRAO_DONO = r"(?i)(?:quem (?:é|e) o dono de|de quem (?:é|e))\s+(.+)"
@@ -49,18 +49,20 @@ def get_meme_name(msg: str) -> str:
     return f"João Dono de {item}".title()
 
 
-async def meme_contact(msg_data: MessageData, *args) -> Dict[str, Any]:
+async def meme_contact(msg_data: MessageData, *args) -> List[Dict[str, Any]]:
     """Cria um objeto de contato fake baseado na mensagem recebida."""
     name = get_meme_name(msg_data.body)
     if not name:
         return {}
     clean_name = name.lower().replace(" ", "")
 
-    return {
-        "fullName": name,
-        "wuid": "556496188380",
-        "phoneNumber": "+55 64 96188-380",
-        "organization": f"{name} LTDA",
-        "email": f"{clean_name}@gmail.com",
-        "url": f"https://{clean_name}.com",
-    }
+    return [
+        {
+            "fullName": name,
+            "wuid": "556496188380",
+            "phoneNumber": "+55 64 96188-380",
+            "organization": f"{name} LTDA",
+            "email": f"{clean_name}@gmail.com",
+            "url": f"https://{clean_name}.com",
+        }
+    ]

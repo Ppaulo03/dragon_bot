@@ -25,7 +25,7 @@ async def trigger_config_page(request: Request):
             "triggers": data["triggers"],
             "no_triggers": data["no_triggers"],
             "options": constants,
-            "storage_url": f"{settings.BUCKET_ENDPOINT}/{settings.BUCKET_NAME}/",
+            "storage_url": f"http://localhost:9000/{settings.BUCKET_NAME}/",
         },
     )
 
@@ -37,7 +37,6 @@ async def save_config(
     parser: RuleFormParser = Depends(),
 ):
     rules: List[TriggerRule] = await parser(request)
-    print(rules)
     triggers = []
     no_triggers = []
 
