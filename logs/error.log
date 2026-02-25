@@ -1,0 +1,592 @@
+2026-02-24 11:26:46 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:26:50 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:27:01 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:31:05 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:31:56 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:32:03 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:32:13 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:32:18 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:32:37 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:32:56 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:33:08 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:33:16 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:33:41 | ERROR    | app.core.services.factory:_create_trigger:72 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-24 11:33:48 | ERROR    | app.core.services.factory:_create_trigger:73 - Erro ao criar trigger Pete: TriggerEvent.__init__() got an unexpected keyword argument 'link_preview'
+2026-02-25 12:57:36 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/944d58f30e86d4c49652fa770353e117.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:36 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/3f3d06205a22a724e9f86024e9acb6fe.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:36 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/95890a51d073b22e9e4d57307c09064c.json': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:36 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/4c793287fe1c3ae4b6eb6e2e917f32d9.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:37 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/a61c9432fa6d4fec5dfc7e4f2b3c6f8c.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:37 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/b1401008c43c32639547d08d2a696456.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:37 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/a68e7b5b1719cd799a19f90f26cca2df.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:37 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/bebb0c86147beab4bc6bb8f97f3da2ae.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:37 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/19ecf1b67c09907a45ca686266225e7c.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:45 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/944d58f30e86d4c49652fa770353e117.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:45 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/3f3d06205a22a724e9f86024e9acb6fe.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:46 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/95890a51d073b22e9e4d57307c09064c.json': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:46 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/4c793287fe1c3ae4b6eb6e2e917f32d9.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:46 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/a61c9432fa6d4fec5dfc7e4f2b3c6f8c.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:46 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/b1401008c43c32639547d08d2a696456.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:46 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/a68e7b5b1719cd799a19f90f26cca2df.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:47 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/bebb0c86147beab4bc6bb8f97f3da2ae.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 12:57:47 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/19ecf1b67c09907a45ca686266225e7c.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:52 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/944d58f30e86d4c49652fa770353e117.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:53 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/3f3d06205a22a724e9f86024e9acb6fe.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:53 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/95890a51d073b22e9e4d57307c09064c.json': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:53 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/4c793287fe1c3ae4b6eb6e2e917f32d9.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:53 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/a61c9432fa6d4fec5dfc7e4f2b3c6f8c.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:53 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/b1401008c43c32639547d08d2a696456.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:54 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/a68e7b5b1719cd799a19f90f26cca2df.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:54 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/bebb0c86147beab4bc6bb8f97f3da2ae.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:10:54 | ERROR    | app.infrastructure.services.storage:get_item_content:147 - Erro ao obter conteúdo do arquivo 'assets/19ecf1b67c09907a45ca686266225e7c.txt': An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.
+2026-02-25 13:44:34 | ERROR    | app.infrastructure.network.base_http_client:request:126 - Erro inesperado na requisição para http://localhost:8080/instance/create
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=13236, pipe_handle=568)
+                                      │           └ <function spawn_main at 0x0000021FCBA44860>
+                                      └ <function spawn_main at 0x0000021FCBA44860>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 184
+               │     └ 3
+               └ <function _main at 0x0000021FCBA44900>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 184
+           │    └ <function BaseProcess._bootstrap at 0x0000021FCB7244A0>
+           └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x0000021FCB7179C0>
+    └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x0000021FCDB1F770>, 'target': <bound method Server.run of <uvicorn.server.Server...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+    │    └ <function subprocess_started at 0x0000021FCDC25B20>
+    └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=524, family=2, type=1, proto=6, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x0000021FCDB1F8C0>>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+           │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x0000021FCDBC65C0>
+           │           │    │             │                      │    └ <uvicorn.config.Config object at 0x0000021FCDB1F770>
+           │           │    │             │                      └ <uvicorn.server.Server object at 0x0000021FCDB1F8C0>
+           │           │    │             └ [<socket.socket fd=524, family=2, type=1, proto=6, laddr=('0.0.0.0', 8000)>]
+           │           │    └ <function Server.serve at 0x0000021FCDC24D60>
+           │           └ <uvicorn.server.Server object at 0x0000021FCDB1F8C0>
+           └ <function run at 0x0000021FCD443B00>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x0000021FCB527BC0>
+           │      └ <function Runner.run at 0x0000021FCD8C6480>
+           └ <asyncio.runners.Runner object at 0x0000021FCDC6C590>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicor...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x0000021FCD8C4040>
+           │    └ <_WindowsSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x0000021FCDC6C590>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 707, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x0000021FCD8C3F60>
+    └ <_WindowsSelectorEventLoop running=True closed=False debug=False>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 678, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x0000021FCD8C5DA0>
+    └ <_WindowsSelectorEventLoop running=True closed=False debug=False>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 2033, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x0000021FCD3F8AE0>
+    └ <Handle Task.task_wakeup()>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup()>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 86, in main
+    await app(scope, self.receive, self.send)
+          │   │      │    │        │    └ <function LifespanOn.send at 0x0000021FCDCDC900>
+          │   │      │    │        └ <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>
+          │   │      │    └ <function LifespanOn.receive at 0x0000021FCDCDC9A0>
+          │   │      └ <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>
+          │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x0000021FE760DA90>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 29, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                 │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                 │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+                 │    └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x0000021FE760DA90>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\applications.py", line 1158, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                           │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                           └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x0000021FE760E510>
+          └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\middleware\errors.py", line 151, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x0000021FE760E3C0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x0000021FE760E510>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 49, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x0000021FE760E270>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x0000021FE760E3C0>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x0000021FE760E270>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x0000021FE75A7350>>
+          └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\routing.py", line 725, in app
+    await self.lifespan(scope, receive, send)
+          │    │        │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │        │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │        └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <function Router.lifespan at 0x0000021FE73D9620>
+          └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\routing.py", line 694, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               │    │                └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+               │    └ <function _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE767FF60>
+               └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE76846A0>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x0000021FE760E660>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\routing.py", line 201, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               │                └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+               └ <function _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE767FA60>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE7684590>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x0000021FE76A42D0>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\routing.py", line 201, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               │                └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+               └ <function lifespan at 0x0000021FE767EA20>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object lifespan at 0x0000021FE761E680>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x0000021FE76A4410>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\main.py", line 35, in lifespan
+    await provider.initialize()
+          │        └ <function EvolutionClient.initialize at 0x0000021FE70B59E0>
+          └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\providers\evolution\client.py", line 138, in initialize
+    isntance = await self.create_instance(settings.EVOLUTION_INSTANCE)
+                     │    │               │        └ 'DGN-BOT'
+                     │    │               └ Settings(ENV='dev', DEBUG=True, EVOLUTION_URL='http://localhost:8080', EVOLUTION_TOKEN='dragon', EVOLUTION_INSTANCE='DGN-BOT'...
+                     │    └ <function EvolutionClient.create_instance at 0x0000021FE70B5940>
+                     └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\providers\evolution\client.py", line 132, in create_instance
+    return await self.post(endpoint, json=body)
+                 │    │    │              └ {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook': {'enabl...
+                 │    │    └ 'instance/create'
+                 │    └ <function BaseHttpClient.post at 0x0000021FCFC62480>
+                 └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 135, in post
+    return await self.request("POST", endpoint, json=json, data=data)
+                 │    │               │              │          └ None
+                 │    │               │              └ {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook': {'enabl...
+                 │    │               └ 'instance/create'
+                 │    └ <function BaseHttpClient.request at 0x0000021FCFC62340>
+                 └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+> File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 118, in request
+    res = await self._retrier(self._do_request, method, url, **kwargs)
+                │    │        │    │            │       │      └ {'json': {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook'...
+                │    │        │    │            │       └ 'http://localhost:8080/instance/create'
+                │    │        │    │            └ 'POST'
+                │    │        │    └ <function BaseHttpClient._do_request at 0x0000021FCFC622A0>
+                │    │        └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+                │    └ <AsyncRetrying object at 0x21fe70d4050 (stop=<tenacity.stop.stop_after_attempt object at 0x0000021FE6F8FED0>, wait=<tenacity....
+                └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 112, in __call__
+    do = await self.iter(retry_state=retry_state)
+               │    │                └ <RetryCallState 2336060994768: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+               │    └ <function AsyncRetrying.iter at 0x0000021FCFC61E40>
+               └ <AsyncRetrying object at 0x21fe70d4050 (stop=<tenacity.stop.stop_after_attempt object at 0x0000021FE6F8FED0>, wait=<tenacity....
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 157, in iter
+    result = await action(retry_state)
+                   │      └ <RetryCallState 2336060994768: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+                   └ <function wrap_to_async_func.<locals>.inner at 0x0000021FE8217920>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\_utils.py", line 111, in inner
+    return call(*args, **kwargs)
+           │     │       └ {}
+           │     └ (<RetryCallState 2336060994768: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pa...
+           └ <function BaseRetrying._post_retry_check_actions.<locals>.<lambda> at 0x0000021FE82179C0>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                 │   │  │       └ <function Future.result at 0x0000021FCBAEFCE0>
+                                 │   │  └ <Future at 0x21fe760f8c0 state=finished raised ImportError>
+                                 │   └ <RetryCallState 2336060994768: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+                                 └ <RetryCallState 2336060994768: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           └ None
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+          └ None
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 116, in __call__
+    result = await fn(*args, **kwargs)
+                   │   │       └ {'json': {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook'...
+                   │   └ ('POST', 'http://localhost:8080/instance/create')
+                   └ <bound method BaseHttpClient._do_request of <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x000002...
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 98, in _do_request
+    client = await self.get_http_client()
+                   │    └ <function BaseHttpClient.get_http_client at 0x0000021FCFC62200>
+                   └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 89, in get_http_client
+    self.http_client = httpx.AsyncClient(
+    │    │             │     └ <class 'httpx.AsyncClient'>
+    │    │             └ <module 'httpx' from 'C:\\Users\\Pichau\\Desktop\\dragon_bot\\.venv\\Lib\\site-packages\\httpx\\__init__.py'>
+    │    └ None
+    └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\httpx\_client.py", line 1394, in __init__
+    raise ImportError(
+
+ImportError: Using http2=True, but the 'h2' package is not installed. Make sure to install httpx using `pip install httpx[http2]`.
+2026-02-25 13:44:34 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Using http2=True, but the 'h2' package is not installed. Make sure to install httpx using `pip install httpx[http2]`.
+2026-02-25 13:44:34 | ERROR    | app.infrastructure.providers.evolution.client:initialize:140 - Falha ao buscar instancia, tentando criar
+2026-02-25 13:44:34 | ERROR    | app.infrastructure.network.base_http_client:request:126 - Erro inesperado na requisição para http://localhost:8080/instance/create
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=13236, pipe_handle=568)
+                                      │           └ <function spawn_main at 0x0000021FCBA44860>
+                                      └ <function spawn_main at 0x0000021FCBA44860>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 184
+               │     └ 3
+               └ <function _main at 0x0000021FCBA44900>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 184
+           │    └ <function BaseProcess._bootstrap at 0x0000021FCB7244A0>
+           └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x0000021FCB7179C0>
+    └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x0000021FCDB1F770>, 'target': <bound method Server.run of <uvicorn.server.Server...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+    │    └ <function subprocess_started at 0x0000021FCDC25B20>
+    └ <SpawnProcess name='SpawnProcess-1' parent=13236 started>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=524, family=2, type=1, proto=6, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x0000021FCDB1F8C0>>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+           │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x0000021FCDBC65C0>
+           │           │    │             │                      │    └ <uvicorn.config.Config object at 0x0000021FCDB1F770>
+           │           │    │             │                      └ <uvicorn.server.Server object at 0x0000021FCDB1F8C0>
+           │           │    │             └ [<socket.socket fd=524, family=2, type=1, proto=6, laddr=('0.0.0.0', 8000)>]
+           │           │    └ <function Server.serve at 0x0000021FCDC24D60>
+           │           └ <uvicorn.server.Server object at 0x0000021FCDB1F8C0>
+           └ <function run at 0x0000021FCD443B00>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x0000021FCB527BC0>
+           │      └ <function Runner.run at 0x0000021FCD8C6480>
+           └ <asyncio.runners.Runner object at 0x0000021FCDC6C590>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicor...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x0000021FCD8C4040>
+           │    └ <_WindowsSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x0000021FCDC6C590>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 707, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x0000021FCD8C3F60>
+    └ <_WindowsSelectorEventLoop running=True closed=False debug=False>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 678, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x0000021FCD8C5DA0>
+    └ <_WindowsSelectorEventLoop running=True closed=False debug=False>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 2033, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x0000021FCD3F8AE0>
+    └ <Handle Task.task_wakeup()>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup()>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 86, in main
+    await app(scope, self.receive, self.send)
+          │   │      │    │        │    └ <function LifespanOn.send at 0x0000021FCDCDC900>
+          │   │      │    │        └ <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>
+          │   │      │    └ <function LifespanOn.receive at 0x0000021FCDCDC9A0>
+          │   │      └ <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>
+          │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x0000021FE760DA90>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 29, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                 │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                 │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+                 │    └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x0000021FE760DA90>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\applications.py", line 1158, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                           │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+                           └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x0000021FE760E510>
+          └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\middleware\errors.py", line 151, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x0000021FE760E3C0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x0000021FE760E510>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 49, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x0000021FE760E270>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x0000021FE760E3C0>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │   └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x0000021FE760E270>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │                └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x0000021FE75A7350>>
+          └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\routing.py", line 725, in app
+    await self.lifespan(scope, receive, send)
+          │    │        │      │        └ <bound method LifespanOn.send of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │        │      └ <bound method LifespanOn.receive of <uvicorn.lifespan.on.LifespanOn object at 0x0000021FE760DD30>>
+          │    │        └ {'type': 'lifespan', 'asgi': {'version': '3.0', 'spec_version': '2.0'}, 'state': {}, 'app': <fastapi.applications.FastAPI obj...
+          │    └ <function Router.lifespan at 0x0000021FE73D9620>
+          └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\starlette\routing.py", line 694, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               │    │                └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+               │    └ <function _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE767FF60>
+               └ <fastapi.routing.APIRouter object at 0x0000021FE75A7350>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE76846A0>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x0000021FE760E660>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\routing.py", line 201, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               │                └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+               └ <function _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE767FA60>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object _merge_lifespan_context.<locals>.merged_lifespan at 0x0000021FE7684590>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x0000021FE76A42D0>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\fastapi\routing.py", line 201, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               │                └ <fastapi.applications.FastAPI object at 0x0000021FE7531160>
+               └ <function lifespan at 0x0000021FE767EA20>
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+                       │    └ <async_generator object lifespan at 0x0000021FE761E680>
+                       └ <contextlib._AsyncGeneratorContextManager object at 0x0000021FE76A4410>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\main.py", line 35, in lifespan
+    await provider.initialize()
+          │        └ <function EvolutionClient.initialize at 0x0000021FE70B59E0>
+          └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\providers\evolution\client.py", line 141, in initialize
+    isntance = await self.create_instance(settings.EVOLUTION_INSTANCE)
+                     │    │               │        └ 'DGN-BOT'
+                     │    │               └ Settings(ENV='dev', DEBUG=True, EVOLUTION_URL='http://localhost:8080', EVOLUTION_TOKEN='dragon', EVOLUTION_INSTANCE='DGN-BOT'...
+                     │    └ <function EvolutionClient.create_instance at 0x0000021FE70B5940>
+                     └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\providers\evolution\client.py", line 132, in create_instance
+    return await self.post(endpoint, json=body)
+                 │    │    │              └ {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook': {'enabl...
+                 │    │    └ 'instance/create'
+                 │    └ <function BaseHttpClient.post at 0x0000021FCFC62480>
+                 └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 135, in post
+    return await self.request("POST", endpoint, json=json, data=data)
+                 │    │               │              │          └ None
+                 │    │               │              └ {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook': {'enabl...
+                 │    │               └ 'instance/create'
+                 │    └ <function BaseHttpClient.request at 0x0000021FCFC62340>
+                 └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+> File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 118, in request
+    res = await self._retrier(self._do_request, method, url, **kwargs)
+                │    │        │    │            │       │      └ {'json': {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook'...
+                │    │        │    │            │       └ 'http://localhost:8080/instance/create'
+                │    │        │    │            └ 'POST'
+                │    │        │    └ <function BaseHttpClient._do_request at 0x0000021FCFC622A0>
+                │    │        └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+                │    └ <AsyncRetrying object at 0x21fe70d4050 (stop=<tenacity.stop.stop_after_attempt object at 0x0000021FE6F8FED0>, wait=<tenacity....
+                └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 112, in __call__
+    do = await self.iter(retry_state=retry_state)
+               │    │                └ <RetryCallState 2336061057104: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+               │    └ <function AsyncRetrying.iter at 0x0000021FCFC61E40>
+               └ <AsyncRetrying object at 0x21fe70d4050 (stop=<tenacity.stop.stop_after_attempt object at 0x0000021FE6F8FED0>, wait=<tenacity....
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 157, in iter
+    result = await action(retry_state)
+                   │      └ <RetryCallState 2336061057104: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+                   └ <function wrap_to_async_func.<locals>.inner at 0x0000021FE827FEC0>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\_utils.py", line 111, in inner
+    return call(*args, **kwargs)
+           │     │       └ {}
+           │     └ (<RetryCallState 2336061057104: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pa...
+           └ <function BaseRetrying._post_retry_check_actions.<locals>.<lambda> at 0x0000021FE827FF60>
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                 │   │  │       └ <function Future.result at 0x0000021FCBAEFCE0>
+                                 │   │  └ <Future at 0x21fe816e0d0 state=finished raised ImportError>
+                                 │   └ <RetryCallState 2336061057104: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+                                 └ <RetryCallState 2336061057104: attempt #1; slept for 0.0; last result: failed (ImportError Using http2=True, but the 'h2' pac...
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           └ None
+  File "C:\Users\Pichau\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+          └ None
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\tenacity\asyncio\__init__.py", line 116, in __call__
+    result = await fn(*args, **kwargs)
+                   │   │       └ {'json': {'instanceName': 'DGN-BOT', 'integration': 'WHATSAPP-BAILEYS', 'alwaysOnline': True, 'readMessages': True, 'webhook'...
+                   │   └ ('POST', 'http://localhost:8080/instance/create')
+                   └ <bound method BaseHttpClient._do_request of <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x000002...
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 98, in _do_request
+    client = await self.get_http_client()
+                   │    └ <function BaseHttpClient.get_http_client at 0x0000021FCFC62200>
+                   └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\src\app\infrastructure\network\base_http_client.py", line 89, in get_http_client
+    self.http_client = httpx.AsyncClient(
+    │    │             │     └ <class 'httpx.AsyncClient'>
+    │    │             └ <module 'httpx' from 'C:\\Users\\Pichau\\Desktop\\dragon_bot\\.venv\\Lib\\site-packages\\httpx\\__init__.py'>
+    │    └ None
+    └ <app.infrastructure.providers.evolution.client.EvolutionClient object at 0x0000021FE70A8AD0>
+
+  File "C:\Users\Pichau\Desktop\dragon_bot\.venv\Lib\site-packages\httpx\_client.py", line 1394, in __init__
+    raise ImportError(
+
+ImportError: Using http2=True, but the 'h2' package is not installed. Make sure to install httpx using `pip install httpx[http2]`.
+2026-02-25 13:44:34 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Using http2=True, but the 'h2' package is not installed. Make sure to install httpx using `pip install httpx[http2]`.
+2026-02-25 13:45:16 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:45:16 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:45:16 | ERROR    | app.infrastructure.providers.evolution.client:initialize:140 - Falha ao buscar instancia, tentando criar
+2026-02-25 13:45:16 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:45:16 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:45:42 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:45:42 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:45:42 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:45:42 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:46:19 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:46:19 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:46:19 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:46:19 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:46:38 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:46:38 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:46:38 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:46:38 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:134 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:47:04 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/fetchInstances
+2026-02-25 13:47:04 | ERROR    | app.infrastructure.providers.evolution.client:fetch_instance:112 - Erro ao buscar instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/fetchInstances?instanceName=DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 13:47:30 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/fetchInstances
+2026-02-25 13:47:30 | ERROR    | app.infrastructure.providers.evolution.client:fetch_instance:112 - Erro ao buscar instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/fetchInstances?instanceName=DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 13:49:18 | ERROR    | app.infrastructure.providers.evolution.client:fetch_instance:115 - Erro ao buscar instância DGN-BOT: 'list' object has no attribute 'get'
+2026-02-25 13:49:18 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 403 em http://localhost:8080/instance/create
+2026-02-25 13:49:18 | ERROR    | app.infrastructure.providers.evolution.client:create_instance:137 - Erro ao criar instância DGN-BOT: Client error '403 Forbidden' for url 'http://localhost:8080/instance/create'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-02-25 13:50:28 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/fetchInstances
+2026-02-25 13:50:28 | ERROR    | app.infrastructure.providers.evolution.client:fetch_instance:113 - Erro ao buscar instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/fetchInstances?instanceName=DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 13:51:11 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/fetchInstances
+2026-02-25 13:51:11 | ERROR    | app.infrastructure.providers.evolution.client:fetch_instance:113 - Erro ao buscar instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/fetchInstances?instanceName=DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 14:33:26 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/setWebhook/DGN-BOT
+2026-02-25 14:33:26 | ERROR    | app.infrastructure.providers.evolution.client:set_webhook:150 - Erro ao criar instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/setWebhook/DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 14:34:01 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/setWebhook/DGN-BOT
+2026-02-25 14:34:01 | ERROR    | app.infrastructure.providers.evolution.client:set_webhook:150 - Erro ao configurar webhook da instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/setWebhook/DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 14:34:07 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 404 em http://localhost:8080/instance/setWebhook/DGN-BOT
+2026-02-25 14:34:07 | ERROR    | app.infrastructure.providers.evolution.client:set_webhook:150 - Erro ao configurar webhook da instância DGN-BOT: Client error '404 Not Found' for url 'http://localhost:8080/instance/setWebhook/DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-02-25 14:34:48 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 400 em http://localhost:8080/webhook/set/DGN-BOT
+2026-02-25 14:34:48 | ERROR    | app.infrastructure.providers.evolution.client:set_webhook:150 - Erro ao configurar webhook da instância DGN-BOT: Client error '400 Bad Request' for url 'http://localhost:8080/webhook/set/DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2026-02-25 14:34:54 | ERROR    | app.infrastructure.network.base_http_client:request:123 - Erro de Status HTTP: 400 em http://localhost:8080/webhook/set/DGN-BOT
+2026-02-25 14:34:54 | ERROR    | app.infrastructure.providers.evolution.client:set_webhook:150 - Erro ao configurar webhook da instância DGN-BOT: Client error '400 Bad Request' for url 'http://localhost:8080/webhook/set/DGN-BOT'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400

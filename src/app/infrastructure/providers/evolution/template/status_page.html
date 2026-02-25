@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conexão Evolution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full text-center">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">WhatsApp Evolution</h1>
+
+        <div id="app-content">
+            <div class="animate-pulse">Carregando status...</div>
+        </div>
+    </div>
+
+    <script>
+        let pollInterval = null;
+
+        async function updateUI() {
+            try {
+                const response = await fetch('/evolution/status');
+                const data = await response.json();
+                const container = document.getElementById('app-content');
+
+                if (data.connected) {
+                    // Para o polling se estiver conectado
+                    clearInterval(pollInterval);
+                    pollInterval = null;
+
+                    container.innerHTML = `
+                        <div class="text-green-500 mb-4">
+                            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <p class="text-lg font-semibold">Conectado!</p>
+                        <button onclick="disconnect()" class="mt-6 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition">
+                            Desconectar
+                        </button>
+                    `;
+                } else {
+                    // Mostra QR Code e inicia polling se ainda não houver
+                    container.innerHTML = `
+                        <p class="text-gray-600 mb-4">Escaneie para conectar:</p>
+                        <img src="${data.qrcode}" class="mx-auto border-4 border-gray-200 rounded-lg" alt="QR Code">
+                        <p class="text-xs text-gray-400 mt-4 italic">Aguardando leitura...</p>
+                    `;
+
+                    if (!pollInterval) {
+                        pollInterval = setInterval(updateUI, 5000); // Tenta a cada 5 segundos
+                    }
+                }
+            } catch (err) {
+                console.error("Erro ao buscar status:", err);
+            }
+        }
+
+        async function disconnect() {
+            if (confirm("Deseja desconectar a instância?")) {
+                await fetch('/evolution/disconnect', { method: 'POST' });
+                updateUI(); // Volta para o estado de QR Code
+            }
+        }
+
+        // Início imediato
+        updateUI();
+    </script>
+</body>
+
+</html>

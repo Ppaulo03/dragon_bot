@@ -1,0 +1,293 @@
+triggers:
+- id: 4384d7f5
+  name: Pete
+  type: send_sticker
+  matcher: image_similarity
+  chance: 1.0
+  params:
+    pattern: triggers/3c7a48890782f5df655e3d145622525c.jpg
+    hash: e0f7fac12e18259c
+  files:
+  - assets/88423e723f22eed476a882049c8a1352.jpg
+- id: 679cbf8a
+  name: Repete
+  type: send_sticker
+  matcher: image_similarity
+  chance: 1.0
+  params:
+    pattern: triggers/88423e723f22eed476a882049c8a1352.jpg
+    hash: 95cb3b14c564b56a
+  files:
+  - assets/3c7a48890782f5df655e3d145622525c.jpg
+- id: 9001ff01
+  name: Repete2
+  type: send_sticker
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: repete
+  files:
+  - assets/88423e723f22eed476a882049c8a1352.jpg
+- id: c6885167
+  name: De Quem
+  type: send_contact
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: de quem é
+  action: meme_contact
+- id: bcb40857
+  name: De Quem 2
+  type: send_contact
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: de quem e
+  action: meme_contact
+- id: ffdd79c3
+  name: Padim zeras
+  type: send_sticker
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: padim zeras
+  files:
+  - assets/10b30fa0540ce77eba5c4dec771a236d.webp
+  - assets/78a2f4aeb22d05f52f12825b23e283fc.webp
+  - assets/394420f73f1a47b50f3d4eb9e3420658.webp
+- id: 2f6d20a0
+  name: Contexto
+  type: send_sticker
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: contexto
+  files:
+  - assets/de95b70ad2782733e29eb8dd8f644f8e.webp
+- id: zur8s0aj
+  name: Pete2
+  type: send_sticker
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: eu tenho dois cachorros pete e repete pete sumiu quem sobrou
+  files:
+  - assets/3c7a48890782f5df655e3d145622525c.jpg
+- id: u8ned9e5
+  name: mylib
+  type: send_text
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: mylib
+  value: https://master.dple1clh7kw1l.amplifyapp.com
+- id: yaeo5q0p
+  name: mylib2
+  type: send_text
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: my_lib
+  value: https://master.dple1clh7kw1l.amplifyapp.com
+- id: 1nqzhsa8
+  name: natal
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: natal
+  files:
+  - assets/944d58f30e86d4c49652fa770353e117.txt
+- id: 6j63rkrf
+  name: fred
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: fred
+  files:
+  - assets/3f3d06205a22a724e9f86024e9acb6fe.txt
+- id: me99fcqu
+  name: bom dia
+  type: send_text
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: bom dia
+  files:
+  - assets/95890a51d073b22e9e4d57307c09064c.json
+- id: lk66ly6o
+  name: trabalho
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: trabalho
+  files:
+  - assets/4c793287fe1c3ae4b6eb6e2e917f32d9.txt
+- id: 4umgwrym
+  name: burro
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: burro
+  files:
+  - assets/a61c9432fa6d4fec5dfc7e4f2b3c6f8c.txt
+- id: 1hk36rbp
+  name: jogo
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: jogo
+  files:
+  - assets/b1401008c43c32639547d08d2a696456.txt
+- id: 1829bzo8
+  name: voar
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: voar
+  files:
+  - assets/a68e7b5b1719cd799a19f90f26cca2df.txt
+- id: ssv5geah
+  name: comida
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: comida
+  files:
+  - assets/bebb0c86147beab4bc6bb8f97f3da2ae.txt
+- id: 7foz7jjy
+  name: tempo
+  type: send_text
+  matcher: text
+  chance: 0.8
+  params:
+    pattern: tempo
+  files:
+  - assets/19ecf1b67c09907a45ca686266225e7c.txt
+- id: 5gv6gxcq
+  name: aniversário
+  type: send_audio
+  matcher: text
+  chance: 0.1
+  params:
+    pattern: aniversário
+  files:
+  - assets/3a223eb24d948dbd5694023ee6af31a6.mp3
+- id: pjshd2cy
+  name: aniversario2
+  type: send_audio
+  matcher: text
+  chance: 0.1
+  params:
+    pattern: aniversario
+  files:
+  - assets/3a223eb24d948dbd5694023ee6af31a6.mp3
+- id: cy2rm0kv
+  name: birthday
+  type: send_audio
+  matcher: text
+  chance: 0.1
+  params:
+    pattern: birthday
+  files:
+  - assets/3a223eb24d948dbd5694023ee6af31a6.mp3
+- id: 1zwkf929
+  name: sextou
+  type: send_audio
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: sextou
+  files:
+  - assets/e9111edcf9836718c5bfa0567c9b731f.mp3
+- id: 1rp0pvcy
+  name: gato1
+  type: send_sticker
+  matcher: text
+  chance: 0.65
+  params:
+    pattern: gat
+  action: cat_photo_api
+- id: skekcdgj
+  name: gato2
+  type: send_text
+  matcher: text
+  chance: 1.0
+  params:
+    pattern: gato
+  action: cat_api
+- id: 5lnnl1ix
+  name: motivacional
+  type: send_text
+  matcher: regex
+  chance: 0.8
+  params:
+    pattern: (sucesso|vencer|conseguir)
+  action: motivacional_api
+- id: cisz5ng7
+  name: chuck norries
+  type: send_text
+  matcher: regex
+  chance: 1.0
+  params:
+    pattern: (chuck|norris)
+  action: chuck_norris_api
+- id: ecdw264o
+  name: cachorro
+  type: send_sticker
+  matcher: regex
+  chance: 1.0
+  params:
+    pattern: (cachorro|dog)
+  action: get_dog
+- id: 5zfmcjh5
+  name: idiota
+  type: send_sticker
+  matcher: regex
+  chance: 1.0
+  params:
+    pattern: (idiota|bonk)
+  action: get_bonk
+- id: p9ce88x4
+  name: feliz
+  type: send_sticker
+  matcher: text
+  chance: 0.5
+  params:
+    pattern: feliz
+  action: get_smile
+- id: 7m3hqtrl
+  name: conselho
+  type: send_text
+  matcher: regex
+  chance: 1.0
+  params:
+    pattern: (conselho|recomendação)
+  action: get_advice
+- id: jvh3fmya
+  name: anime
+  type: send_text
+  matcher: text
+  chance: 0.5
+  params:
+    pattern: anime
+  action: anime_api
+no_triggers:
+- id: j9xj0d7p
+  name: BreakingBad
+  type: send_text
+  matcher: always
+  chance: 0.01
+  action: breaking_bad_api
+- id: ag24ma8y
+  name: Observando
+  type: send_text
+  matcher: always
+  chance: 0.001
+  value: Estou te observando... 👀
