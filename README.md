@@ -68,7 +68,7 @@ docker compose up -d --build
 Opcional: suba tudo com um comando:
 
 ```bash
-docker compose -f infra.yml -f docker-compose.yml up -d --build
+docker compose -f infra.yml up -d ; docker compose up -d
 ```
 
 ### Endpoints principais
