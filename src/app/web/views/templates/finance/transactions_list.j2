@@ -1,0 +1,53 @@
+{% extends "finance/layout.j2" %}
+{% from "finance/macros/transaction_row.j2" import transaction_row %}
+
+{% block finance_content %}
+<section>
+    <form method="get" action="" style="display: flex; gap: 15px; align-items: flex-end; margin-bottom: 2rem;">
+        <div style="flex: 2;">
+            <label>Buscar Entidade</label>
+            <input type="search" name="q" value="{{ current_q }}" placeholder="Ex: Mercado, Posto...">
+        </div>
+
+        <div style="flex: 1;">
+            <label>Conta</label>
+            <select name="account_id">
+                <option value="">Todas</option>
+                {% for acc in accounts %}
+                <option value="{{ acc.id }}" {% if current_acc==acc.id %}selected{% endif %}>{{ acc.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="contrast" style="padding: 12px 20px;">Filtrar</button>
+        <a href="?" role="button" class="outline secondary" style="padding: 12px 20px;">Limpar</a>
+    </form>
+
+    <figure>
+        <table role="grid">
+            <thead>...</thead>
+            <tbody>
+                {% for tx in transactions %}
+                {{ transaction_row(tx, categories) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    {% if total_pages > 1 %}
+    <nav aria-label="pagination" style="display: flex; justify-content: center; gap: 10px;">
+        {% if current_page > 1 %}
+        <a href="?page={{ current_page - 1 }}&q={{ current_q }}&account_id={{ current_acc or '' }}" role="button"
+            class="outline">« Anterior</a>
+        {% endif %}
+
+        <span style="align-self: center;">Página {{ current_page }} de {{ total_pages }}</span>
+
+        {% if current_page < total_pages %} <a
+            href="?page={{ current_page + 1 }}&q={{ current_q }}&account_id={{ current_acc or '' }}" role="button"
+            class="outline">Próxima »</a>
+            {% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

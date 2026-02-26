@@ -1,0 +1,32 @@
+{% macro transaction_row(tx, categories) %}
+<tr id="tx-row-{{ tx.id }}">
+    <td style="font-size: 0.85rem; white-space: nowrap;">
+        {{ tx.date_timestamp | timestamp_to_date }}
+    </td>
+    <td>
+        <input type="text" value="{{ tx.entity }}" onchange="updateTx('{{ tx.id }}', {entity: this.value})"
+            style="margin-bottom: 0; padding: 2px 5px; font-size: 0.9rem;">
+    </td>
+    <td style="text-align: right; font-weight: bold;" class="{{ 'text-red' if tx.amount_cents < 0 else 'text-green' }}">
+        R$ {{ "%.2f"|format(tx.amount_cents / 100) }}
+    </td>
+    <td>
+        <select onchange="updateTx('{{ tx.id }}', {category_id: this.value})"
+            style="margin-bottom: 0; padding: 2px; font-size: 0.85rem;">
+            <option value="">Sem Categoria</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if tx.category_id==cat.id %}selected{% endif %}>
+                {{ cat.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </td>
+    <td style="text-align: center;">
+        {% if tx.is_category_automatic %}
+        <span data-tooltip="Categorizado pelo Bot">🤖</span>
+        {% else %}
+        <span data-tooltip="Revisado Manualmente">👤</span>
+        {% endif %}
+    </td>
+</tr>
+{% endmacro %}

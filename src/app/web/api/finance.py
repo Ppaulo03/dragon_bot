@@ -91,3 +91,28 @@ async def api_update_account(
             return {"status": "error", "message": "Valor inválido"}, 400
     await db.commit()
     return {"status": "success", "new_balance": account.initial_balance_cents}
+
+
+@router.patch("/users/{user_id}")
+async def api_update_user(
+    user_id: str,
+    name: str = Body(embed=True),
+    db: AsyncSession = Depends(get_db_session),
+):
+    user = await db.get(User, user_id)
+    if not user:
+        return {"status": "error"}, 404
+
+    user.name = name
+    await db.commit()
+    return {"status": "success"}
+
+
+@router.delete("/users/{user_id}")
+async def api_delete_user(user_id: str, db: AsyncSession = Depends(get_db_session)):
+    user = await db.get(User, user_id)
+    if user:
+        await db.delete(user)
+        await db.commit()
+        return {"status": "success"}
+    return {"status": "error"}, 404

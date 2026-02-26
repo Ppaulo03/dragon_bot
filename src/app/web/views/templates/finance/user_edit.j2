@@ -1,0 +1,51 @@
+{% extends "finance/layout.j2" %}
+
+{% block title %}Editar Perfil | {{ user.name }}{% endblock %}
+
+{% block finance_content %}
+<article style="max-width: 600px; margin: 0 auto;">
+    <header>
+        <hgroup>
+            <h1>Configurações do Perfil</h1>
+            <p>ID: {{ user.id }} (WhatsApp)</p>
+        </hgroup>
+    </header>
+
+    <form id="editUserForm">
+        <label for="name">Nome do Perfil</label>
+        <input type="text" id="name" name="name" value="{{ user.name }}" required
+            style="padding: 0.75rem 1rem; height: auto;">
+
+        <div class="grid">
+            <button type="submit">Salvar Alterações</button>
+            <button type="button" class="outline contrast" onclick="deleteUser()">Deletar Usuário</button>
+        </div>
+    </form>
+</article>
+
+{% block extra_scripts %}
+<script>
+    document.getElementById('editUserForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const res = await fetch(`/api/internal/finance/users/{{ user.id }}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        });
+        if (res.ok) {
+            alert("Perfil atualizado!");
+            window.location.href = "/finance";
+        }
+    };
+
+    // Deletar Usuário
+    async function deleteUser() {
+        if (confirm("🚨 ATENÇÃO: Isso apagará o usuário e todos os seus vínculos com as contas. As transações NÃO serão apagadas, mas perderão a conexão com este perfil. Continuar?")) {
+            const res = await fetch(`/api/internal/finance/users/{{ user.id }}`, { method: 'DELETE' });
+            if (res.ok) window.location.href = "/finance";
+        }
+    }
+</script>
+{% endblock %}
+{% endblock %}
