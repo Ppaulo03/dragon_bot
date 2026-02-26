@@ -1,6 +1,14 @@
-from sqlalchemy import String, Integer, BigInteger, ForeignKey, Boolean, text
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from typing import Optional, List
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy import (
+    String,
+    Integer,
+    BigInteger,
+    ForeignKey,
+    Boolean,
+    Table,
+    Column,
+)
 
 
 class Base(DeclarativeBase):
@@ -24,6 +32,36 @@ class Template(Base):
     accounts: Mapped[List["Account"]] = relationship(back_populates="template")
 
 
+user_accounts = Table(
+    "user_accounts",
+    Base.metadata,
+    Column(
+        "user_id",
+        String(50),
+        ForeignKey("users.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    Column(
+        "account_id",
+        Integer,
+        ForeignKey("accounts.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+)
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)  # JID do WhatsApp
+    name: Mapped[str] = mapped_column(String(100))
+
+    # Relação N x N com Account
+    accounts: Mapped[List["Account"]] = relationship(
+        secondary=user_accounts, back_populates="users"
+    )
+
+
 class Account(Base):
     __tablename__ = "accounts"
 
@@ -33,7 +71,9 @@ class Account(Base):
     default_template_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("templates.id", ondelete="SET NULL")
     )
-
+    users: Mapped[List["User"]] = relationship(
+        secondary=user_accounts, back_populates="accounts"
+    )
     template: Mapped[Optional["Template"]] = relationship(back_populates="accounts")
     transactions: Mapped[List["Transaction"]] = relationship(back_populates="account")
 
@@ -62,11 +102,18 @@ class Category(Base):
     transaction_type: Mapped[str] = mapped_column(String(50), nullable=False)
     level: Mapped[int] = mapped_column(Integer, default=1)
 
+    user_id: Mapped[Optional[str]] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=True
+    )
+
     parent_id: Mapped[Optional[str]] = mapped_column(
         ForeignKey("categories.id", ondelete="CASCADE")
     )
 
     subcategories: Mapped[List["Category"]] = relationship(
-        back_populates="parent", remote_side=[id]
+        back_populates="parent", cascade="all, delete-orphan"
     )
-    parent: Mapped[Optional["Category"]] = relationship(back_populates="subcategories")
+
+    parent: Mapped[Optional["Category"]] = relationship(
+        back_populates="subcategories", remote_side=[id]
+    )
