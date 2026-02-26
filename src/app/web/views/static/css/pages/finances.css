@@ -1,0 +1,47 @@
+.tx-card {
+    padding: 1rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.inline-edit-title {
+    font-weight: 700;
+    font-size: 1.1rem !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 4px !important;
+}
+
+.inline-edit-title:focus {
+    border-bottom: 1px solid var(--primary) !important;
+}
+
+.badge {
+    background: var(--primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+}
+
+.badge-account {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ddd;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-date {
+    background: var(--primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+}

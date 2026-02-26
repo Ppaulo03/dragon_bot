@@ -1,53 +1,93 @@
 {% extends "finance/layout.j2" %}
-{% from "finance/macros/transaction_row.j2" import transaction_row %}
+{% from "finance/macros/transaction_card.j2" import transaction_card %}
+
+{% block extra_head %}
+{# Importante: HTMX carregado antes para gerenciar os eventos #}
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<link rel="stylesheet" href="{{ url_for('static', path='css/pages/finances/transactions.css') }}">
+<style>
+    /* Feedback visual de que a lista está carregando */
+    .htmx-request #transactions-container {
+        opacity: 0.5;
+        filter: blur(1px);
+        transition: all 0.2s ease;
+    }
+</style>
+{% endblock %}
 
 {% block finance_content %}
 <section>
-    <form method="get" action="" style="display: flex; gap: 15px; align-items: flex-end; margin-bottom: 2rem;">
-        <div style="flex: 2;">
-            <label>Buscar Entidade</label>
-            <input type="search" name="q" value="{{ current_q }}" placeholder="Ex: Mercado, Posto...">
+    <article>
+        {# HTMX assume o controle aqui #}
+        <form id="filter-form" method="get" action="" class="grid" style="align-items: end;" hx-get=""
+            hx-target="#transactions-wrapper" hx-select="#transactions-wrapper"
+            hx-trigger="keyup delay:500ms from:#search-input, change from:#account-select" hx-push-url="true">
+
+            <div style="flex: 2;">
+                <label>Buscar</label>
+                <input type="search" name="q" id="search-input" value="{{ current_q }}"
+                    placeholder="Entidade ou Descrição..." autocomplete="off">
+            </div>
+
+            <div>
+                <label>Conta</label>
+                <select name="account_id" id="account-select">
+                    <option value="">Todas as Contas</option>
+                    {% for acc in accounts %}
+                    <option value="{{ acc.id }}" {% if current_acc==acc.id|string %}selected{% endif %}>{{ acc.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="contrast">Filtrar</button>
+            <input type="hidden" name="page" value="1">
+        </form>
+    </article>
+
+    {# O wrapper é essencial para o HTMX saber o que substituir #}
+    <div id="transactions-wrapper">
+        <div id="transactions-container">
+            {% for tx in transactions %}
+            {{ transaction_card(tx, cat_lv1) }}
+            {% else %}
+            <article style="text-align: center; border: 2px dashed rgba(255,255,255,0.1);">
+                <p>Nenhuma transação encontrada para os filtros aplicados.</p>
+                <a href="/finance/user/{{ user.id }}/transactions" class="secondary">Limpar todos os filtros</a>
+            </article>
+            {% endfor %}
         </div>
 
-        <div style="flex: 1;">
-            <label>Conta</label>
-            <select name="account_id">
-                <option value="">Todas</option>
-                {% for acc in accounts %}
-                <option value="{{ acc.id }}" {% if current_acc==acc.id %}selected{% endif %}>{{ acc.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
+        {# Paginação dentro do wrapper para atualizar junto com os dados #}
+        {% if total_pages > 1 %}
+        <nav aria-label="pagination" style="display: flex; justify-content: center; gap: 10px; margin-top: 2rem;">
+            {% set base_url = "?q=" ~ (current_q or '') ~ "&account_id=" ~ (current_acc or '') %}
 
-        <button type="submit" class="contrast" style="padding: 12px 20px;">Filtrar</button>
-        <a href="?" role="button" class="outline secondary" style="padding: 12px 20px;">Limpar</a>
-    </form>
-
-    <figure>
-        <table role="grid">
-            <thead>...</thead>
-            <tbody>
-                {% for tx in transactions %}
-                {{ transaction_row(tx, categories) }}
-                {% endfor %}
-            </tbody>
-        </table>
-    </figure>
-
-    {% if total_pages > 1 %}
-    <nav aria-label="pagination" style="display: flex; justify-content: center; gap: 10px;">
-        {% if current_page > 1 %}
-        <a href="?page={{ current_page - 1 }}&q={{ current_q }}&account_id={{ current_acc or '' }}" role="button"
-            class="outline">« Anterior</a>
-        {% endif %}
-
-        <span style="align-self: center;">Página {{ current_page }} de {{ total_pages }}</span>
-
-        {% if current_page < total_pages %} <a
-            href="?page={{ current_page + 1 }}&q={{ current_q }}&account_id={{ current_acc or '' }}" role="button"
-            class="outline">Próxima »</a>
+            {% if current_page > 1 %}
+            <a href="{{ base_url }}&page={{ current_page - 1 }}" hx-get="{{ base_url }}&page={{ current_page - 1 }}"
+                hx-target="#transactions-wrapper" hx-select="#transactions-wrapper" role="button" class="outline">«
+                Anterior</a>
             {% endif %}
-    </nav>
-    {% endif %}
+
+            <span style="align-self: center; font-weight: bold; font-size: 0.9rem;">
+                Página {{ current_page }} de {{ total_pages }}
+            </span>
+
+            {% if current_page < total_pages %} <a href="{{ base_url }}&page={{ current_page + 1 }}"
+                hx-get="{{ base_url }}&page={{ current_page + 1 }}" hx-target="#transactions-wrapper"
+                hx-select="#transactions-wrapper" role="button" class="outline">Próxima »</a>
+                {% endif %}
+        </nav>
+        {% endif %}
+    </div>
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const categoryTree = {{ categories_json | safe }};
+
+</script>
+<script src="{{ url_for('static', path='js/finance/transaction_card.js') }}"></script>
+<script src="{{ url_for('static', path='js/finance/transactions_list.js') }}"></script>
 {% endblock %}

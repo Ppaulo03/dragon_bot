@@ -1,0 +1,60 @@
+{% macro transaction_card(tx, cat_lv1) %}
+<article id="tx-card-{{ tx.id }}" class="tx-card" data-current-cat="{{ tx.category_id or '' }}">
+    <div class="grid">
+        <div style="flex: 1.5;">
+            <header
+                style="padding: 0; margin-bottom: 0.5rem; background: none; border: none; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    <span class="badge-account" title="Conta Bancária">
+                        🏦 {{ tx.account.name if tx.account else 'Sem Conta' }}
+                    </span>
+                    <span class="badge-date">{{ tx.date_timestamp | timestamp_to_date }}</span>
+                </div>
+
+                <strong class="{{ 'amount-positive' if tx.amount_cents > 0 else 'amount-negative' }}"
+                    style="font-size: 1.1rem;">
+                    R$ {{ "%.2f"|format(tx.amount_cents / 100) }}
+                </strong>
+            </header>
+
+            <input type="text" class="inline-edit-title" value="{{ tx.entity }}"
+                onchange="updateTx('{{ tx.id }}', {entity: this.value})">
+
+            <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 0;">
+                <i style="color: var(--primary)">📝</i> {{ tx.description or "Sem descrição" }}
+            </p>
+        </div>
+
+        <div style="flex: 2; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+            <label style="font-size: 0.7rem; margin-bottom: 2px;">Classificação Hierárquica</label>
+            <div class="grid" style="gap: 5px;">
+                <select id="lv1-{{ tx.id }}" onchange="filterLevels('{{ tx.id }}', 1)"
+                    style="font-size: 0.8rem; padding: 5px;">
+                    <option value="">Raiz</option>
+                    {% for c in cat_lv1 %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="lv2-{{ tx.id }}" onchange="filterLevels('{{ tx.id }}', 2)"
+                    style="font-size: 0.8rem; padding: 5px;" disabled>
+                    <option value="">Grupo</option>
+                </select>
+
+                <select id="lv3-{{ tx.id }}" onchange="updateTx('{{ tx.id }}', {category_id: this.value})"
+                    style="font-size: 0.8rem; padding: 5px;" disabled>
+                    <option value="">Categoria</option>
+                </select>
+            </div>
+
+            <footer style="margin-top: 5px; padding: 0; background: none; text-align: right;">
+                {% if tx.is_category_automatic %}
+                <small id="status-{{ tx.id }}">🤖 Sugestão do Bot</small>
+                {% else %}
+                <small id="status-{{ tx.id }}">👤 Revisado</small>
+                {% endif %}
+            </footer>
+        </div>
+    </div>
+</article>
+{% endmacro %}
