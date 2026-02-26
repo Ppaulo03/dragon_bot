@@ -10,6 +10,7 @@ from app.infrastructure.providers import PROVIDERS, PROVIDERS_ROUTERS
 from app.core.services.factory import TriggerFactory
 from app.core import trigger_manager
 
+from app.infrastructure.database import db_client
 from app.infrastructure import webhooks_router
 from app.web import web_router
 
@@ -30,6 +31,7 @@ async def lifespan(app: FastAPI):
 
         _ = responses_impl
 
+        await db_client.setup_database()
         for provider in PROVIDERS.values():
             await provider.initialize()
 
@@ -49,6 +51,7 @@ async def lifespan(app: FastAPI):
 
     finally:
         logger.info("Desligando recursos...")
+        await db_client.close()
         for provider in PROVIDERS.values():
             if hasattr(provider, "close") and callable(provider.close):
                 await provider.close()

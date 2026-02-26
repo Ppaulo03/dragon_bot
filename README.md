@@ -178,10 +178,128 @@ docker exec dragon-minio-storage mc ilm list meu_minio/dragon-bot-bucket
 - Se BUCKET_* nao estiver configurado, o storage e desativado.
 - Para rodar em producao, revise tokens e credenciais no .env.
 
-## Estrutura de pastas (resumo)
+## Arquitetura das Pastas
 
-- src/app/main.py: entrada do FastAPI e ciclo de vida
-- src/app/core: regras de negocio e triggers
-- src/app/infrastructure: integracoes (Evolution, storage, translate)
-- src/app/web: painel web e API interna
-- config/triggers.yaml: regras do bot
+O projeto segue uma arquitetura em camadas com separacao clara de responsabilidades:
+
+### Raiz do Projeto
+
+- **docker-compose.yml**: Orquestracao do servico principal da aplicacao
+- **dockerfile**: Imagem Docker da aplicacao Python
+- **infra.yml**: Infraestrutura dos servicos auxiliares (Postgres, Redis, MinIO, LibreTranslate, Evolution)
+- **pyproject.toml**: Configuracao de dependencias Python (gerenciado pelo UV)
+- **README.md**: Documentacao do projeto
+- **config/**: Configuracoes da aplicacao
+  - **triggers.yaml**: Arquivo de configuracao dos gatilhos do bot
+  - **logs/**: Diretorio para arquivos de log
+
+### src/app/
+
+Codigo-fonte principal da aplicacao.
+
+```
+src/app/
+├── main.py          # Ponto de entrada do FastAPI e ciclo de vida da aplicacao
+├── config.py        # Carregamento de variaveis de ambiente e configuracoes globais
+├── core/            # Camada de dominio (regras de negocio)
+├── infrastructure/  # Camada de infraestrutura (integracoes externas)
+├── utils/           # Utilitarios compartilhados
+└── web/             # Camada de apresentacao (API web e dashboard)
+```
+
+### src/app/core/ (Dominio)
+
+Contem a logica de negocio e regras de dominio, independente de implementacoes externas.
+
+- **entities/**: Entidades do dominio
+  - **trigger.py**: Definicao de triggers, matchers e acoes
+- **interfaces/**: Contratos e interfaces
+  - **chat.py**: Interface para provedores de chat (WhatsApp)
+  - **message.py**: Interface de mensagem generica
+- **logic/**: Implementacao da logica de negocio
+  - **matchers/**: Implementacao dos tipos de matching
+    - **base.py**: Classe base para matchers
+    - **implementations.py**: Implementacoes concretas (text, regex, image_similarity, always)
+    - **schemas.py**: Schemas de parametros dos matchers
+  - **actions/**: Implementacao das acoes de resposta
+    - **external.py**: Acoes que consomem APIs externas (cat_api, dog_api, etc)
+    - **local.py**: Acoes locais (meme_contact, etc)
+  - **response.py**: Interface de construcao de respostas
+  - **response_impl.py**: Implementacoes concretas de respostas (texto, audio, sticker, contato)
+- **services/**: Servicos de dominio
+  - **config_service.py**: Servico de gerenciamento de configuracao dos triggers
+  - **trigger_manager.py**: Motor de avaliacao de triggers
+  - **factory.py**: Fabrica de criacao de matchers e acoes
+
+### src/app/infrastructure/ (Infraestrutura)
+
+Implementacoes concretas para integracao com servicos externos.
+
+- **network/**: Cliente HTTP base
+  - **base_http_client.py**: Cliente HTTP generico para requisicoes externas
+- **providers/**: Provedores de servicos especificos
+  - **evolution/**: Integracao com Evolution API
+    - **adapter.py**: Adaptador de mensagens entre Evolution e formato interno
+    - **client.py**: Cliente HTTP para Evolution API
+    - **parser.py**: Parser de webhooks da Evolution
+    - **route.py**: Roteador para endpoints de webhook
+    - **schemas.py**: Schemas Pydantic para Evolution API
+    - **template/**: Templates de mensagens Evolution
+- **services/**: Servicos de infraestrutura
+  - **api_client.py**: Cliente generico para APIs externas
+  - **storage.py**: Cliente para MinIO/S3 (gerenciamento de assets)
+  - **translate.py**: Cliente para LibreTranslate (traducao opcional)
+- **webhooks/**: Processamento de webhooks
+  - **evolution.py**: Handler principal de webhooks da Evolution
+
+### src/app/utils/
+
+Utilitarios e funcoes auxiliares compartilhadas.
+
+- **image.py**: Processamento e comparacao de imagens (hashing, similaridade)
+- **text.py**: Utilitarios de texto (normalizacao, regex)
+- **logging_config.py**: Configuracao centralizada de logging
+
+### src/app/web/ (Apresentacao)
+
+Camada web com API REST e dashboard web.
+
+- **api.py**: Endpoints da API interna (configuracao de triggers)
+- **views.py**: Views principais (dashboard, login Evolution)
+- **schemas/**: Schemas da API web
+  - **view.py**: Schemas de resposta da API de configuracao
+- **static/**: Arquivos estaticos (CSS, JavaScript)
+- **templates/**: Templates HTML (Jinja2)
+- **utils/**: Utilitarios especificos da camada web
+- **views/**: Views especializadas (se houver)
+
+### volumes/
+
+Dados persistentes dos containers Docker (nao versionado). Criado automaticamente pelo Docker Compose.
+
+- **evolution_instances/**: Dados das instâncias da Evolution API
+- **libretranslate_data/**: Modelos e cache do LibreTranslate
+- **minio_data/**: Storage do MinIO
+  - **dragon-bot-bucket/**: Bucket principal
+    - **assets/**: Assets gerais (audios, stickers, imagens)
+    - **evolution-api/**: Midias recebidas/enviadas pela Evolution
+    - **triggers/**: Padroes de imagem para triggers com image_similarity
+- **postgres_data/**: Dados do banco PostgreSQL (Evolution API)
+- **redis_data/**: Dados do Redis (Evolution API)
+
+### Fluxo de Dados entre Camadas
+
+```
+Webhook → infrastructure/webhooks → infrastructure/providers/evolution (adapter)
+  ↓
+core/services/trigger_manager → core/logic/matchers (avaliacao)
+  ↓
+core/logic/actions → core/logic/response (construcao da resposta)
+  ↓
+infrastructure/providers/evolution/client (envio) → Evolution API
+```
+
+A arquitetura garante que:
+- **core/** nunca depende de **infrastructure/** ou **web/**
+- **infrastructure/** implementa contratos definidos em **core/interfaces/**
+- **web/** orquestra **core/** e **infrastructure/** para expor funcionalidades
