@@ -110,7 +110,7 @@ class BaseHttpClient:
             await asyncio.sleep(delay)
 
         try:
-            url = f"{self.base_url}/{endpoint.lstrip('/')}"
+            url = f"{self.base_url}/{endpoint.lstrip('/')}".lstrip("/")
             if kwargs.get("json") is None:
                 kwargs.pop("json", None)
 
@@ -120,7 +120,7 @@ class BaseHttpClient:
                 return res
 
         except httpx.HTTPStatusError as e:
-            logger.error(f"Erro de Status HTTP: {e.response.status_code} em {url}")
+            logger.exception(f"Erro de Status HTTP: {e.response.status_code} em {url}")
             raise e
         except Exception as e:
             logger.exception(f"Erro inesperado na requisição para {url}")

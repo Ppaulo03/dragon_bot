@@ -1,0 +1,29 @@
+{% macro account_card(acc, user_id) %}
+<article id="acc-card-{{ acc.id }}">
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <strong>{{ acc.name }}</strong>
+        <button onclick="unlinkAccount('{{ user_id }}', '{{ acc.id }}')" class="outline contrast"
+            style="padding: 2px 5px; font-size: 0.6rem; border-color: var(--del-color); color: var(--del-color);">
+            Remover
+        </button>
+    </header>
+
+    <div style="margin: 1rem 0;">
+        <small style="opacity: 0.7;">Saldo Inicial:</small><br>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <strong id="balance-text-{{ acc.id }}" style="font-size: 1.1rem;">
+                R$ {{ "%.2f"|format(acc.initial_balance_cents / 100) }}
+            </strong>
+            <a href="javascript:void(0)" onclick="editBalance('{{ acc.id }}', '{{ acc.initial_balance_cents / 100 }}')"
+                title="Editar Saldo" style="text-decoration: none; font-size: 0.9rem;">✏️</a>
+        </div>
+    </div>
+
+    <footer style="background: transparent; padding: 0; border: none;">
+        <a href="/finance/user/{{ user_id }}/transactions?account_id={{ acc.id }}" role="button" class="secondary"
+            style="width: 100%; margin-top: 0.5rem;">
+            Ver Transações
+        </a>
+    </footer>
+</article>
+{% endmacro %}

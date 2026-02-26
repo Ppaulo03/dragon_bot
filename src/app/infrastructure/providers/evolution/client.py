@@ -71,7 +71,9 @@ class EvolutionClient(ChatClient, BaseHttpClient):
         """
         Envia figurinhas (WebP).
         """
-        if not sticker.startswith("http"):
+        if sticker.startswith(";base64,"):
+            sticker = sticker.split(";base64,")[1]
+        elif not sticker.startswith("http"):
             sticker = f"{settings.BUCKET_ENDPOINT}/{settings.BUCKET_NAME}/{sticker}"
         payload = self._clean_payload({"number": number, "sticker": sticker, **options})
         return await self._execute_send(instance, "sendSticker", payload)

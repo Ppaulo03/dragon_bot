@@ -1,0 +1,26 @@
+{% extends "base.j2" %}
+
+{% block content %}
+<header class="container">
+    <nav>
+        <ul>
+            <li><strong>🐲 Dragon Finance</strong></li>
+        </ul>
+        <ul>
+            <li><a href="/finance" class="secondary">Trocar Perfil</a></li>
+
+            {% if user %}
+            <li><a href="/finance/user/{{ user.id }}/accounts">Minhas Contas</a></li>
+            <li><a href="/finance/user/{{ user.id }}/transactions">Transações</a></li>
+            <li>
+                <kbd style="font-size: 0.7rem;">👤 {{ user.name }}</kbd>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<main class="container">
+    {% block finance_content %}{% endblock %}
+</main>
+{% endblock %}

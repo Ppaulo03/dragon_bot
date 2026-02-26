@@ -1,7 +1,9 @@
+import os
 import random
 from typing import Optional
 from app.infrastructure.services import TranslateClient, ExternalApiClient
 from app.config import settings
+from app.utils.image import url_to_b64
 
 
 async def _safe_translate(text: Optional[str]) -> str:
@@ -19,7 +21,7 @@ async def cat_api(*args) -> str:
     """Busca um fato sobre gatos."""
     url = "https://meowfacts.herokuapp.com/?lang=por-br"
     res = await ExternalApiClient().fetch(url)
-    return _safe_translate(res.get("data", [""])[0] if res else "Miau!")
+    return await _safe_translate(res.get("data", [""])[0] if res else "Miau!")
 
 
 async def breaking_bad_api(*args) -> str:
@@ -88,6 +90,12 @@ async def cat_photo_api(*args) -> str:
     if img_path and not img_path.startswith("http"):
         img_path = f"https://cataas.com/{img_path.lstrip('/')}"
 
+    if img_path:
+        try:
+            b64 = await url_to_b64(img_path)
+            return f";base64,{b64}" if b64 else img_path
+        except Exception:
+            return img_path
     return img_path or ""
 
 

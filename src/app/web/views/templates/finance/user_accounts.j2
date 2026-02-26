@@ -1,0 +1,65 @@
+{% extends "finance/layout.j2" %}
+{% from "finance/macros/account_card.j2" import account_card %}
+
+{% block title %}Contas de {{ user.name }}{% endblock %}
+
+{% block finance_content %}
+<section>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <hgroup style="margin-bottom: 0;">
+            <h1>Contas Bancárias</h1>
+            <p>Gerenciando acessos de <strong>{{ user.name }}</strong></p>
+        </hgroup>
+
+        <details role="list" dir="rtl">
+            <summary aria-haspopup="listbox" role="link" class="contrast">+ Vincular Conta</summary>
+            <ul role="listbox">
+                {% for acc in available_accounts %}
+                <li><a href="#" onclick="linkAccount('{{ user.id }}', '{{ acc.id }}')">{{ acc.name }}</a></li>
+                {% else %}
+                <li><small>Nenhuma conta disponível</small></li>
+                {% endfor %}
+            </ul>
+        </details>
+    </div>
+
+    <div class="grid">
+        {% for acc in owned_accounts %}
+        {{ account_card(acc, user.id) }}
+        {% else %}
+        <article style="grid-column: 1 / -1; text-align: center; border: 2px dashed #444;">
+            <p>Nenhuma conta vinculada a este perfil.</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+{% block extra_scripts %}
+<script>
+    // As funções de JS permanecem aqui, pois são específicas da lógica desta página
+    async function editBalance(accId, currentVal) {
+        const newVal = prompt("Novo saldo inicial:", currentVal);
+        if (newVal !== null && newVal !== currentVal) {
+            const res = await fetch(`/api/internal/finance/accounts/${accId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ initial_balance: newVal })
+            });
+            if (res.ok) location.reload();
+        }
+    }
+
+    async function linkAccount(userId, accId) {
+        await fetch(`/api/internal/finance/user/${userId}/link/${accId}`, { method: 'POST' });
+        location.reload();
+    }
+
+    async function unlinkAccount(userId, accId) {
+        if (confirm("Remover vínculo desta conta?")) {
+            await fetch(`/api/internal/finance/user/${userId}/unlink/${accId}`, { method: 'DELETE' });
+            location.reload();
+        }
+    }
+</script>
+{% endblock %}
+{% endblock %}

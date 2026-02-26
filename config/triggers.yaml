@@ -1,5 +1,5 @@
 triggers:
-- id: 3269e8e2
+- id: '69238301'
   name: Pete
   type: send_sticker
   matcher: image_similarity
@@ -9,7 +9,7 @@ triggers:
     hash: e0f7fac12e18259c
   files:
   - assets/pete_4a31.jpg
-- id: fe33d602
+- id: 37bbb554
   name: Repete
   type: send_sticker
   matcher: image_similarity
@@ -19,7 +19,7 @@ triggers:
     hash: 95cb3b14c564b56a
   files:
   - assets/repete_86a8.jpg
-- id: b27b921e
+- id: 94449fc5
   name: Repete2
   type: send_sticker
   matcher: text
@@ -28,7 +28,7 @@ triggers:
     pattern: repete
   files:
   - assets/pete_21d8.jpg
-- id: 8c24359d
+- id: e7d236a0
   name: De Quem
   type: send_contact
   matcher: text
@@ -36,7 +36,7 @@ triggers:
   params:
     pattern: de quem é
   action: meme_contact
-- id: cdbffdab
+- id: '50079009'
   name: De Quem 2
   type: send_contact
   matcher: text
@@ -44,7 +44,7 @@ triggers:
   params:
     pattern: de quem e
   action: meme_contact
-- id: d49b5310
+- id: bfd817a0
   name: Padim zeras
   type: send_sticker
   matcher: text
@@ -55,7 +55,7 @@ triggers:
   - assets/padim_zeras_3_3f36.webp
   - assets/padim_zeras_1_14a7.webp
   - assets/padim_zeras_2_362f.webp
-- id: d520d2d1
+- id: bc6e452f
   name: Contexto
   type: send_sticker
   matcher: text
@@ -64,7 +64,7 @@ triggers:
     pattern: contexto
   files:
   - assets/contexto_2106.webp
-- id: 44eaaf45
+- id: e416243a
   name: Pete2
   type: send_sticker
   matcher: text
@@ -73,7 +73,7 @@ triggers:
     pattern: eu tenho dois cachorros pete e repete pete sumiu quem sobrou
   files:
   - assets/repete_cda6.jpg
-- id: 93dd4ad3
+- id: f288101b
   name: mylib
   type: send_text
   matcher: text
@@ -81,7 +81,7 @@ triggers:
   params:
     pattern: mylib
   value: https://master.dple1clh7kw1l.amplifyapp.com
-- id: 8184c66e
+- id: d3d45f79
   name: mylib2
   type: send_text
   matcher: text
@@ -89,7 +89,7 @@ triggers:
   params:
     pattern: my_lib
   value: https://master.dple1clh7kw1l.amplifyapp.com
-- id: 3a9a267e
+- id: 237b8c34
   name: natal
   type: send_text
   matcher: text
@@ -99,7 +99,7 @@ triggers:
   value: ''
   files:
   - assets/natal_a1a0.txt
-- id: 7d085bd2
+- id: 164bc752
   name: fred
   type: send_text
   matcher: text
@@ -109,7 +109,7 @@ triggers:
   value: ''
   files:
   - assets/pokemon_398e.txt
-- id: 4b370db3
+- id: b421ba3c
   name: bom dia
   type: send_text
   matcher: text
@@ -119,7 +119,7 @@ triggers:
   value: ''
   files:
   - assets/bom_dia_fdcf.json
-- id: '69032018'
+- id: 5797ac9a
   name: trabalho
   type: send_text
   matcher: text
@@ -129,7 +129,7 @@ triggers:
   value: ''
   files:
   - assets/coach_f3af.txt
-- id: 8e4f52a1
+- id: 2b575ca5
   name: burro
   type: send_text
   matcher: text
@@ -139,7 +139,7 @@ triggers:
   value: ''
   files:
   - assets/intelectual_4806.txt
-- id: e2c9e1c9
+- id: bd698fc4
   name: jogo
   type: send_text
   matcher: text
@@ -149,7 +149,7 @@ triggers:
   value: ''
   files:
   - assets/gamer_fda6.txt
-- id: 26b3eb9a
+- id: 47d26b18
   name: voar
   type: send_text
   matcher: text
@@ -159,7 +159,7 @@ triggers:
   value: ''
   files:
   - assets/abelha_3a8e.txt
-- id: 0cdd678e
+- id: 196725d3
   name: comida
   type: send_text
   matcher: text
@@ -169,7 +169,7 @@ triggers:
   value: ''
   files:
   - assets/comida_56fc.txt
-- id: f90e8ee0
+- id: e9dc6b15
   name: tempo
   type: send_text
   matcher: text
@@ -179,7 +179,7 @@ triggers:
   value: ''
   files:
   - assets/fisica_a301.txt
-- id: 7ceae14f
+- id: 98ff09d4
   name: aniversário
   type: send_audio
   matcher: regex
@@ -188,7 +188,7 @@ triggers:
     pattern: (aniversário|aniversario|birthday)
   files:
   - assets/parabens_686c.mp3
-- id: e4076562
+- id: 7a4fe60d
   name: sextou
   type: send_audio
   matcher: text
@@ -197,23 +197,23 @@ triggers:
     pattern: sextou
   files:
   - assets/sextou_671b.mp3
-- id: 644d5eb9
+- id: a7a42a10
   name: gato1
-  type: send_sticker
+  type: send_text
   matcher: text
-  chance: 0.65
+  chance: 0.2
   params:
     pattern: gat
   action: cat_api
-- id: '91687529'
+- id: 2173d94c
   name: gato2
-  type: send_text
+  type: send_sticker
   matcher: text
   chance: 1.0
   params:
     pattern: gato
   action: cat_photo_api
-- id: 99d64648
+- id: 0d9ac78f
   name: motivacional
   type: send_text
   matcher: regex
@@ -221,7 +221,7 @@ triggers:
   params:
     pattern: (sucesso|vencer|conseguir)
   action: motivacional
-- id: 54874ffb
+- id: e10a82ad
   name: chuck norries
   type: send_text
   matcher: regex
@@ -229,7 +229,7 @@ triggers:
   params:
     pattern: (chuck|norris)
   action: chuck_norris
-- id: c849f4fe
+- id: 659f7b59
   name: cachorro
   type: send_sticker
   matcher: regex
@@ -237,7 +237,7 @@ triggers:
   params:
     pattern: (cachorro|dog)
   action: dog_api
-- id: 6f420cc9
+- id: 7de5f1a2
   name: idiota
   type: send_sticker
   matcher: regex
@@ -245,7 +245,7 @@ triggers:
   params:
     pattern: (idiota|bonk)
   action: bonk
-- id: a725275a
+- id: 8cb1b69b
   name: feliz
   type: send_sticker
   matcher: text
@@ -253,7 +253,7 @@ triggers:
   params:
     pattern: feliz
   action: smile
-- id: f67300c7
+- id: 0f5dac72
   name: conselho
   type: send_text
   matcher: regex
@@ -261,7 +261,7 @@ triggers:
   params:
     pattern: (conselho|recomendação)
   action: advice
-- id: b25e7a0b
+- id: eda4c020
   name: anime
   type: send_text
   matcher: text
@@ -270,7 +270,7 @@ triggers:
     pattern: anime
   action: anime_quote
 no_triggers:
-- id: 708f5e58
+- id: 7eb25ab8
   name: BreakingBad
   type: send_text
   matcher: always
@@ -278,7 +278,7 @@ no_triggers:
   params:
     pattern: ''
   action: breaking_bad
-- id: 2af753ec
+- id: 63aefab4
   name: Observando
   type: send_text
   matcher: always

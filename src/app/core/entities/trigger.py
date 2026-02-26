@@ -29,11 +29,21 @@ async def send_contact(
     return await msg_data.reply_contact(contact_info, **options)
 
 
+async def send_image(
+    msg_data: MessageData,
+    media_url: str,
+    mime_type: str = "image/jpeg",
+    **options: Any,
+) -> ChatResponse:
+    return await msg_data.reply_media(media_url, "image", mime_type, **options)
+
+
 ACTIONS_REGISTRY = {
     "send_text": send_text,
     "send_audio": send_audio,
     "send_sticker": send_sticker,
     "send_contact": send_contact,
+    "send_image": send_image,
 }
 
 
