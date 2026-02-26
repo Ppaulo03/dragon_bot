@@ -60,7 +60,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Dragon Bot", lifespan=lifespan)
 
 CURRENT_DIR = Path(__file__).parent
-STATIC_DIR = CURRENT_DIR / "web" / "static"
+STATIC_DIR = CURRENT_DIR / "web" / "views" / "static"
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 else:

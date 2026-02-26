@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.core.services.config_service import config_service
 
-router = APIRouter(prefix="/api/internal", tags=["Dashboard API"])
+router = APIRouter(tags=["Trigger Config API"])
 
 
 @router.get("/constants")

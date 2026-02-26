@@ -11,15 +11,17 @@ from app.utils.image import calculate_phash
 from app.web.utils.RuleFormParser import RuleFormParser, TriggerRule
 
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
-router = APIRouter(tags=["Interface Visual"])
+router = APIRouter(
+    prefix="/trigger-config", tags=["Interface Visual de Configuração de Triggers"]
+)
 
 
-@router.get("/trigger-config", response_class=HTMLResponse)
+@router.get("", response_class=HTMLResponse)
 async def trigger_config_page(request: Request):
     data = config_service.load_triggers_data()
     constants = config_service.get_constants()
     return templates.TemplateResponse(
-        "trigger_config.j2",
+        "trigger_config/trigger_config.j2",
         {
             "request": request,
             "triggers": data["triggers"],
@@ -30,7 +32,7 @@ async def trigger_config_page(request: Request):
     )
 
 
-@router.post("/trigger-config")
+@router.post("")
 async def save_config(
     background_tasks: BackgroundTasks,
     request: Request,

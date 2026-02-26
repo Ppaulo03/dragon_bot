@@ -1,0 +1,88 @@
+{% extends "base.j2" %}
+
+{% block title %}Dragon Finance | Perfis{% endblock %}
+
+{% block content %}
+<section>
+    <hgroup>
+        <h1>🐲 Dragon Finance</h1>
+        <h2>Selecione o perfil para gerenciar as contas</h2>
+    </hgroup>
+
+    <div class="grid">
+        <article>
+            <header><strong>Perfis Ativos</strong></header>
+
+            {% for user in users %}
+            <a href="/finance/user/{{ user.id }}/accounts" role="button" class="outline secondary"
+                style="width: 100%; text-align: left; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>{{ user.name }}</strong><br>
+                    <small class="phone-display" style="font-size: 0.8rem; opacity: 0.8;">{{ user.id }}</small>
+                </div>
+                <span>➔</span>
+            </a>
+            {% else %}
+            <p><i>Nenhum usuário encontrado.</i></p>
+            {% endfor %}
+        </article>
+
+        <article>
+            <header><strong>Novo Perfil</strong></header>
+
+            <form action="/api/internal/finance/users" method="post">
+                <label for="name">Nome do Usuário</label>
+                <input type="text" id="name" name="name" placeholder="Ex: Admin" required
+                    style="padding: 0.75rem 1rem; margin-bottom: 1.2rem; height: auto;">
+
+                <label for="phone_mask">WhatsApp (com DDI + DDD)</label>
+                <input type="tel" id="phone_mask" placeholder="+55 (11) 99999-9999" required {% if error
+                    %}aria-invalid="true" {% endif %}
+                    style="padding: 0.75rem 1rem; margin-bottom: 0.5rem; height: auto;">
+
+                {% if error %}
+                <small
+                    style="display: block; padding: 1rem 0.8rem; background: rgba(198, 40, 40, 0.1); border-left: 3px solid #c62828; color: #c62828; margin-bottom: 1.2rem; border-radius: 0 4px 4px 0;">
+                    {{ error }}
+                </small>
+                {% endif %}
+
+                <input type="hidden" id="jid_clean" name="jid">
+
+                <button type="submit" class="contrast" style="margin-top: 0.5rem;">Criar Perfil</button>
+            </form>
+        </article>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const phoneInput = document.getElementById('phone_mask');
+    const hiddenInput = document.getElementById('jid_clean');
+
+    phoneInput.addEventListener('input', function (e) {
+        // Remove tudo que não é número para o banco
+        let x = e.target.value.replace(/\D/g, '');
+        hiddenInput.value = x;
+
+        // Formatação visual: +55 (11) 99999-9999
+        let formatted = "";
+        if (x.length > 0) {
+            formatted = "+" + x.substring(0, 2);
+            if (x.length > 2) formatted += " (" + x.substring(2, 4) + ")";
+            if (x.length > 4) formatted += " " + x.substring(4, 9);
+            if (x.length > 9) formatted += "-" + x.substring(9, 13);
+        }
+        e.target.value = formatted;
+    });
+
+    // Formata os números já existentes na lista ao carregar a página
+    document.querySelectorAll('.phone-display').forEach(el => {
+        let x = el.innerText.replace(/\D/g, '');
+        if (x.length >= 12) {
+            el.innerText = `+${x.substring(0, 2)} (${x.substring(2, 4)}) ${x.substring(4, 9)}-${x.substring(9, 13)}`;
+        }
+    });
+</script>
+{% endblock %}

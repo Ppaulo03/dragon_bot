@@ -82,13 +82,19 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     id: Mapped[str] = mapped_column(String(50), primary_key=True)
+    entity: Mapped[str] = mapped_column(String(100), nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=False)
     amount_cents: Mapped[int] = mapped_column(BigInteger, nullable=False)
     date_timestamp: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    is_category_automatic: Mapped[bool] = mapped_column(Boolean, default=True)
     account_id: Mapped[int] = mapped_column(
         ForeignKey("accounts.id", ondelete="CASCADE"), nullable=False
     )
+    category_id: Mapped[Optional[str]] = mapped_column(
+        ForeignKey("categories.id", ondelete="SET NULL"), nullable=True
+    )
 
+    category: Mapped[Optional["Category"]] = relationship()
     account: Mapped["Account"] = relationship(back_populates="transactions")
 
 
@@ -101,10 +107,6 @@ class Category(Base):
     icon_name: Mapped[str] = mapped_column(String(50), default="category")
     transaction_type: Mapped[str] = mapped_column(String(50), nullable=False)
     level: Mapped[int] = mapped_column(Integer, default=1)
-
-    user_id: Mapped[Optional[str]] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"), nullable=True
-    )
 
     parent_id: Mapped[Optional[str]] = mapped_column(
         ForeignKey("categories.id", ondelete="CASCADE")
