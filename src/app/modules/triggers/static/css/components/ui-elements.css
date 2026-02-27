@@ -1,0 +1,150 @@
+/* Botões */
+.btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    color: #fff !important;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(157, 78, 221, 0.3);
+}
+
+.btn-outline {
+    background-color: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-muted) !important;
+}
+
+.btn-outline:hover {
+    border-color: var(--primary) !important;
+    color: var(--text-main) !important;
+    background-color: rgba(157, 78, 221, 0.05) !important;
+}
+
+/* Inputs e Selects */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-main) !important;
+    padding: 0.6rem 0.8rem !important;
+    border-radius: 6px !important;
+    margin-bottom: 0 !important;
+    box-shadow: none !important;
+    font-size: 0.95rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.2) !important;
+}
+
+/* Tabs (Navegação) */
+.tabs-nav {
+    display: flex;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    width: fit-content;
+}
+
+.tab-btn {
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    border: none !important;
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0 !important;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: var(--text-main) !important;
+}
+
+.tab-btn.active {
+    background: var(--primary) !important;
+    color: white !important;
+    box-shadow: var(--shadow-sm);
+}
+
+.preview-item {
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.1s ease, opacity 0.2s ease;
+    user-select: none;
+}
+
+.preview-item:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.preview-item:hover::after {
+    content: attr(data-file-name);
+    /* Pega o nome do dataset */
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.preview-item:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+}
+
+.preview-item.marked-for-delete {
+    opacity: 0.25;
+    filter: grayscale(1) blur(1px);
+}
+
+.preview-item.marked-for-delete::after {
+    content: '🚫';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+}

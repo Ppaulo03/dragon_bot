@@ -1,85 +1,62 @@
-import uvicorn
+from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from loguru import logger
-from pathlib import Path
 
-from app.config import settings
-from app.infrastructure import storage
-from app.infrastructure.providers import PROVIDERS, PROVIDERS_ROUTERS
+from app.kernel import settings
+from app.kernel.core import module_registry
+from app.kernel.api import router as api_router
+from app.kernel.utils.views import setup_views
+from app.kernel.infrastructure.providers import PROVIDERS, router as providers_router
+from app.modules import setup_modules
 
-from app.core.services.factory import TriggerFactory
-from app.core import trigger_manager
-
-from app.infrastructure.database import db_client
-from app.infrastructure import webhooks_router
-from app.web import web_router
-
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
+setup_modules()
+active_modules = module_registry.get_all()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Ciclo de vida do App: Inicializa recursos no boot e limpa no shutdown.
-    """
-    logger.info("Iniciando o Boot do Bot...")
-    try:
 
-        await storage.setup()
-        import app.core.logic.response_impl as responses_impl
+    for provider in PROVIDERS:
+        await provider.initialize()
 
-        _ = responses_impl
+    for module in active_modules:
+        await module.startup(app)
+        logger.info(f"[Lifespan] Módulo '{module.name}' iniciado.")
 
-        await db_client.setup_database()
-        for provider in PROVIDERS.values():
-            await provider.initialize()
+    logger.info(
+        "[Lifespan] Todos os módulos iniciados. "
+        "Aplicação pronta para receber mensagens."
+    )
+    yield
 
-        factory = TriggerFactory(storage_service=storage)
-        primary, fallback = await factory.load_triggers()
+    for module in active_modules:
+        await module.shutdown(app)
+        logger.info(f"[Lifespan] Módulo '{module.name}' desligado.")
 
-        for trigger in primary:
-            trigger_manager.register(trigger, is_primary=True)
-        for trigger in fallback:
-            trigger_manager.register(trigger, is_primary=False)
+    for provider in PROVIDERS:
+        await provider.close()
 
-        logger.info(
-            f"Bot pronto! {len(primary)} triggers e {len(fallback)} fallbacks ativos."
-        )
-
-        yield
-
-    finally:
-        logger.info("Desligando recursos...")
-        await db_client.close()
-        for provider in PROVIDERS.values():
-            if hasattr(provider, "close") and callable(provider.close):
-                await provider.close()
+    logger.info("[Lifespan] Aplicação encerrada.")
 
 
 app = FastAPI(title="Dragon Bot", lifespan=lifespan)
+templates = setup_views(app)
+app.state.templates = templates
 
-CURRENT_DIR = Path(__file__).parent
-STATIC_DIR = CURRENT_DIR / "web" / "views" / "static"
-if STATIC_DIR.exists():
-    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
-else:
-    logger.warning(f"Pasta static não encontrada em {STATIC_DIR}")
-
-
-app.include_router(webhooks_router)
-app.include_router(web_router)
-for router in PROVIDERS_ROUTERS:
-    app.include_router(router)
+app.include_router(api_router)
+app.include_router(providers_router)
+for module in module_registry.get_all():
+    router = module.register_routes()
+    if router:
+        app.include_router(router)
 
 
 @app.get("/")
 async def root():
-    status = {}
-    for provider_name, provider in PROVIDERS.items():
-        status[provider_name] = await provider.check_status()
-    return {"message": "Dragon Bot is running!", "providers": status}
+    return {"message": "Dragon Bot is running!"}
 
 
 if __name__ == "__main__":
+    import uvicorn
+
     uvicorn.run("app.main:app", host="0.0.0.0", port=8001, reload=settings.DEBUG)

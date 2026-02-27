@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static_global', path='css/variables.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static_global', path='css/ui-elements.css') }}">
+    {% block extra_head %}{% endblock %}
+    <title>{% block title %}Dragon Bot{% endblock %}</title>
+</head>
+
+<body>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>
