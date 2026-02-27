@@ -3,9 +3,8 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from app.infrastructure.database.postgrees_client import get_db_session
-from src.app.infrastructure.database.models import User
-from .utils import templates
+from app.modules.finances.database import get_db_session
+from app.modules.finances.database.models import User
 
 from .account_view import router as account_router
 from .transactions_view import router as transactions_router
@@ -20,8 +19,9 @@ async def users_view(
 ):
     result = await db.execute(select(User))
     users = result.scalars().all()
+    templates = request.app.state.templates
     return templates.TemplateResponse(
-        "finance/users_list.j2",
+        "users_list.j2",
         {"request": request, "users": users, "error": error},
     )
 

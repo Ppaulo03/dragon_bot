@@ -3,9 +3,8 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # Imports internos
-from app.infrastructure.database.postgrees_client import get_db_session
-from src.app.infrastructure.database.models import User
-from .utils import templates
+from app.modules.finances.database import get_db_session
+from app.modules.finances.database.models import User
 
 router = APIRouter()
 
@@ -18,6 +17,7 @@ async def edit_user_view(
     if not user:
         return RedirectResponse(url="/finance?error=Usuário não encontrado")
 
+    templates = request.app.state.templates
     return templates.TemplateResponse(
         "finance/user_edit.j2", {"request": request, "user": user, "options": {}}
     )

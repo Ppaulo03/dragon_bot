@@ -4,9 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy import not_, select
 
-from app.infrastructure.database.postgrees_client import get_db_session
-from src.app.infrastructure.database.models import User, Account
-from .utils import templates
+from app.modules.finances.database import get_db_session
+from app.modules.finances.database.models import User, Account
 
 router = APIRouter()
 
@@ -27,6 +26,7 @@ async def user_accounts_view(
     if owned_ids:
         stmt_available = stmt_available.where(not_(Account.id.in_(owned_ids)))
     available_accounts = (await db.execute(stmt_available)).scalars().all()
+    templates = request.app.state.templates
     return templates.TemplateResponse(
         "finance/user_accounts.j2",
         {

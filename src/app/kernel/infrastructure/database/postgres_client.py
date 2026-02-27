@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy import text
+from sqlalchemy import MetaData, text
 from loguru import logger
 
 
@@ -31,7 +31,7 @@ class PostgresClient:
 
         await temp_engine.dispose()
 
-    async def setup_database(self, base_metadata):
+    async def setup_database(self, base_metadata: MetaData):
         """Verifica o banco e sincroniza as tabelas do módulo específico."""
         try:
             await self._create_database_if_not_exists()

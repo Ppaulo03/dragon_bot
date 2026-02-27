@@ -6,15 +6,15 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.infrastructure.database.postgrees_client import get_db_session
-from src.app.infrastructure.database.models import (
+from app.modules.finances.database import get_db_session
+from app.modules.finances.database.models import (
     Category,
     Transaction,
     User,
     Account,
     user_accounts,
 )
-from .utils import templates
+
 
 router = APIRouter()
 
@@ -48,6 +48,7 @@ async def transactions_view(
         user = await db.get(User, user_id)
         if not user:
             return RedirectResponse(url="/finance?error=Usuário não encontrado")
+        templates = request.app.state.templates
         return templates.TemplateResponse(
             "finance/transactions_list.j2",
             {

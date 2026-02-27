@@ -23,13 +23,6 @@ class TriggerManager:
         self._initialized = True
         logger.info("TriggerManager inicializado como Singleton.")
 
-    def register(self, trigger: TriggerEvent, is_primary: bool = True) -> None:
-        target_list = self.primary_triggers if is_primary else self.fallback_triggers
-        target_list.append(trigger)
-        logger.debug(
-            f"Gatilho '{trigger.name}' registrado como {'Primário' if is_primary else 'Fallback'}."
-        )
-
     async def process(self, msg_data: MessageData) -> None:
         if await self._run_events(self.primary_triggers, msg_data, "Primary"):
             return

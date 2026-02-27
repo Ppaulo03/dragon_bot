@@ -5,6 +5,7 @@ from loguru import logger
 from app.kernel import settings
 from app.kernel.core import module_registry
 from app.kernel.api import router as api_router
+from app.kernel import storage_service
 from app.kernel.utils.views import setup_views
 from app.kernel.infrastructure.providers import PROVIDERS, router as providers_router
 from app.modules import setup_modules
@@ -15,6 +16,8 @@ active_modules = module_registry.get_all()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
+    await storage_service.setup()
 
     for provider in PROVIDERS:
         await provider.initialize()

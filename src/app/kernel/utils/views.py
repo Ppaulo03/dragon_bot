@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from app.kernel.core.registry import module_registry
+from .timestamp import format_timestamp
 
 
 def setup_views(app: FastAPI) -> Jinja2Templates:
@@ -17,4 +18,7 @@ def setup_views(app: FastAPI) -> Jinja2Templates:
 
     for module in module_registry.get_all():
         module.setup_resources(app, template_dirs)
-    return Jinja2Templates(directory=template_dirs)
+
+    templates = Jinja2Templates(directory=template_dirs)
+    templates.env.filters["timestamp_to_date"] = format_timestamp
+    return templates
