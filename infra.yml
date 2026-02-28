@@ -6,8 +6,8 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_USER=${DB_USER:-admin}
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-admin123}
+      - POSTGRES_USER=${POSTGRES_USER:-admin}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-admin123}
       - POSTGRES_DB=${DB_NAME:-evolutiondb}
     volumes:
       - ./volumes/postgres_data:/var/lib/postgresql/data
@@ -41,7 +41,7 @@ services:
       - LT_SUGGESTIONS=false
       - LT_DISABLE_WEB_UI=true
     ports:
-      - "${TRANSLATE_PORT:-5001}:5000"
+      - "${TRANSLATE_PORT:-5000}:5000"
     volumes:
       - ./volumes/libretranslate_data:/app/data
     networks:
@@ -58,8 +58,8 @@ services:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-admin123}
     ports:
-      - "${MINIO_PORT:-9002}:9000"
-      - "${MINIO_CONSOLE_PORT:-9003}:9001"
+      - "${MINIO_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
       - ./volumes/minio_data:/data
     command: server /data --console-address ":9001"
@@ -108,7 +108,7 @@ services:
 
       - AUTHENTICATION_API_KEY=${EVO_API_KEY:-dragon}
     ports:
-      - "8081:8080"
+      - "${EVO_API_PORT:-8080}:8080"
     volumes:
       - ./volumes/evolution_instances:/evolution/instances
     networks:

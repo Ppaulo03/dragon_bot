@@ -1,5 +1,9 @@
-{% extends "finance/layout.j2" %}
-{% from "finance/macros/account_card.j2" import account_card %}
+{% extends "layout.j2" %}
+{% from "macros/account_card.j2" import account_card %}
+
+{% block extra_head %}
+{{ super() }}
+{% endblock %}
 
 {% block title %}Contas de {{ user.name }}{% endblock %}
 

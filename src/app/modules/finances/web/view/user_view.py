@@ -19,5 +19,5 @@ async def edit_user_view(
 
     templates = request.app.state.templates
     return templates.TemplateResponse(
-        "finance/user_edit.j2", {"request": request, "user": user, "options": {}}
+        "user_edit.j2", {"request": request, "user": user, "options": {}}
     )

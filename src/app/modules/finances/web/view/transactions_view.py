@@ -50,7 +50,7 @@ async def transactions_view(
             return RedirectResponse(url="/finance?error=Usuário não encontrado")
         templates = request.app.state.templates
         return templates.TemplateResponse(
-            "finance/transactions_list.j2",
+            "transactions_list.j2",
             {
                 "request": request,
                 "user": user,

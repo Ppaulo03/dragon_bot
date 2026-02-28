@@ -1,9 +1,9 @@
-{% extends "finance/layout.j2" %}
-{% from "finance/macros/transaction_card.j2" import transaction_card %}
+{% extends "layout.j2" %}
+{% from "macros/transaction_card.j2" import transaction_card %}
 
 {% block extra_head %}
-{# Importante: HTMX carregado antes para gerenciar os eventos #}
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<link rel="stylesheet" href="{{ url_for('static', path='css/pages/finances/transactions.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='css/pages/finances/transactions.css') }}">
 <style>
     /* Feedback visual de que a lista está carregando */

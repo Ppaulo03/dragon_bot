@@ -1,0 +1,85 @@
+/* Faixa de largura total 🐲 */
+.finance-header {
+    width: 100%;
+    background-color: var(--bg-main);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+}
+
+.li {
+    padding-bottom: 0 !important;
+}
+
+/* Container de centralização */
+.header-wrapper {
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    padding-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+/* O Nav agora ocupa 100% do wrapper */
+.finance-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100% !important;
+    margin: 0;
+}
+
+/* Reset de listas do Pico.css ou outros frameworks */
+.finance-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo dos links de navegação */
+.finance-nav a {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.finance-nav a:hover {
+    color: var(--primary);
+    text-shadow: 0 0 8px rgba(var(--primary-rgb), 0.4);
+}
+
+/* O Badge do Pedro (kbd) estilizado */
+.user-badge {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--bg-card);
+    border: 1px solid var(--primary);
+    color: var(--text-main);
+    padding: 6px 14px;
+    border-radius: 99px;
+    /* Formato pílula moderno */
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: default;
+}
+
+/* Identidade Visual */
+.brand-name {
+    color: var(--primary);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
