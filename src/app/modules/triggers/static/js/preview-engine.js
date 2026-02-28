@@ -1,5 +1,3 @@
-import { CONFIG } from './config.js';
-
 export const PreviewEngine = {
     _createContainer(fileName, isNew = true) {
         const item = document.createElement('div');
@@ -16,7 +14,7 @@ export const PreviewEngine = {
         const icons = {
             audio: '🎵',
             doc: '📄',
-            json: 'curly_braces' // Exemplo de classe ou emoji
+            json: 'curly_braces'
         };
         const icon = ['mp3', 'ogg', 'wav', 'm4a'].includes(ext) ? icons.audio : icons.doc;
 
@@ -54,18 +52,14 @@ export const PreviewEngine = {
     },
 
     getSource(item) {
-        // 1. Se for um arquivo novo (upload), usamos o Blob salvo no dataset
+
         if (item.classList.contains('new-file')) {
             return item.dataset.sourceUrl;
         }
-
-        // 2. Se for do storage e for uma imagem, pegamos o src direto da tag img
         const img = item.querySelector('img');
         if (img && img.src) {
             return img.src;
         }
-
-        // 3. Caso contrário (áudio/texto do storage), usamos o data-path ou data-src
         return item.dataset.path || item.getAttribute('data-src');
     }
 };

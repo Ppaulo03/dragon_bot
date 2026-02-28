@@ -1,4 +1,17 @@
-/* Botões Padronizados */
+html,
+body {
+    height: 100%;
+    background-color: var(--bg-main) !important;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+main.container {
+    padding-top: 0 !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+}
+
 .btn {
     appearance: none;
     display: inline-flex;
@@ -37,7 +50,6 @@
     background-color: rgba(var(--primary-rgb), 0.05);
 }
 
-/* Inputs e Formulários */
 input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
@@ -47,7 +59,6 @@ textarea {
     border-radius: 6px !important;
 }
 
-/* Tabs Genéricas */
 .tabs-nav {
     display: flex;
     gap: 4px;
