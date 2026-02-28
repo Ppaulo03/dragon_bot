@@ -310,6 +310,37 @@ textarea {
     font-family: var(--pico-font-family);
 }
 
+.zone-container input[type="file"] {
+    height: auto !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+
+    display: inline-grid !important;
+
+    grid-template-columns: min-content 0;
+    overflow: hidden;
+
+    color: transparent !important;
+    /* Esconde o texto nativo */
+    vertical-align: middle;
+    width: auto !important;
+}
+
+.zone-container input[type="file"]::file-selector-button {
+    height: 1.75rem !important;
+    padding: 0 1rem !important;
+    background: var(--primary) !important;
+    color: white !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 6px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    float: left;
+}
 
 .zone-container input[type="file"],
 .zone-container select {
@@ -338,6 +369,86 @@ textarea {
 .zone-container button,
 .zone-container select {
     pointer-events: auto;
+}
+
+
+
+
+
+
+
+
+.response-selector[data-zone="mode-selector"] {
+    display: inline-flex !important;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 0.5rem 0;
+    gap: 0 !important;
+}
+
+.response-selector {
+    display: inline-flex !important;
+    /* Mantém o componente compacto horizontalmente */
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 0.5rem 0;
+    gap: 0 !important;
+    /* Remove o espaço entre as opções para parecer um único bloco */
+}
+
+.response-selector label {
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none !important;
+    /* Reseta bordas do Pico */
+}
+
+/* Esconde o rádio original (bolinha) */
+.response-selector input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Estiliza o span que contém o texto para parecer um botão */
+.response-selector span {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Estado: Quando o rádio escondido estiver checado, estiliza o span vizinho (+) */
+.response-selector input[type="radio"]:checked+span {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de Hover apenas nos itens não selecionados */
+.response-selector label:hover span {
+    color: var(--text-main);
+}
+
+.response-selector label:hover input[type="radio"]:not(:checked)+span {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-zone="mode-selector"][style*="display: none"] {
+    display: none !important;
 }
 
 /* #endregion */
@@ -433,36 +544,6 @@ textarea {
     color: var(--text-muted);
 }
 
-/* Estilização do Input de Arquivo (Botão) */
-.image-matcher-zone input[type="file"] {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    background: var(--bg-input);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem !important;
-    width: 100%;
-    cursor: pointer;
-}
-
-/* Customização do botão "Escolher arquivo" (File Selector) */
-.image-matcher-zone input[type="file"]::file-selector-button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.2rem 0.8rem;
-    margin-right: 0.8rem;
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-.image-matcher-zone input[type="file"]::file-selector-button:hover {
-    background: var(--primary-hover);
-}
-
 /* Preview da Imagem de Referência (Mini Preview) */
 .mini-preview {
     margin-top: 0.8rem;
@@ -471,19 +552,8 @@ textarea {
     padding: 0.5rem;
     background: rgba(0, 0, 0, 0.3) !important;
     border: 1px dashed var(--primary) !important;
-    /* Destaque em roxo para indicar zona de trigger */
     min-height: 90px !important;
     width: fit-content;
-}
-
-.img-ref-preview {
-    height: 70px;
-    width: 70px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid var(--primary);
-    box-shadow: 0 0 8px rgba(157, 78, 221, 0.3);
-    /* Glow suave do dragão */
 }
 
 /* #endregion */
