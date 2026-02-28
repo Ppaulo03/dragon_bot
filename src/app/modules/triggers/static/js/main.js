@@ -39,11 +39,15 @@ document.addEventListener('change', (e) => {
         const isTrigger = e.target.name.startsWith('trigger_file_upload_');
 
         if (isTrigger) {
+
             const file = e.target.files[0];
+            if (file && !file.type.startsWith('image/')) {
+                e.target.value = ''; // Limpa o input
+                return;
+            }
             if (file) {
                 const previewContainer = card.querySelector(`[id^="preview-trig-"]`);
                 const url = URL.createObjectURL(file);
-                // Agora usando as classes CSS do seu trigger-config.css
                 previewContainer.innerHTML = `<img src="${url}" class="img-ref-preview">`;
             }
         } else {
@@ -100,9 +104,7 @@ let longPressTimer;
 document.addEventListener('mousedown', (e) => {
     const item = e.target.closest('.preview-item');
     if (!item) return;
-
     longPressTimer = setTimeout(() => {
-        // Agora usamos o seletor inteligente do engine
         const source = PreviewEngine.getSource(item);
         const fileName = item.dataset.fileName;
 
