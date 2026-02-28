@@ -94,8 +94,9 @@ async def transactions_view(
         ]
     )
     user = await db.get(User, user_id)
+    templates = request.app.state.templates
     return templates.TemplateResponse(
-        "finance/transactions_list.j2",
+        "transactions_list.j2",
         {
             "request": request,
             "user": user,
