@@ -1,27 +1,36 @@
 {% extends "layout.j2" %}
 
-{% block title %}Editar Perfil | {{ user.name }}{% endblock %}
+{% block extra_head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/user_edit.css') }}">
+{% endblock %}
+
 
 {% block finance_content %}
-<article style="max-width: 600px; margin: 0 auto;">
-    <header>
-        <hgroup>
-            <h1>Configurações do Perfil</h1>
-            <p>ID: {{ user.id }} (WhatsApp)</p>
-        </hgroup>
-    </header>
-
-    <form id="editUserForm">
-        <label for="name">Nome do Perfil</label>
-        <input type="text" id="name" name="name" value="{{ user.name }}" required
-            style="padding: 0.75rem 1rem; height: auto;">
-
-        <div class="grid">
-            <button type="submit">Salvar Alterações</button>
-            <button type="button" class="outline contrast" onclick="deleteUser()">Deletar Usuário</button>
+<section class="edit-section">
+    <article class="edit-card">
+        <div class="card-header">
+            <div class="header-info">
+                <kbd class="user-badge-id">ID: {{ user.id }}</kbd>
+            </div>
         </div>
-    </form>
-</article>
+
+        <form id="editUserForm" class="profile-form">
+            <div class="form-group">
+                <label for="name">Nome do Perfil</label>
+                <input type="text" id="name" name="name" value="{{ user.name }}" required
+                    placeholder="Ex: Pedro Administrador">
+            </div>
+
+            <div class="form-actions grid">
+                <button type="submit" class="btn-save">Salvar Alterações</button>
+                <button type="button" class="btn-delete outline contrast" onclick="deleteUser()">
+                    Deletar Usuário
+                </button>
+            </div>
+        </form>
+    </article>
+</section>
 
 {% block extra_scripts %}
 <script>
