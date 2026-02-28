@@ -15,7 +15,7 @@ class FinanceModule(BaseModule):
         pass
 
     async def startup(self, app):
-        client.setup_database(Base.metadata)
+        await client.setup_database(Base.metadata)
 
     async def shutdown(self, app):
         await client.close()

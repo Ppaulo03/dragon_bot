@@ -4,22 +4,23 @@
     --bg-card: #16161a;
     --bg-input: #1f1f23;
 
+    /* Roxo Dragão e Acentos */
     --primary: #9d4edd;
-    /* Roxo Dragão */
+    --primary-rgb: 157, 78, 221;
     --primary-hover: #7b2cbf;
     --accent: #3c096c;
 
+    /* Semântica */
+    --danger: #ff4d4d;
+    --success: #00fa9a;
     --text-main: #f0f0f0;
     --text-muted: #8b8b93;
 
+    /* Estrutural */
     --border: #2d2d33;
-    --danger: #ff4d4d;
-    --success: #00fa9a;
-
-    /* Sombras e Blur */
+    --radius: 8px;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
-    --glass: rgba(22, 22, 26, 0.8);
 }
 
 * {

@@ -1,7 +1,7 @@
 {% extends "base.j2" %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static_triggers', path='css/pages/triggers-editor.css') }}">
+<link rel="stylesheet" href="{{ url_for('static_triggers', path='css/trigger-config.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -10,11 +10,11 @@
 <form id="main-form" action="/trigger-config" enctype="multipart/form-data">
     <div class="form-header">
 
-        <div class="header-brand">
-            <h2 style="margin: 0; font-size: 1.4rem;">🐲 Dragon Bot</h2>
+        <div class="header-left">
+            <h2 class="brand-title">🐲 Dragon Bot</h2>
         </div>
 
-        <div class="header-actions">
+        <div class="header-right">
             <nav class="tabs-nav">
                 <button type="button" data-tab-target="tab-triggers" id="btn-tab-triggers" class="tab-btn active">
                     Triggers
@@ -24,7 +24,7 @@
                 </button>
             </nav>
 
-            <button type="button" onclick="window.saveAll()" class="btn-primary">
+            <button type="button" onclick="window.saveAll()" class="btn-save">
                 💾 Salvar Alterações
             </button>
         </div>
@@ -41,7 +41,7 @@
         </button>
     </div>
 
-    <div id="tab-no-triggers" class="tab-content" style="display: none;">
+    <div id="tab-no-triggers" class="tab-content">
         <div id="container-no-triggers" class="rules-container">
             {% for t in no_triggers %}
             {{ render_rule_card(t, 'no_trigger', options, loop.index0 + 1000) }}

@@ -13,16 +13,18 @@
 <article class="rule-card collapsed" data-section="{{ section }}" id="card-{{ idx }}">
     <header class="card-header">
         <span class="collapse-icon">▼</span>
-        <input type="text" name="name_{{ card_id }}" value="{{ name }}" placeholder="Nome da Regra" required
-            onclick="event.stopPropagation()">
-        <button type="button" class="btn-delete"
-            onclick="event.stopPropagation(); this.closest('article').remove()">✖</button>
+        <input type="text" name="name_{{ card_id }}" value="{{ name }}" class="input-rule-name"
+            placeholder="Nome da Regra" required onclick="event.stopPropagation()">
+
+        <div class="header-right-actions">
+            <button type="button" class="btn-delete" title="Excluir Regra"
+                onclick="event.stopPropagation(); this.closest('article').remove()">✖</button>
+        </div>
     </header>
 
     <div class="card-body">
-        <div class="grid">
-            <label>
-                Tipo
+        <div class="grid-options">
+            <label>Tipo
                 <select name="type_{{ card_id }}">
                     {% for op in options.response_types %}
                     <option value="{{ op }}" {{ 'selected' if op==type }}>{{ op }}</option>
@@ -40,39 +42,47 @@
             </label>
             {% endif %}
 
-            <div>
-                <label>Chance (<span class="chance-display">{{ "%.1f"|format(chance * 100) }}%</span>)
+            <div class="chance-container">
+                <label>Chance (<span class="chance-display">{{ "%.1f"|format(chance * 100) }}%</span>)</label>
+                <div class="chance-input-wrapper">
                     <input type="range" name="chance_{{ card_id }}" value="{{ chance }}" min="0" max="1" step="0.001">
-                </label>
+                </div>
             </div>
         </div>
 
         <section class="dynamic-zones">
-            <div data-zone="matcher-text">
-                <label>Padrão (Texto/Regex)</label>
-                <input type="text" name="pattern_{{ card_id }}" value="{{ params.get('pattern', '') }}">
+
+            <div data-zone="matcher-text" class="zone-container">
+                <label>Padrão (Texto ou Regex)</label>
+                <input type="text" name="pattern_{{ card_id }}" value="{{ params.get('pattern', '') }}"
+                    placeholder="Ex: oi|olá|bom dia">
             </div>
 
-            <div data-zone="matcher-image">
-                <label>Imagem de Referência</label>
+            <div data-zone="matcher-image" class="zone-container">
+                <label>Imagem de Referência (Similarity)</label>
                 <input type="file" name="trigger_file_upload_{{ card_id }}" accept="image/*">
                 <input type="hidden" name="pattern_{{ card_id }}" value="{{ params.get('pattern', '') }}">
                 <input type="hidden" name="hash_{{ card_id }}" value="{{ params.get('hash', '') }}">
-                <div class="preview-box mini-preview" id="preview-trig-{{ card_id }}"
-                    data-path="{{ storage_url }}{{ params.get('pattern', '') }}">
+
+                <div class="preview-box mini-preview" id="preview-trig-{{ card_id }}">
                     {% if params.get('pattern', '') %}
-                    <img src="{{ storage_url }}{{ params.get('pattern', '') }}" style="max-height: 80px;">
+                    <img src="{{ storage_url }}{{ params.get('pattern', '') }}" class="img-ref-preview">
                     {% endif %}
                 </div>
             </div>
 
             <div data-zone="mode-selector" class="response-selector">
-                <label><input type="radio" name="mode_{{ card_id }}" value="text" {{ 'checked' if not action }}>
-                    Direto</label>
-                <label><input type="radio" name="mode_{{ card_id }}" value="api" {{ 'checked' if action }}> API</label>
+                <label>
+                    <input type="radio" name="mode_{{ card_id }}" value="text" {{ 'checked' if not action }}>
+                    <span>Direto</span>
+                </label>
+                <label>
+                    <input type="radio" name="mode_{{ card_id }}" value="api" {{ 'checked' if action }}>
+                    <span>API Externa</span>
+                </label>
             </div>
 
-            <div data-zone="input-api">
+            <div data-zone="input-api" class="zone-container">
                 <label>Ação da API</label>
                 <select name="action_{{ card_id }}">
                     {% for act in options.actions %}
@@ -81,34 +91,27 @@
                 </select>
             </div>
 
-            <div data-zone="input-text">
-                <label>Resposta de Texto</label>
-                <textarea name="value_{{ card_id }}" placeholder="Texto da resposta">{{ value }}</textarea>
+            <div data-zone="input-text" class="zone-container">
+                <label>Texto da Resposta</label>
+                <textarea name="value_{{ card_id }}"
+                    placeholder="Digite a mensagem que o bot enviará...">{{ value }}</textarea>
             </div>
 
-            <div data-zone="input-file">
-                <label>Arquivos</label>
-
+            <div data-zone="input-file" class="zone-container">
+                <label>Arquivos Anexados (Audios, Imagens, Stickers)</label>
                 <input type="file" name="file_upload_{{ card_id }}" multiple>
 
                 <div class="preview-box sutil-preview" id="preview-dest-{{ card_id }}">
-                    {# --- 1. ARQUIVOS QUE JÁ EXISTEM NO STORAGE --- #}
                     {% if files and files is iterable and files is not string %}
                     {% for path in files %}
                     {% set file_name = path.split('/')[-1] %}
                     {% set ext = path.split('.')[-1].lower() %}
-                    <div class="preview-item" id="file-{{ loop.index }}-{{ idx }}" data-path="{{ path }}"
-                        data-file-name="{{ file_name }}" title="{{ file_name }}"
-                        style="position: relative; display: inline-block; cursor: pointer;">
-
+                    <div class="preview-item" data-path="{{ path }}" data-file-name="{{ file_name }}">
                         {% if ext in ['png', 'jpg', 'jpeg', 'gif', 'webp'] %}
-                        <img src="{{ storage_url }}{{ path }}"
-                            style="height: 60px; width: 60px; object-fit: cover; border-radius: 4px; pointer-events: none;">
+                        <img src="{{ storage_url }}{{ path }}" class="asset-preview-img">
                         {% else %}
-                        <div
-                            style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: #333; border-radius: 4px; pointer-events: none;">
-                            <span>{{ '🎵' if ext in ['mp3', 'ogg', 'wav'] else '📄'
-                                }}</span>
+                        <div class="asset-preview-icon">
+                            <span>{{ '🎵' if ext in ['mp3', 'ogg', 'wav', 'm4a'] else '📄' }}</span>
                         </div>
                         {% endif %}
                         <input type="hidden" name="keep_files_{{ card_id }}" value="{{ path }}">
@@ -118,8 +121,7 @@
                 </div>
 
                 {% if not files %}
-                <small class="text-muted no-files-msg" style="font-size: 0.7rem;">Nenhum arquivo
-                    anexado</small>
+                <small class="no-files-msg">Nenhum arquivo anexado no storage.</small>
                 {% endif %}
             </div>
 

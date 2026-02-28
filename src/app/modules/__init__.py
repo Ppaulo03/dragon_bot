@@ -6,4 +6,4 @@ from .finances import provider as finance_provider
 
 def setup_modules():
     module_registry.register(triggers_provider)
-    module_registry.register(finance_provider)
+    # module_registry.register(finance_provider)

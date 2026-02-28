@@ -39,12 +39,12 @@ document.addEventListener('change', (e) => {
         const isTrigger = e.target.name.startsWith('trigger_file_upload_');
 
         if (isTrigger) {
-            // FLUXO A: Imagem de Referência (Similarity)
             const file = e.target.files[0];
             if (file) {
                 const previewContainer = card.querySelector(`[id^="preview-trig-"]`);
                 const url = URL.createObjectURL(file);
-                previewContainer.innerHTML = `<img src="${url}" style="max-height: 80px; border-radius: 4px; border: 2px solid #3b82f6;">`;
+                // Agora usando as classes CSS do seu trigger-config.css
+                previewContainer.innerHTML = `<img src="${url}" class="img-ref-preview">`;
             }
         } else {
             const type = card.querySelector('[name^="type_"]').value;
@@ -54,6 +54,45 @@ document.addEventListener('change', (e) => {
     }
 });
 
+
+document.addEventListener('dragover', (e) => {
+    const zone = e.target.closest('.zone-container');
+    if (!zone || !zone.querySelector('input[type="file"]')) return;
+
+    e.preventDefault();
+    zone.classList.add('drag-over');
+    e.dataTransfer.dropEffect = 'copy';
+});
+
+document.addEventListener('dragleave', (e) => {
+    const zone = e.target.closest('.zone-container');
+    if (!zone) return;
+
+    // Previne que o destaque suma ao passar por cima de elementos filhos
+    const related = e.relatedTarget ? e.relatedTarget.closest('.zone-container') : null;
+    if (related !== zone) {
+        zone.classList.remove('drag-over');
+    }
+});
+
+document.addEventListener('drop', (e) => {
+    const zone = e.target.closest('.zone-container');
+    if (!zone) return;
+
+    const fileInput = zone.querySelector('input[type="file"]');
+    if (!fileInput) return;
+
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        // Injeta os arquivos no input
+        fileInput.files = files;
+        // Dispara o evento change para acionar sua lógica de Preview/Upload já existente
+        fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+});
 /**
  * 3. Delegação de Eventos: Interação com Previews (Clique e Long Press)
  */
