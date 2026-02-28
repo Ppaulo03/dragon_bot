@@ -3,7 +3,9 @@
 
 {% block extra_head %}
 {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/transaction_filters.css') }}">
 <link rel="stylesheet" href="{{ url_for('static_finance', path='css/transactions.css') }}">
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/transaction_card.css') }}">
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <style>
     /* Feedback visual de que a lista está carregando */
@@ -71,37 +73,59 @@
             <input type="hidden" name="page" value="1">
         </form>
     </article>
-    {# O wrapper é essencial para o HTMX saber o que substituir #}
-    <div id="transactions-wrapper">
-        <div id="transactions-container">
+
+    <div id="transactions-wrapper" class="fade-in">
+        <div id="transactions-container" class="transactions-list">
             {% for tx in transactions %}
             {{ transaction_card(tx, cat_lv1) }}
             {% else %}
-            <article style="text-align: center; border: 2px dashed rgba(255,255,255,0.1);">
+            <article class="empty-state">
+                <div class="empty-icon">🔍</div>
                 <p>Nenhuma transação encontrada para os filtros aplicados.</p>
-                <a href="/finance/user/{{ user.id }}/transactions" class="secondary">Limpar todos os filtros</a>
+                <a href="/finance/user/{{ user.id }}/transactions" class="btn-clear-filters outline secondary">
+                    Limpar todos os filtros
+                </a>
             </article>
             {% endfor %}
         </div>
 
-        {# Paginação dentro do wrapper para atualizar junto com os dados #}
         {% if total_pages > 1 %}
-        <nav aria-label="pagination" style="display: flex; justify-content: center; gap: 10px; margin-top: 2rem;">
-            {% set base_url = "?q=" ~ (current_q or '') ~ "&account_id=" ~ (current_acc or '') %}
+        <nav class="pagination-container" aria-label="pagination">
+            {# Base URL consolidada com todos os filtros atuais #}
+            {% set base_url = "?q=" ~ (current_q or '') ~
+            "&account_id=" ~ (current_acc or '') ~
+            "&type=" ~ (current_type or '') ~
+            "&manual=" ~ (current_manual or '') ~
+            "&start_date=" ~ (current_start_date or '') ~
+            "&end_date=" ~ (current_end_date or '') %}
 
             {% if current_page > 1 %}
             <a href="{{ base_url }}&page={{ current_page - 1 }}" hx-get="{{ base_url }}&page={{ current_page - 1 }}"
-                hx-target="#transactions-wrapper" hx-select="#transactions-wrapper" role="button" class="outline">«
-                Anterior</a>
+                hx-target="#transactions-wrapper" hx-select="#transactions-wrapper" hx-swap="innerHTML"
+                hx-push-url="true" role="button" class="btn-pagination outline">
+                « Anterior
+            </a>
             {% endif %}
 
-            <span style="align-self: center; font-weight: bold; font-size: 0.9rem;">
-                Página {{ current_page }} de {{ total_pages }}
-            </span>
+            <div class="pagination-selector">
+                <span>Página</span>
+                <select name="page" hx-get="{{ base_url }}" hx-target="#transactions-wrapper"
+                    hx-select="#transactions-wrapper" hx-swap="innerHTML" hx-push-url="true" hx-trigger="change">
+                    {% for p in range(1, total_pages + 1) %}
+                    <option value="{{ p }}" {% if p==current_page %}selected{% endif %}>
+                        {{ p }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <span>de {{ total_pages }}</span>
+            </div>
 
             {% if current_page < total_pages %} <a href="{{ base_url }}&page={{ current_page + 1 }}"
                 hx-get="{{ base_url }}&page={{ current_page + 1 }}" hx-target="#transactions-wrapper"
-                hx-select="#transactions-wrapper" role="button" class="outline">Próxima »</a>
+                hx-select="#transactions-wrapper" hx-swap="innerHTML" hx-push-url="true" role="button"
+                class="btn-pagination outline">
+                Próxima »
+                </a>
                 {% endif %}
         </nav>
         {% endif %}
@@ -114,6 +138,6 @@
     const categoryTree = {{ categories_json | safe }};
 
 </script>
-<script src="{{ url_for('static_finance', path='js/finance/transaction_card.js') }}"></script>
-<script src="{{ url_for('static_finance', path='js/finance/transactions_list.js') }}"></script>
+<script src="{{ url_for('static_finance', path='js/transaction_card.js') }}"></script>
+<script src="{{ url_for('static_finance', path='js/transactions_list.js') }}"></script>
 {% endblock %}

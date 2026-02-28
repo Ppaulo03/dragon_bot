@@ -1,0 +1,136 @@
+/* 1. Container Principal do Filtro 🐲 */
+.filter-card {
+    position: sticky;
+    top: 75px;
+    z-index: 900;
+    margin-bottom: 2rem;
+    margin-top: 0 !important;
+    background-color: rgba(20, 20, 25, 0.95) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-lg);
+
+    /* Transição suave para expansão/colapso */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden;
+    max-height: 600px;
+    padding: 0.8rem 1.2rem !important;
+    padding-bottom: 0 !important;
+}
+
+/* 2. Grid de Filtros (Estado Normal/Expandido) */
+.filter-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(5, 1fr);
+    gap: 12px;
+    align-items: flex-end;
+    margin: 0 !important;
+    transition: all 0.3s ease;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0 !important;
+}
+
+/* Labels e Inputs Padrão */
+.filter-grid label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.filter-grid input,
+.filter-grid select {
+    font-size: 0.85rem !important;
+    height: 38px !important;
+    padding: 6px 12px !important;
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius);
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+/* --- 3. Lógica de Colapso Inteligente (Desktop) --- */
+
+@media (min-width: 1024px) {
+
+    /* ESTADO COLAPSADO (Quando não está com mouse em cima) */
+    .filter-card:not(:hover) {
+        max-height: 48px;
+        /* Altura de uma barra de ferramentas */
+        padding-top: 0.5rem !important;
+        padding-bottom: 0 !important;
+        opacity: 0.85;
+        border-color: var(--primary) !important;
+        display: flex;
+        align-items: center;
+        /* Resolve itens "muito para baixo" de image_648479.png */
+    }
+
+    .filter-card:not(:hover) .filter-grid {
+        display: flex !important;
+        /* Muda para flex para alinhar tudo em uma linha fina */
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    /* Esconde labels e reduz inputs */
+    .filter-card:not(:hover) label {
+        opacity: 0;
+        height: 0;
+        margin: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+    }
+
+    .filter-card:not(:hover) input,
+    .filter-card:not(:hover) select {
+        height: 28px !important;
+        font-size: 0.75rem !important;
+        background: transparent !important;
+        border-color: transparent !important;
+        padding: 0 5px !important;
+    }
+
+    /* ESTADO EXPANDIDO (Mouse em cima) */
+    .filter-card:hover {
+        max-height: 600px;
+        opacity: 1;
+        padding: 1rem 1.2rem !important;
+        background-color: var(--bg-card) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    }
+
+    .filter-card:hover label {
+        opacity: 1;
+        height: auto;
+        transform: translateY(0);
+        margin-bottom: 4px;
+        transition: all 0.3s ease 0.1s;
+    }
+}
+
+/* 4. Correções de Ícones e Navegador */
+input[type="search"] {
+    padding-left: 2.2rem !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.75rem center;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}
