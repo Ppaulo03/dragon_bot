@@ -3,6 +3,7 @@
 
 {% block extra_head %}
 {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/transactions.css') }}">
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <style>
     /* Feedback visual de que a lista está carregando */
@@ -16,22 +17,21 @@
 
 {% block finance_content %}
 <section>
-    <article>
-        {# HTMX assume o controle aqui #}
-        <form id="filter-form" method="get" action="" class="grid" style="align-items: end;" hx-get=""
-            hx-target="#transactions-wrapper" hx-select="#transactions-wrapper"
-            hx-trigger="keyup delay:500ms from:#search-input, change from:#account-select" hx-push-url="true">
+    <article class="filter-card">
+        <form id="filter-form" method="get" action="" class="filter-grid" hx-get="" hx-target="#transactions-wrapper"
+            hx-select="#transactions-wrapper"
+            hx-trigger="keyup delay:500ms from:#search-input, change from:select, change from:input[type='date']"
+            hx-push-url="true">
 
-            <div style="flex: 2;">
-                <label>Buscar</label>
-                <input type="search" name="q" id="search-input" value="{{ current_q }}"
-                    placeholder="Entidade ou Descrição..." autocomplete="off">
+            <div class="form-group search-group">
+                <label for="search-input">Buscar</label>
+                <input type="search" name="q" id="search-input" value="{{ current_q }}" placeholder="Descrição...">
             </div>
 
-            <div>
-                <label>Conta</label>
+            <div class="form-group">
+                <label for="account-select">Conta</label>
                 <select name="account_id" id="account-select">
-                    <option value="">Todas as Contas</option>
+                    <option value="">Todas</option>
                     {% for acc in accounts %}
                     <option value="{{ acc.id }}" {% if current_acc==acc.id|string %}selected{% endif %}>{{ acc.name }}
                     </option>
@@ -39,11 +39,38 @@
                 </select>
             </div>
 
-            <button type="submit" class="contrast">Filtrar</button>
+            <div class="form-group">
+                <label for="type-select">Tipo</label>
+                <select name="type" id="type-select">
+                    <option value="">Todos</option>
+                    <option value="INFLOW" {% if current_type=='INFLOW' %}selected{% endif %}>Entrada</option>
+                    <option value="OUTFLOW" {% if current_type=='OUTFLOW' %}selected{% endif %}>Saída</option>
+                    <option value="TRANSFER" {% if current_type=='TRANSFER' %}selected{% endif %}>Transferência</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="origin-select">Origem</label>
+                <select name="manual" id="origin-select">
+                    <option value="">Todas</option>
+                    <option value="true" {% if current_manual=='true' %}selected{% endif %}>Manual</option>
+                    <option value="false" {% if current_manual=='false' %}selected{% endif %}>Automática</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start-date">Início</label>
+                <input type="date" name="start_date" id="start-date" value="{{ current_start_date }}">
+            </div>
+
+            <div class="form-group">
+                <label for="end-date">Fim</label>
+                <input type="date" name="end_date" id="end-date" value="{{ current_end_date }}">
+            </div>
+
             <input type="hidden" name="page" value="1">
         </form>
     </article>
-
     {# O wrapper é essencial para o HTMX saber o que substituir #}
     <div id="transactions-wrapper">
         <div id="transactions-container">
