@@ -14,14 +14,21 @@
             </ul>
             {% if user %}
             <ul>
-                <li class="secondary"><a href="/finance" class="secondary">Trocar Perfil</a></li>
-
-
+                <li class="secondary"><a href="/finance" class="secondary">Sair do Perfil</a></li>
                 <li><a href="/finance/user/{{ user.id }}/accounts">Minhas Contas</a></li>
                 <li><a href="/finance/user/{{ user.id }}/transactions">Transações</a></li>
                 <li><a href="/finance/user/{{ user.id }}/edit">Editar Perfil</a></li>
                 <li>
                     <kbd class="user-badge">👤 {{ user.name }}</kbd>
+                </li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="/finance">👤 Perfil</a></li>
+                <li><a href="/finance/accounts">🏦 Gestão de Contas</a></li>
+                <li><a href="/finance/templates">📄 Templates de Importação</a></li>
+                <li>
+                    <kbd class="user-badge admin">⚙️ Infra</kbd>
                 </li>
             </ul>
             {% endif %}

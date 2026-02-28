@@ -1,0 +1,69 @@
+.saved-flash {
+    animation: flashSuccess 1s ease-out;
+}
+
+@keyframes flashSuccess {
+    0% {
+        background-color: rgba(34, 197, 94, 0.2);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.admin-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.admin-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.inline-edit {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-main);
+    flex: 1;
+    padding: 4px;
+}
+
+.inline-edit:focus {
+    border-bottom: 1px solid var(--primary);
+    outline: none;
+}
+
+.add-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.account-item:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+}
+
+/* Classe que o HTMX pode usar para destacar a conta ativa */
+.htmx-request .account-item {
+    opacity: 0.8;
+}

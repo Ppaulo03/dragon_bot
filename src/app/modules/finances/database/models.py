@@ -1,3 +1,4 @@
+from time import time
 from typing import Optional, List
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy import (
@@ -92,6 +93,15 @@ class Transaction(Base):
     )
     category_id: Mapped[Optional[str]] = mapped_column(
         ForeignKey("categories.id", ondelete="SET NULL"), nullable=True
+    )
+    import_timestamp: Mapped[int] = mapped_column(
+        BigInteger, default=lambda: int(time.time()), nullable=False
+    )
+
+    importation_id: Mapped[str] = mapped_column(
+        String(50),
+        index=True,
+        nullable=False,
     )
 
     category: Mapped[Optional["Category"]] = relationship()

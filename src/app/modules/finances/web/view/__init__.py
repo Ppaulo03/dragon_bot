@@ -9,6 +9,7 @@ from app.modules.finances.database.models import User
 from .account_view import router as account_router
 from .transactions_view import router as transactions_router
 from .user_view import router as user_router
+from .accounts_manager import router as accounts_manager_router
 
 router = APIRouter(prefix="/finance", tags=["Finance Management"])
 
@@ -30,5 +31,6 @@ async def users_view(
 router.include_router(user_router)
 router.include_router(account_router)
 router.include_router(transactions_router)
+router.include_router(accounts_manager_router)
 
 __all__ = ["router"]

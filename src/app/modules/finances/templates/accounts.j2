@@ -1,0 +1,56 @@
+{% extends "layout.j2" %}
+
+{% block extra_head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/accounts_manager.css') }}">
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+{% endblock %}
+
+{% block finance_content %}
+<div class="admin-container">
+    <header>
+        <h1>⚙️ Gestão de Contas</h1>
+    </header>
+
+    <div class="admin-grid" style="display: grid; grid-template-columns: 350px 1fr; gap: 2rem; margin-top: 2rem;">
+
+        <section class="admin-card list-sidebar"
+            style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>🏦 Contas</h2>
+                <button class="btn-primary btn-sm" hx-get="/finance/accounts/new" hx-target="#edit-container">
+                    + Nova
+                </button>
+            </div>
+
+            <div class="account-selector-list">
+                {% for acc in accounts %}
+                <div class="account-item" hx-get="/finance/accounts/edit/{{ acc.id }}" hx-target="#edit-container"
+                    style="cursor: pointer; padding: 1rem; border-bottom: 1px solid var(--border); transition: 0.2s;">
+                    <strong>{{ acc.name }}</strong>
+                    <div class="text-muted" style="font-size: 0.8rem;">
+                        R$ {{ "%.2f"|format(acc.initial_balance_cents / 100) }}
+                    </div>
+                </div>
+                {% else %}
+                <p class="text-muted">Nenhuma conta cadastrada.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="admin-card" id="edit-container"
+            style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+            <div class="empty-state" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                <p>Selecione uma conta à esquerda para visualizar os detalhes ou criar uma nova.</p>
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Se precisar de alguma lógica global
+</script>
+{% endblock %}
