@@ -51,7 +51,7 @@
         </div>
 
         <section class="dynamic-zones">
-
+            {% if section == 'trigger' %}
             <div data-zone="matcher-text" class="zone-container">
                 <label>Padrão (Texto ou Regex)</label>
                 <input type="text" name="pattern_{{ card_id }}" value="{{ params.get('pattern', '') }}"
@@ -70,7 +70,7 @@
                     {% endif %}
                 </div>
             </div>
-
+            {% endif %}
             <div data-zone="mode-selector" class="response-selector">
                 <label>
                     <input type="radio" name="mode_{{ card_id }}" value="text" {{ 'checked' if not action }}>

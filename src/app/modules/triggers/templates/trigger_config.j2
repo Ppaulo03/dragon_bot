@@ -20,7 +20,7 @@
                     Triggers
                 </button>
                 <button type="button" data-tab-target="tab-no-triggers" id="btn-tab-no-triggers" class="tab-btn">
-                    Fallbacks
+                    No-Triggers
                 </button>
             </nav>
 
@@ -41,14 +41,14 @@
         </button>
     </div>
 
-    <div id="tab-no-triggers" class="tab-content">
+    <div id="tab-no-triggers" class="tab-content" style="display: none;">
         <div id="container-no-triggers" class="rules-container">
             {% for t in no_triggers %}
             {{ render_rule_card(t, 'no_trigger', options, loop.index0 + 1000) }}
             {% endfor %}
         </div>
         <button type="button" onclick="addCard('no-trigger')" class="btn btn-outline">
-            ➕ Novo Fallback
+            ➕ Novo No-Trigger
         </button>
     </div>
 </form>
