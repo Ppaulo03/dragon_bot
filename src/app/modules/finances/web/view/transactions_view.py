@@ -36,7 +36,7 @@ async def transactions_view(
         except ValueError:
             account_id = None
 
-    limit = 50
+    limit = 10
     offset = (page - 1) * limit
     acc_stmt = (
         select(Account).join(user_accounts).where(user_accounts.c.user_id == user_id)
