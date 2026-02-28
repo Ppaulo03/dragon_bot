@@ -1,50 +1,60 @@
 {% extends "layout.j2" %}
 
-{% block title %}Dragon Finance | Perfis{% endblock %}
+
+{% block extra_head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/user_list.css') }}">
+{% endblock %}
+
 
 {% block finance_content %}
-<section>
+<section class="management-section">
     <div class="grid">
-        <article>
-            <header><strong>Perfis Ativos</strong></header>
+        <article class="user-card-container">
+            <header class="card-header">
+                <strong>Perfis Ativos</strong>
+            </header>
 
-            {% for user in users %}
-            <a href="/finance/user/{{ user.id }}/accounts" role="button" class="outline secondary"
-                style="width: 100%; text-align: left; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>{{ user.name }}</strong><br>
-                    <small class="phone-display" style="font-size: 0.8rem; opacity: 0.8;">{{ user.id }}</small>
-                </div>
-                <span>➔</span>
-            </a>
-            {% else %}
-            <p><i>Nenhum usuário encontrado.</i></p>
-            {% endfor %}
+            <div class="user-list">
+                {% for user in users %}
+                <a href="/finance/user/{{ user.id }}/accounts" class="profile-item-link">
+                    <div class="profile-info">
+                        <strong class="profile-name">{{ user.name }}</strong>
+                        <small class="phone-display">{{ user.id }}</small>
+                    </div>
+                    <span class="action-icon">➔</span>
+                </a>
+                {% else %}
+                <p class="empty-state"><i>Nenhum usuário encontrado.</i></p>
+                {% endfor %}
+            </div>
         </article>
 
-        <article>
-            <header><strong>Novo Perfil</strong></header>
+        <article class="form-card-container">
+            <header class="card-header">
+                <strong>Novo Perfil</strong>
+            </header>
 
-            <form action="/api/internal/finance/users" method="post">
-                <label for="name">Nome do Usuário</label>
-                <input type="text" id="name" name="name" placeholder="Ex: Admin" required
-                    style="padding: 0.75rem 1rem; margin-bottom: 1.2rem; height: auto;">
+            <form action="/api/internal/finance/users" method="post" class="profile-form">
+                <div class="form-group">
+                    <label for="name">Nome do Usuário</label>
+                    <input type="text" id="name" name="name" placeholder="Ex: Admin" required>
+                </div>
 
-                <label for="phone_mask">WhatsApp (com DDI + DDD)</label>
-                <input type="tel" id="phone_mask" placeholder="+55 (11) 99999-9999" required {% if error
-                    %}aria-invalid="true" {% endif %}
-                    style="padding: 0.75rem 1rem; margin-bottom: 0.5rem; height: auto;">
+                <div class="form-group">
+                    <label for="phone_mask">WhatsApp (DDI + DDD)</label>
+                    <input type="tel" id="phone_mask" placeholder="+55 (11) 99999-9999" required {% if error
+                        %}aria-invalid="true" {% endif %}>
 
-                {% if error %}
-                <small
-                    style="display: block; padding: 1rem 0.8rem; background: rgba(198, 40, 40, 0.1); border-left: 3px solid #c62828; color: #c62828; margin-bottom: 1.2rem; border-radius: 0 4px 4px 0;">
-                    {{ error }}
-                </small>
-                {% endif %}
+                    {% if error %}
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                </div>
 
                 <input type="hidden" id="jid_clean" name="jid">
-
-                <button type="submit" class="contrast" style="margin-top: 0.5rem;">Criar Perfil</button>
+                <button type="submit" class="btn-create contrast">Criar Perfil</button>
             </form>
         </article>
     </div>
