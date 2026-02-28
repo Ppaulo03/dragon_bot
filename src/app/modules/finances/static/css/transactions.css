@@ -179,7 +179,6 @@
 @media (max-width: 600px) {
     .pagination-selector span {
         display: none;
-        /* Esconde "Página" e "de" em telas muito pequenas */
     }
 
     .pagination-container {

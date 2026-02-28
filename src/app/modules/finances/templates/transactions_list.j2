@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ url_for('static_finance', path='css/transaction_card.css') }}">
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <style>
-    /* Feedback visual de que a lista está carregando */
+    /* Feedback visual de carregamento */
     .htmx-request #transactions-container {
         opacity: 0.5;
         filter: blur(1px);
@@ -20,7 +20,8 @@
 {% block finance_content %}
 <section>
     <article class="filter-card">
-        <form id="filter-form" method="get" action="" class="filter-grid" hx-get="" hx-target="#transactions-wrapper"
+        <form id="filter-form" method="get" action="/finance/user/{{ user.id }}/transactions" class="filter-grid"
+            hx-get="/finance/user/{{ user.id }}/transactions" hx-target="#transactions-wrapper"
             hx-select="#transactions-wrapper"
             hx-trigger="keyup delay:500ms from:#search-input, change from:select, change from:input[type='date']"
             hx-push-url="true">
@@ -91,26 +92,23 @@
 
         {% if total_pages > 1 %}
         <nav class="pagination-container" aria-label="pagination">
-            {# Base URL consolidada com todos os filtros atuais #}
-            {% set base_url = "?q=" ~ (current_q or '') ~
-            "&account_id=" ~ (current_acc or '') ~
-            "&type=" ~ (current_type or '') ~
-            "&manual=" ~ (current_manual or '') ~
-            "&start_date=" ~ (current_start_date or '') ~
-            "&end_date=" ~ (current_end_date or '') %}
+            {% set clean_url = "/finance/user/" ~ user.id ~ "/transactions" %}
 
             {% if current_page > 1 %}
-            <a href="{{ base_url }}&page={{ current_page - 1 }}" hx-get="{{ base_url }}&page={{ current_page - 1 }}"
-                hx-target="#transactions-wrapper" hx-select="#transactions-wrapper" hx-swap="innerHTML"
-                hx-push-url="true" role="button" class="btn-pagination outline">
+            <a href="{{ clean_url }}?page={{ current_page - 1 }}" hx-get="{{ clean_url }}?page={{ current_page - 1 }}"
+                hx-include="#filter-form" hx-params="not page" hx-target="#transactions-wrapper"
+                hx-select="#transactions-wrapper" hx-swap="innerHTML" hx-push-url="true" role="button"
+                class="btn-pagination outline">
                 « Anterior
             </a>
             {% endif %}
 
             <div class="pagination-selector">
                 <span>Página</span>
-                <select name="page" hx-get="{{ base_url }}" hx-target="#transactions-wrapper"
-                    hx-select="#transactions-wrapper" hx-swap="innerHTML" hx-push-url="true" hx-trigger="change">
+                <select name="page" hx-get="{{ clean_url }}" hx-include="#filter-form" {# O SEGREDO: hx-vals garante que
+                    este valor 'atropela' o do formulário #} hx-vals='js:{page: event.target.value}'
+                    hx-target="#transactions-wrapper" hx-select="#transactions-wrapper" hx-swap="innerHTML"
+                    hx-push-url="true" hx-trigger="change">
                     {% for p in range(1, total_pages + 1) %}
                     <option value="{{ p }}" {% if p==current_page %}selected{% endif %}>
                         {{ p }}
@@ -120,10 +118,10 @@
                 <span>de {{ total_pages }}</span>
             </div>
 
-            {% if current_page < total_pages %} <a href="{{ base_url }}&page={{ current_page + 1 }}"
-                hx-get="{{ base_url }}&page={{ current_page + 1 }}" hx-target="#transactions-wrapper"
-                hx-select="#transactions-wrapper" hx-swap="innerHTML" hx-push-url="true" role="button"
-                class="btn-pagination outline">
+            {% if current_page < total_pages %} <a href="{{ clean_url }}?page={{ current_page + 1 }}"
+                hx-get="{{ clean_url }}?page={{ current_page + 1 }}" hx-include="#filter-form" hx-params="not page"
+                hx-target="#transactions-wrapper" hx-select="#transactions-wrapper" hx-swap="innerHTML"
+                hx-push-url="true" role="button" class="btn-pagination outline">
                 Próxima »
                 </a>
                 {% endif %}
@@ -136,7 +134,6 @@
 {% block extra_scripts %}
 <script>
     const categoryTree = {{ categories_json | safe }};
-
 </script>
 <script src="{{ url_for('static_finance', path='js/transaction_card.js') }}"></script>
 <script src="{{ url_for('static_finance', path='js/transactions_list.js') }}"></script>
