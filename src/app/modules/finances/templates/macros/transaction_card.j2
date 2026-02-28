@@ -1,7 +1,8 @@
 {% macro transaction_card(tx, cat_lv1) %}
-<article id="tx-card-{{ tx.id }}" class="tx-card" data-current-cat="{{ tx.category_id or '' }}">
-    <div class="tx-card-inner">
+<article id="tx-card-{{ tx.id }}" class="tx-card" data-tx-id="{{ tx.id }}"
+    data-current-cat="{{ tx.category_id or '' }}">
 
+    <div class="tx-card-inner">
         <div class="tx-info-col">
             <div class="tx-top-bar">
                 <div class="tx-badges">
@@ -32,18 +33,21 @@
             <label class="micro-label">Classificação Hierárquica</label>
 
             <div class="classification-selects">
-                <select id="lv1-{{ tx.id }}" onchange="filterLevels('{{ tx.id }}', 1)">
+                <select id="lv1-{{ tx.id }}" class="cat-select" data-level="1"
+                    onchange="filterLevels('{{ tx.id }}', 1)">
                     <option value="">Raiz</option>
                     {% for c in cat_lv1 %}
                     <option value="{{ c.id }}">{{ c.name }}</option>
                     {% endfor %}
                 </select>
 
-                <select id="lv2-{{ tx.id }}" onchange="filterLevels('{{ tx.id }}', 2)" disabled>
+                <select id="lv2-{{ tx.id }}" class="cat-select" data-level="2" onchange="filterLevels('{{ tx.id }}', 2)"
+                    disabled>
                     <option value="">Grupo</option>
                 </select>
 
-                <select id="lv3-{{ tx.id }}" onchange="updateTx('{{ tx.id }}', {category_id: this.value})" disabled>
+                <select id="lv3-{{ tx.id }}" class="cat-select" data-level="3"
+                    onchange="updateTx('{{ tx.id }}', {category_id: this.value})" disabled>
                     <option value="">Categoria</option>
                 </select>
             </div>
@@ -60,7 +64,6 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
 </article>
 {% endmacro %}

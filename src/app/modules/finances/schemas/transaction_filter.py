@@ -9,6 +9,7 @@ class TransactionFilter(BaseModel):
     q: Optional[str] = None
     account_id: Optional[int] = None
     type: Optional[str] = None
+    manual: Optional[bool] = None
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
 
@@ -38,10 +39,13 @@ class TransactionFilter(BaseModel):
 
     @property
     def start_timestamp(self) -> Optional[int]:
-        return int(self.start_date.timestamp()) if self.start_date else None
+        return int(self.start_date.timestamp()) * 1000 if self.start_date else None
 
     @property
     def end_timestamp(self) -> Optional[int]:
         if self.end_date:
-            return int(self.end_date.replace(hour=23, minute=59, second=59).timestamp())
+            return (
+                int(self.end_date.replace(hour=23, minute=59, second=59).timestamp())
+                * 1000
+            )
         return None

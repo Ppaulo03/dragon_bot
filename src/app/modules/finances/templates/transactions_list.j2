@@ -46,9 +46,8 @@
                 <label for="type-select">Tipo</label>
                 <select name="type" id="type-select">
                     <option value="">Todos</option>
-                    <option value="INFLOW" {% if current_type=='INFLOW' %}selected{% endif %}>Entrada</option>
-                    <option value="OUTFLOW" {% if current_type=='OUTFLOW' %}selected{% endif %}>Saída</option>
-                    <option value="TRANSFER" {% if current_type=='TRANSFER' %}selected{% endif %}>Transferência</option>
+                    <option value="income" {% if current_type=='INFLOW' %}selected{% endif %}>Entrada</option>
+                    <option value="expense" {% if current_type=='OUTFLOW' %}selected{% endif %}>Saída</option>
                 </select>
             </div>
 

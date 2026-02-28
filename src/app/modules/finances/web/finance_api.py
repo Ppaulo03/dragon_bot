@@ -1,10 +1,16 @@
 import re
-from sqlalchemy import insert, delete, select
+from sqlalchemy import insert, delete, select, update
 from fastapi import APIRouter, Body, Form, Depends, status
 from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.finances.database import get_db_session
-from app.modules.finances.database.models import Account, User, user_accounts
+from app.modules.finances.database.models import (
+    Account,
+    Category,
+    User,
+    user_accounts,
+    Transaction,
+)
 
 router = APIRouter(prefix="/api/internal/finance", tags=["Finance API"])
 
@@ -116,3 +122,54 @@ async def api_delete_user(user_id: str, db: AsyncSession = Depends(get_db_sessio
         await db.commit()
         return {"status": "success"}
     return {"status": "error"}, 404
+
+
+@router.get("/categories")
+async def get_categories(
+    parent_id=None,
+    db: AsyncSession = Depends(get_db_session),
+):
+
+    if not parent_id:
+        return []
+
+    query = select(Category).filter_by(parent_id=parent_id).order_by(Category.name)
+
+    result = await db.execute(query)
+    categories_objects = result.scalars().all()
+
+    # Retorna um Array (importante para evitar o erro de forEach)
+    return [{"id": cat.id, "name": cat.name} for cat in categories_objects]
+
+
+@router.patch("/transactions/{tx_id}")
+async def patch_transaction(
+    tx_id: str, data: dict, db: AsyncSession = Depends(get_db_session)
+):
+    # 1. Busca a transação original para garantir que ela existe
+    query = select(Transaction).filter_by(id=tx_id)
+    result = await db.execute(query)
+    tx = result.scalar_one_or_none()
+
+    if not tx:
+        return {"error": "Transação não encontrada"}, 404
+
+    update_data = {}
+    if "entity" in data:
+        update_data["entity"] = data["entity"]
+
+    if "category_id" in data:
+        update_data["category_id"] = data["category_id"]
+        update_data["is_category_automatic"] = False
+
+    if not update_data:
+        return {"message": "Nenhuma alteração enviada"}, 400
+
+    # 3. Executa o Update no Banco
+    stmt = update(Transaction).where(Transaction.id == tx_id).values(**update_data)
+
+    await db.execute(stmt)
+    await db.commit()
+
+    # 4. Retorna Sucesso para disparar o 'saved' no CSS
+    return {"status": "success", "updated_fields": list(update_data.keys())}

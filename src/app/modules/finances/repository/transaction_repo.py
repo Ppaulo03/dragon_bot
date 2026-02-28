@@ -52,9 +52,18 @@ class TransactionRepository:
                 )
             )
 
+        if filters.manual is not None:
+            query = query.where(
+                Transaction.is_category_automatic == (not filters.manual)
+            )
+        if filters.type:
+            if filters.type.lower() == "income":
+                query = query.where(Transaction.amount_cents > 0)
+            elif filters.type.lower() == "expense":
+                query = query.where(Transaction.amount_cents < 0)
+
         if filters.start_timestamp:
             query = query.where(Transaction.date_timestamp >= filters.start_timestamp)
-
         if filters.end_timestamp:
             query = query.where(Transaction.date_timestamp <= filters.end_timestamp)
 

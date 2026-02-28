@@ -124,3 +124,140 @@ async function updateTx(txId, payload) {
         console.error("Erro:", err);
     }
 }
+
+async function updateTx(txId, payload) {
+    const card = document.getElementById(`tx-card-${txId}`);
+
+    // 1. Feedback Visual: Indica que o salvamento iniciou
+    if (card) {
+        card.classList.add('saving');
+        card.classList.remove('saved'); // Limpa estados anteriores
+    }
+
+    try {
+        // 2. Chamada para o seu Backend
+        const response = await fetch(`/api/internal/finance/transactions/${txId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            // 3. Sucesso: Aplica animação de confirmação (Ref: image_65ceac.png)
+            if (card) {
+                card.classList.remove('saving');
+                card.classList.add('saved');
+
+                // Remove a classe de animação após 1.5s
+                setTimeout(() => card.classList.remove('saved'), 1500);
+            }
+
+            // 4. Se a alteração foi de categoria, atualizamos o badge de status
+            if (payload.category_id) {
+                const statusBadge = document.getElementById(`status-${txId}`);
+                if (statusBadge) {
+                    statusBadge.innerHTML = '👤 Revisado';
+                    statusBadge.className = 'status-badge user'; // Muda para o estilo verde
+                }
+            }
+        } else {
+            throw new Error('Falha ao salvar');
+        }
+    } catch (error) {
+        console.error("Erro Dragon Finance:", error);
+        if (card) {
+            card.classList.remove('saving');
+            card.style.borderColor = 'var(--negative)'; // Indica erro visualmente
+        }
+    }
+}
+
+/**
+ * Gerencia a lógica de filtragem hierárquica dos selects (Lv1 -> Lv2 -> Lv3)
+ */
+/**
+ * Atualiza os dados da transação via API com feedback visual de alta densidade.
+ */
+async function updateTx(txId, payload) {
+    const card = document.getElementById(`tx-card-${txId}`);
+
+    // 1. Feedback Visual: Indica que o salvamento iniciou
+    if (card) {
+        card.classList.add('saving');
+        card.classList.remove('saved'); // Limpa estados anteriores
+    }
+
+    try {
+        // 2. Chamada para o seu Backend
+        const response = await fetch(`/api/internal/finance/transactions/${txId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            // 3. Sucesso: Aplica animação de confirmação (Ref: image_65ceac.png)
+            if (card) {
+                card.classList.remove('saving');
+                card.classList.add('saved');
+
+                // Remove a classe de animação após 1.5s
+                setTimeout(() => card.classList.remove('saved'), 1500);
+            }
+
+            // 4. Se a alteração foi de categoria, atualizamos o badge de status
+            if (payload.category_id) {
+                const statusBadge = document.getElementById(`status-${txId}`);
+                if (statusBadge) {
+                    statusBadge.innerHTML = '👤 Revisado';
+                    statusBadge.className = 'status-badge user'; // Muda para o estilo verde
+                }
+            }
+        } else {
+            throw new Error('Falha ao salvar');
+        }
+    } catch (error) {
+        console.error("Erro Dragon Finance:", error);
+        if (card) {
+            card.classList.remove('saving');
+            card.style.borderColor = 'var(--negative)'; // Indica erro visualmente
+        }
+    }
+}
+
+/**
+ * Gerencia a lógica de filtragem hierárquica dos selects (Lv1 -> Lv2 -> Lv3)
+ */
+async function filterLevels(txId, level) {
+    const currentSelect = document.getElementById(`lv${level}-${txId}`);
+    const nextLevel = level + 1;
+    const nextSelect = document.getElementById(`lv${nextLevel}-${txId}`);
+    const thirdSelect = document.getElementById(`lv3-${txId}`);
+
+    if (!currentSelect.value) {
+        if (nextSelect) { nextSelect.disabled = true; nextSelect.value = ""; }
+        if (thirdSelect && level === 1) { thirdSelect.disabled = true; thirdSelect.value = ""; }
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/internal/finance/categories?parent_id=${currentSelect.value}`);
+        const categories = await response.json();
+
+        if (nextSelect) {
+            nextSelect.innerHTML = `<option value="">${level === 1 ? 'Grupo' : 'Categoria'}</option>`;
+            categories.forEach(c => {
+                nextSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+            nextSelect.disabled = false;
+        }
+    } catch (e) {
+        console.error("Erro ao carregar subcategorias:", e);
+    }
+}
