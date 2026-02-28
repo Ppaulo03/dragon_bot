@@ -3,40 +3,47 @@
 
 {% block extra_head %}
 {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/accounts.css') }}">
 {% endblock %}
 
-{% block title %}Contas de {{ user.name }}{% endblock %}
-
 {% block finance_content %}
-<section>
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-        <hgroup style="margin-bottom: 0;">
+<section class="accounts-section">
+    <header class="section-header">
+        <hgroup>
             <h1>Contas Bancárias</h1>
             <p>Gerenciando acessos de <strong>{{ user.name }}</strong></p>
         </hgroup>
 
-        <details role="list" dir="rtl">
-            <summary aria-haspopup="listbox" role="link" class="contrast">+ Vincular Conta</summary>
+        <details role="list" class="add-account-menu">
+            <summary aria-haspopup="listbox" role="link" class="contrast">
+                Vincular Conta
+            </summary>
             <ul role="listbox">
                 {% for acc in available_accounts %}
-                <li><a href="#" onclick="linkAccount('{{ user.id }}', '{{ acc.id }}')">{{ acc.name }}</a></li>
+                <li>
+                    <a href="#" onclick="linkAccount('{{ user.id }}', '{{ acc.id }}')">
+                        {{ acc.name }}
+                    </a>
+                </li>
                 {% else %}
                 <li><small>Nenhuma conta disponível</small></li>
                 {% endfor %}
             </ul>
         </details>
-    </div>
+    </header>
 
-    <div class="grid">
+    <div class="accounts-grid">
         {% for acc in owned_accounts %}
         {{ account_card(acc, user.id) }}
         {% else %}
-        <article style="grid-column: 1 / -1; text-align: center; border: 2px dashed #444;">
+        <article class="empty-accounts">
+            <div class="empty-icon">🏦</div>
             <p>Nenhuma conta vinculada a este perfil.</p>
         </article>
         {% endfor %}
     </div>
 </section>
+{% endblock %}
 
 {% block extra_scripts %}
 <script>
@@ -65,5 +72,4 @@
         }
     }
 </script>
-{% endblock %}
 {% endblock %}
