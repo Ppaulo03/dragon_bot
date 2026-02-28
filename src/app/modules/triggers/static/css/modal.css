@@ -1,0 +1,59 @@
+.preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 9999 !important;
+    /* Deve ser maior que o header sticky */
+
+    /* Estado inicial: Escondido */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    cursor: pointer;
+}
+
+/* Quando o JS adiciona .active */
+.preview-modal.active {
+    display: flex !important;
+}
+
+/* Estilização dos conteúdos internos */
+.modal-img-content,
+.modal-video-content {
+    max-width: 90%;
+    max-height: 85vh;
+    border-radius: 8px;
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    object-fit: contain;
+}
+
+/* Container para JSON/Texto */
+.text-preview-wrapper {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--primary);
+    max-width: 80%;
+    max-height: 80vh;
+    overflow: auto;
+}
+
+.text-preview-content pre {
+    margin: 0;
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.loader {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'JetBrains Mono', monospace;
+}
