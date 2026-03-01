@@ -31,7 +31,6 @@ class TransactionRepository:
         """
         Aplica filtros dinâmicos, paginação e retorna os dados junto com o total (count).
         """
-        print(filters)
         # 1. Query Base
         query = (
             select(Transaction)

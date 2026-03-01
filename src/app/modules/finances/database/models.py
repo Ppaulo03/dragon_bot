@@ -21,14 +21,23 @@ class Template(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
+
     delimiter: Mapped[str] = mapped_column(String(5), nullable=False)
+    skip_rows: Mapped[int] = mapped_column(Integer, default=1)
+
+    csv_name_pattern: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    expected_header: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+
     date_column_index: Mapped[int] = mapped_column(Integer, nullable=False)
     description_column_index: Mapped[int] = mapped_column(Integer, nullable=False)
     amount_column_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    counterpart_column_index: Mapped[Optional[int]] = mapped_column(
+        Integer, nullable=True
+    )
+
     date_format: Mapped[str] = mapped_column(String(50), default="dd/MM/yyyy")
     decimal_separator: Mapped[str] = mapped_column(String(5), default=".")
     is_income_positive: Mapped[bool] = mapped_column(Boolean, default=True)
-    skip_rows: Mapped[int] = mapped_column(Integer, default=1)
 
     accounts: Mapped[List["Account"]] = relationship(back_populates="template")
 

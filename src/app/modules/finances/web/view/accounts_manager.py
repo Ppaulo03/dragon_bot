@@ -23,15 +23,6 @@ async def manage_finance(request: Request, db: AsyncSession = Depends(get_db_ses
 
     templates_result = await db.execute(select(Template).order_by(Template.name))
     templates = templates_result.scalars().all()
-
-    print(
-        {
-            "request": request,
-            "accounts": accounts,
-            "profiles": profiles,
-            "templates": templates,
-        }
-    )
     return request.app.state.templates.TemplateResponse(
         "accounts.j2",
         {
@@ -160,7 +151,6 @@ async def delete_account(acc_id: str, db: AsyncSession = Depends(get_db_session)
         await db.commit()
     except Exception as e:
         await db.rollback()
-        print(f"Erro ao deletar: {e}")
         return Response(status_code=500, content="Erro ao excluir a conta.")
     return Response(headers={"HX-Redirect": "/finance/accounts"})
 

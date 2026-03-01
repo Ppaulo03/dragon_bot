@@ -1,0 +1,50 @@
+{% extends "layout.j2" %}
+
+{% block extra_head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/templates_manager.css') }}">
+{% endblock %}
+
+{% block finance_content %}
+<div class="admin-container">
+    <header class="admin-header">
+        <h1>📄 Templates de Importação</h1>
+        <p class="text-muted">Configure como o sistema deve ler seus arquivos CSV.</p>
+    </header>
+
+    <div class="admin-grid">
+        <aside class="admin-card list-sidebar">
+            <div class="card-header">
+                <h2><span>📑</span> Modelos</h2>
+                <button class="btn-new-account" hx-get="/finance/templates/new" hx-target="#template-edit-container">
+                    + Novo
+                </button>
+            </div>
+
+            <div class="account-selector-list">
+                {% for tmp in templates %}
+                <div class="account-item" hx-get="/finance/templates/edit/{{ tmp.id }}"
+                    hx-target="#template-edit-container">
+                    <div class="acc-info">
+                        <span class="acc-name">{{ tmp.name }}</span>
+                        <span class="acc-amount" style="font-size: 0.75rem; opacity: 0.7;">
+                            Separador: "{{ tmp.delimiter }}" | Data: {{ tmp.date_format }}
+                        </span>
+                    </div>
+                    <span class="chevron">›</span>
+                </div>
+                {% else %}
+                <p class="empty-msg">Nenhum template criado.</p>
+                {% endfor %}
+            </div>
+        </aside>
+
+        <section class="admin-card edit-area" id="template-edit-container">
+            <div class="empty-state">
+                <div class="empty-icon">📂</div>
+                <p>Selecione um template ou crie um novo para configurar o mapeamento.</p>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
