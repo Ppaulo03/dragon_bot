@@ -28,7 +28,7 @@ async def user_accounts_view(
     available_accounts = (await db.execute(stmt_available)).scalars().all()
     templates = request.app.state.templates
     return templates.TemplateResponse(
-        "user_accounts.j2",
+        "finances/user/accounts/accounts.j2",
         {
             "request": request,
             "user": user,

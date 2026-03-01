@@ -1,0 +1,41 @@
+{% extends "layout.j2" %}
+{% from "finances/user/accounts/macros/account_card.j2" import account_card %}
+
+{% block extra_stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/accounts.css') }}">
+{% endblock %}
+
+{% block finance_content %}
+<section class="accounts-section">
+    <header class="section-header">
+        <hgroup>
+            <h1>Contas Bancárias</h1>
+            <p>Gerenciando acessos de <strong>{{ user.name }}</strong></p>
+        </hgroup>
+
+        <details role="list" class="add-account-menu" id="add-account-details">
+            <summary aria-haspopup="listbox" role="link" class="contrast">
+                Vincular Conta
+            </summary>
+            <ul role="listbox">
+                {% for acc in available_accounts %}
+                <li id="menu-item-{{ acc.id }}">
+                    <a href="#" hx-post="accounts/{{ acc.id }}" hx-target=".accounts-grid" hx-swap="beforeend"
+                        hx-on::after-request="document.getElementById('add-account-details').removeAttribute('open')">
+                        {{ acc.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </details>
+    </header>
+
+    <div class="accounts-grid" id="accounts-grid">
+        {% for acc in owned_accounts %}
+        {{ account_card(acc, user.id) }}
+        {% else %}
+        {% include "finances/user/accounts/partials/empty_accounts.j2" %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

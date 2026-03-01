@@ -1,0 +1,19 @@
+{% from "finances/user/accounts/macros/balance_display.j2" import balance_display %}
+
+
+{% macro account_card(acc, user_id) %}
+<article class="account-card" id="acc-card-{{ acc.id }}">
+    <div class="card-header">
+        <strong class="account-name">{{ acc.name }}</strong>
+        <button hx-delete="accounts/{{ acc.id }}" hx-target="#acc-card-{{ acc.id }}" hx-swap="outerHTML"
+            hx-confirm="Remover vínculo desta conta?" class="btn-unlink outline">
+            Remover
+        </button>
+    </div>
+
+    <div class="balance-section" id="balance-container-{{ acc.id }}">
+        <small class="label">Saldo Inicial</small>
+        {{ balance_display(acc) }}
+    </div>
+</article>
+{% endmacro %}

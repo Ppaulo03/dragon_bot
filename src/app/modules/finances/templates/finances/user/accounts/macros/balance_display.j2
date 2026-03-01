@@ -1,0 +1,8 @@
+{% macro balance_display(acc) %}
+<div class="balance-wrapper" id="balance-wrapper-{{ acc.id }}" hx-get="accounts/{{ acc.id }}/edit-form" hx-target="this"
+    hx-swap="outerHTML" style="cursor: pointer;" title="Clique para editar">
+    <strong class="balance-value">
+        R$ {{ "%.2f"|format(acc.initial_balance_cents / 100) }}
+    </strong>
+</div>
+{% endmacro %}

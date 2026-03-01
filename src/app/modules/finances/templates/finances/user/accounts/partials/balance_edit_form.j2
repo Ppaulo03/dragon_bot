@@ -1,0 +1,11 @@
+<div class="balance-wrapper" id="balance-wrapper-{{ acc.id }}">
+    <form hx-patch="accounts/{{ acc.id }}" hx-target="this" hx-swap="outerHTML" class="inline-edit-form">
+
+        <input type="number" name="initial_balance" value="{{ acc.initial_balance_cents / 100 }}" step="0.01" autofocus
+            onfocus="this.select()" hx-trigger="keyup[key=='Enter'], change" hx-patch="accounts/{{ acc.id }}"
+            class="edit-balance-input">
+
+        <button type="button" hx-get="accounts/{{ acc.id }}" hx-target="closest .balance-wrapper" hx-swap="outerHTML"
+            class="btn-cancel-small">❌</button>
+    </form>
+</div>

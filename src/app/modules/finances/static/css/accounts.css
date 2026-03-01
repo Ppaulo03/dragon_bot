@@ -35,23 +35,26 @@
 }
 
 .add-account-menu summary {
-    font-size: 0.8rem;
-    padding: 6px 16px !important;
-    min-width: 200px;
-    /* Reduzi de 300px para ser mais slim, mas o ul compensa */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px !important;
+    /* Remova o padding vertical se tiver altura fixa */
+    height: 35px;
+    /* Define uma altura fixa para a pílula */
+    list-style: none !important;
+    /* Esconde a seta no Firefox */
+    outline: none;
+    user-select: none;
     background-color: var(--primary);
-    border-radius: 50px;
-    /* Estilo pílula para combinar com o user-badge */
-    list-style: none;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.3s;
+    color: #FFFFFF !important;
+    border-radius: 10px;
 }
 
-.add-account-menu summary::-webkit-details-marker {
-    display: none;
-    /* Remove a seta padrão do navegador */
+.add-account-menu summary * {
+    color: inherit !important;
 }
+
 
 .add-account-menu summary:hover {
     filter: brightness(1.2);
@@ -130,6 +133,7 @@
     background: transparent !important;
     border: 2px dashed var(--border) !important;
     border-radius: var(--radius);
+    margin: 0 !important;
 }
 
 .empty-icon {
@@ -157,6 +161,8 @@
     flex-direction: column;
     transition: transform 0.2s ease, border-color 0.2s ease;
     overflow: hidden;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .account-card:hover {
@@ -240,4 +246,50 @@
 .btn-edit-balance:hover {
     opacity: 1;
     transform: scale(1.2);
+}
+
+/* Container que envolve o input e o botão durante a edição */
+.inline-edit-form .input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-cancel-small {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 2rem;
+    margin: 0 !important;
+    opacity: 0.5;
+    padding: 0.2rem;
+}
+
+.btn-cancel-small:hover {
+    opacity: 1;
+    background-color: rgba(255, 77, 77, 0.1);
+    /* Um leve vermelho de fundo */
+    transform: scale(1.1);
+}
+
+.btn-cancel-small:active {
+    transform: scale(0.95);
+}
+
+.inline-edit-form {
+    display: flex;
+    /* Alinha horizontalmente */
+    align-items: space-between;
+    /* Centraliza verticalmente */
+    gap: 4px;
+    /* Espaço entre o input e o botão */
+    width: 100%;
+}
+
+.edit-balance-input {
+    flex: 1;
+    padding: 0;
+    margin: 0 !important;
 }

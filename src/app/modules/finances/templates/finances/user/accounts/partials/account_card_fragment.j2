@@ -1,0 +1,4 @@
+{% from "finances/user/accounts/macros/account_card.j2" import account_card %}
+<div id="empty-state-msg" hx-swap-oob="delete"></div>
+<li id="menu-item-{{ acc.id }}" hx-swap-oob="delete"></li>
+{{ account_card(acc, user_id) }}
