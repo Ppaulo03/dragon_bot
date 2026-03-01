@@ -1,5 +1,14 @@
-<article class="empty-accounts" id="empty-state-msg">
-    <div class="empty-icon">🏦</div>
-    <p>Nenhuma conta vinculada a este perfil.</p>
-    <small>Use o menu "Vincular Conta" acima para começar.</small>
-</article>
+{% from "finances/user/accounts/macros/empty_account.j2" import empty_acc_display %}
+
+
+
+<div hx-swap-oob="beforeend:#add-account-details ul">
+    <li id="menu-item-{{ acc.id }}">
+        <a href="#" hx-post="accounts/{{ acc.id }}" hx-target=".accounts-grid" hx-swap="beforeend">
+            {{ acc.name }}
+        </a>
+    </li>
+</div>
+
+
+{{ empty_acc_display() }}

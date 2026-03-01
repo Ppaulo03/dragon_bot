@@ -1,5 +1,6 @@
 {% extends "layout.j2" %}
 {% from "finances/user/accounts/macros/account_card.j2" import account_card %}
+{% from "finances/user/accounts/macros/empty_account.j2" import empty_acc_display %}
 
 {% block extra_stylesheets %}
 <link rel="stylesheet" href="{{ url_for('static_finance', path='css/accounts.css') }}">
@@ -20,13 +21,14 @@
             <ul role="listbox">
                 {% for acc in available_accounts %}
                 <li id="menu-item-{{ acc.id }}">
-                    <a href="#" hx-post="accounts/{{ acc.id }}" hx-target=".accounts-grid" hx-swap="beforeend"
-                        hx-on::after-request="document.getElementById('add-account-details').removeAttribute('open')">
+                    <a href="#" hx-post="accounts/{{ acc.id }}" hx-target=".accounts-grid" hx-swap="beforeend">
                         {{ acc.name }}
                     </a>
                 </li>
                 {% endfor %}
+                <li class="empty-menu-msg">Todas as contas já estão vinculadas</li>
             </ul>
+
         </details>
     </header>
 
@@ -34,8 +36,19 @@
         {% for acc in owned_accounts %}
         {{ account_card(acc, user.id) }}
         {% else %}
-        {% include "finances/user/accounts/partials/empty_accounts.j2" %}
+        {{ empty_acc_display() }}
         {% endfor %}
     </div>
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('click', function (event) {
+        const details = document.getElementById('add-account-details');
+        if (details.hasAttribute('open') && !details.contains(event.target)) {
+            details.removeAttribute('open');
+        }
+    });
+</script>
 {% endblock %}

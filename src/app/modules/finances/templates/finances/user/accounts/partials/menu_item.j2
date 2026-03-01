@@ -1,7 +1,6 @@
 <div hx-swap-oob="beforeend:#add-account-details ul">
     <li id="menu-item-{{ acc.id }}">
-        <a href="#" hx-post="accounts/{{ acc.id }}" hx-target=".accounts-grid" hx-swap="beforeend"
-            hx-on::after-request="document.getElementById('add-account-details').removeAttribute('open')">
+        <a href="#" hx-post="accounts/{{ acc.id }}" hx-target=".accounts-grid" hx-swap="beforeend">
             {{ acc.name }}
         </a>
     </li>

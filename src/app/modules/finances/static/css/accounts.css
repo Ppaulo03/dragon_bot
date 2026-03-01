@@ -293,3 +293,16 @@
     padding: 0;
     margin: 0 !important;
 }
+
+.empty-menu-msg {
+    display: block;
+    padding: 0.8rem;
+    text-align: center;
+    color: var(--muted-color, #888);
+    font-size: 0.9rem;
+    list-style: none;
+}
+
+ul[role="listbox"]:has(li:not(.empty-menu-msg)) .empty-menu-msg {
+    display: none !important;
+}

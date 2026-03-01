@@ -64,7 +64,7 @@ async def remove_account_from_user(
     if not user.accounts:
         return request.app.state.templates.TemplateResponse(
             TEMPLATE_PATH + "partials/empty_accounts.j2",
-            {"request": request, "user_id": user_id},
+            {"request": request, "acc": account, "user_id": user_id},
         )
 
     return request.app.state.templates.TemplateResponse(
