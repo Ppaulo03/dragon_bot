@@ -73,7 +73,7 @@ class Account(Base):
         ForeignKey("templates.id", ondelete="SET NULL")
     )
     users: Mapped[List["User"]] = relationship(
-        secondary=user_accounts, back_populates="accounts"
+        "User", secondary=user_accounts, back_populates="accounts", lazy="selectin"
     )
     template: Mapped[Optional["Template"]] = relationship(back_populates="accounts")
     transactions: Mapped[List["Transaction"]] = relationship(back_populates="account")

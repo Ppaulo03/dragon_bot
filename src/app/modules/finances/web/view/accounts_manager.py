@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from typing import List, Optional
+
+from fastapi import APIRouter, Depends, Form, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, selectinload
 
 from app.modules.finances.database.models import Account, Template, User
 from app.modules.finances.database import get_db_session
@@ -96,27 +98,71 @@ async def new_account_form(
 @router.post("/save")
 async def save_account(
     name: str = Form(...),
-    account_id: str = Form(None),
+    initial_balance: float = Form(0.0),
+    account_id: Optional[str] = Form(None),
+    default_template_id: Optional[str] = Form(None),
+    user_ids: List[str] = Form([]),
     db: AsyncSession = Depends(get_db_session),
 ):
-    if account_id:
-        # Edição de conta existente
-        res = await db.execute(select(Account).filter_by(id=int(account_id)))
-        acc = res.scalar_one()
+    # 1. Preparação dos dados
+    balance_cents = int(round(initial_balance * 100))
+    template_id = (
+        int(default_template_id)
+        if default_template_id and default_template_id != ""
+        else None
+    )
+
+    if account_id and account_id != "":
+        # 1. Carregamos a conta já trazendo os usuários (selectinload é melhor que joinedload para N:N)
+        stmt = (
+            select(Account)
+            .options(selectinload(Account.users))
+            .filter_by(id=int(account_id))
+        )
+        res = await db.execute(stmt)
+        acc = res.scalar_one_or_none()
+
+        if not acc:
+            raise HTTPException(status_code=404, detail="Conta não encontrada")
+
         acc.name = name
+        acc.initial_balance_cents = balance_cents
+        acc.default_template_id = template_id
     else:
-        db.add(Account(name=name))
+        acc = Account(
+            name=name,
+            initial_balance_cents=balance_cents,
+            default_template_id=template_id,
+        )
+        db.add(acc)
+        # Importante: Para objetos novos, precisamos garantir que a lista de users exista
+        acc.users = []
+
+    # 2. Buscamos os usuários selecionados
+    if user_ids:
+        user_res = await db.execute(select(User).where(User.id.in_(user_ids)))
+        new_users = list(user_res.scalars().all())
+        acc.users = (
+            new_users  # Agora o SQLAlchemy já tem acc.users na memória e não reclama
+        )
+    else:
+        acc.users = []
 
     await db.commit()
     return RedirectResponse(url="/finance/accounts", status_code=303)
 
 
 @router.delete("/{acc_id}")
-async def delete_account(acc_id: int, db: AsyncSession = Depends(get_db_session)):
-    # O Cascade do seu modelo cuidará das transações
-    await db.execute(delete(Account).where(Account.id == acc_id))
-    await db.commit()
-    return HTMLResponse(status_code=200)
+async def delete_account(acc_id: str, db: AsyncSession = Depends(get_db_session)):
+    account_id_int = int(acc_id)
+    try:
+        await db.execute(delete(Account).where(Account.id == account_id_int))
+        await db.commit()
+    except Exception as e:
+        await db.rollback()
+        print(f"Erro ao deletar: {e}")
+        return Response(status_code=500, content="Erro ao excluir a conta.")
+    return Response(headers={"HX-Redirect": "/finance/accounts"})
 
 
 @router.patch("/{acc_id}")
