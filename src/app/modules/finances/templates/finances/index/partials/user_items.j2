@@ -1,0 +1,11 @@
+{% for user in users %}
+<a href="/finance/user/{{ user.id }}/accounts" class="profile-item-link">
+    <div class="profile-info">
+        <strong class="profile-name">{{ user.name }}</strong>
+        <small class="phone-display">{{ user.id }}</small>
+    </div>
+    <span class="action-icon">➔</span>
+</a>
+{% else %}
+<p class="empty-state"><i>Nenhum usuário encontrado.</i></p>
+{% endfor %}

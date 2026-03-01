@@ -2,7 +2,10 @@
 
 
 {% block extra_head %}
+<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+<script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/response-targets.js"></script>
 <link rel="stylesheet" href="{{ url_for('static_finance', path='css/layout.css') }}">
+{% block extra_stylesheets %}{% endblock %}
 {% endblock %}
 {% block title %}Dragon Finance{% endblock %}
 {% block content %}

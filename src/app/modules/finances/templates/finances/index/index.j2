@@ -1,0 +1,56 @@
+{% extends "layout.j2" %}
+
+
+{% block extra_stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static_finance', path='css/user_list.css') }}">
+{% endblock %}
+
+
+{% block finance_content %}
+<section class="management-section" id="finance-manager">
+    <div class="grid">
+        <article class="user-card-container">
+            <header class="card-header">
+                <strong>Perfis Ativos</strong>
+            </header>
+
+            <div class="user-list" id="user-list-container">
+                {% include "finances/index/partials/user_items.j2" %}
+            </div>
+        </article>
+
+        <article class="form-card-container">
+            <header class="card-header">
+                <strong>Novo Perfil</strong>
+            </header>
+
+            <form hx-post="/finance/" hx-target="#user-list-container" hx-swap="innerHTML" hx-on::after-request="if(event.detail.successful && event.detail.target.id === 'user-list-container') { 
+          this.reset(); 
+          document.getElementById('error-container').innerHTML = ''; 
+      }" class="profile-form">
+
+                <div class="form-group">
+                    <label for="name">Nome do Usuário</label>
+                    <input type="text" id="name" name="name" placeholder="Ex: Admin" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_mask">WhatsApp (DDI + DDD)</label>
+                    <input type="tel" id="phone_mask" placeholder="+55 (11) 99999-9999" required>
+                    <div id="error-container" class="error-container"></div>
+                </div>
+
+                <input type="hidden" id="jid_clean" name="jid">
+                <button type="submit" class="btn-create contrast">
+                    <span class="htmx-indicator">Criando...</span>
+                    Criar Perfil
+                </button>
+            </form>
+        </article>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static_finance', path='js/finances/index.js') }}"></script>
+{% endblock %}

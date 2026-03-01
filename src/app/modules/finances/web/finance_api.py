@@ -15,31 +15,6 @@ from app.modules.finances.database.models import (
 router = APIRouter(prefix="/api/internal/finance", tags=["Finance API"])
 
 
-@router.post("/users")
-async def api_add_user(
-    name: str = Form(...),
-    jid: str = Form(...),
-    db: AsyncSession = Depends(get_db_session),
-):
-    clean_id = re.sub(r"\D", "", jid)
-
-    try:
-        existing = await db.get(User, clean_id)
-        if existing:
-            raise ValueError(
-                f"O número {clean_id} já está vinculado ao perfil '{existing.name}'."
-            )
-
-        new_user = User(id=clean_id, name=name)
-        db.add(new_user)
-        await db.commit()
-        return RedirectResponse(url="/finance", status_code=status.HTTP_303_SEE_OTHER)
-    except ValueError as e:
-        return RedirectResponse(
-            url=f"/finance?error={str(e)}", status_code=status.HTTP_303_SEE_OTHER
-        )
-
-
 @router.post("/user/{user_id}/link/{account_id}")
 async def api_link_account(
     user_id: str, account_id: int, db: AsyncSession = Depends(get_db_session)
