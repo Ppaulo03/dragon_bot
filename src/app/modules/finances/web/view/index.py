@@ -1,12 +1,10 @@
-from fastapi import APIRouter, Form, Request, Depends, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import APIRouter, Form, Request, Depends
+from fastapi.responses import HTMLResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+
 
 from app.modules.finances.database import get_db_session
-from app.modules.finances.database.models import User
 from app.modules.finances.repository import UserRepository
-import re
 
 
 router = APIRouter()

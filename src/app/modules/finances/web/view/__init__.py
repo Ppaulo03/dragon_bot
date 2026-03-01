@@ -1,10 +1,4 @@
-from fastapi import APIRouter, Request, Depends
-from fastapi.responses import HTMLResponse
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-
-from app.modules.finances.database import get_db_session
-from app.modules.finances.database.models import User
+from fastapi import APIRouter
 
 from .account_view import router as account_router
 from .transactions_view import router as transactions_router
