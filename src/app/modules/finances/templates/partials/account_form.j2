@@ -1,16 +1,14 @@
 <div class="edit-form-wrapper fade-in">
-    <header class="form-header"
-        style="margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+    <header class="form-header">
         <h2>{{ "Editar: " ~ acc.name if acc else "Nova Conta Bancária" }}</h2>
     </header>
 
-    <form action="/finance/accounts/save" method="POST" class="dragon-form"
-        style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <form action="/finance/accounts/save" method="POST" class="dragon-form">
         {% if acc %}
         <input type="hidden" name="account_id" value="{{ acc.id }}">
         {% endif %}
 
-        <div class="form-row" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+        <div class="form-row">
             <div class="form-group">
                 <label>Nome da Instituição</label>
                 <input type="text" name="name" value="{{ acc.name if acc else '' }}" placeholder="Ex: Nubank" required
@@ -33,34 +31,30 @@
                 </option>
                 {% endfor %}
             </select>
-            <small class="text-muted">Define como os arquivos CSV desta conta serão lidos.</small>
         </div>
 
         <div class="form-group">
             <label>Usuários com Acesso</label>
-            <div class="user-selection-grid"
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; background: var(--bg-body); padding: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            <div class="user-selection-grid">
+                {% set active_user_ids = acc.users | map(attribute='id') | list if acc else [] %}
                 {% for user_item in all_users %}
-                <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                    <input type="checkbox" name="user_ids" value="{{ user_item.id }}" {% if acc and user_item in
-                        acc.users %}checked{% endif %}>
-                    <span style="font-size: 0.9rem;">{{ user_item.name or user_item.display_name }}</span>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="user_ids" value="{{ user_item.id }}" {% if user_item.id in
+                        active_user_ids %}checked{% endif %}>
+                    <span>{{ user_item.name or user_item.display_name }}</span>
                 </label>
                 {% endfor %}
             </div>
-            <small class="text-muted">Apenas os usuários marcados poderão ver as transações desta conta.</small>
         </div>
 
-        <div class="form-actions"
-            style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+        <div class="form-actions">
             <button type="submit" class="btn-primary">
                 {{ "Salvar Alterações" if acc else "Criar Conta" }}
             </button>
 
             {% if acc %}
             <button type="button" class="btn-danger-outline" hx-delete="/finance/accounts/{{ acc.id }}"
-                hx-confirm="Isso apagará permanentemente a conta e todas as transações. Confirmar?" hx-target="body"
-                style="margin-left: auto;">
+                hx-confirm="Isso apagará permanentemente a conta e todas as transações. Confirmar?" hx-target="body">
                 Deletar Conta
             </button>
             {% endif %}
