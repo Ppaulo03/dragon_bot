@@ -1,0 +1,67 @@
+<div class="form-section-title">🏗️ Estrutura e Formatação Detectada</div>
+<div class="form-grid-3">
+    <div class="form-group">
+        <label>Delimitador</label>
+        <input type="text" name="delimiter" value="{{ tmp.delimiter if tmp else ';' }}" required maxlength="5">
+    </div>
+    <div class="form-group">
+        <label>Separador Decimal</label>
+        <select name="decimal_separator">
+            <option value="," {% if tmp and tmp.decimal_separator==',' %}selected{% endif %}>Vírgula (,)</option>
+            <option value="." {% if tmp and tmp.decimal_separator=='.' %}selected{% endif %}>Ponto (.)</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Pular Linhas</label>
+        <input type="number" name="skip_rows" value="{{ tmp.skip_rows if tmp else 1 }}">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Formato da Data</label>
+        <input type="text" name="date_format" value="{{ tmp.date_format if tmp else '%d/%m/%Y' }}" required>
+    </div>
+    <div class="form-group">
+        <label>Sinal do Saldo</label>
+        <select name="is_income_positive">
+            <option value="true" {% if not tmp or tmp.is_income_positive %}selected{% endif %}>Receitas Positivas (+)
+            </option>
+            <option value="false" {% if tmp and not tmp.is_income_positive %}selected{% endif %}>Receitas Negativas (-)
+            </option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Cabeçalho Esperado (Header Original)</label>
+    <input type="text" name="expected_header" value="{{ tmp.expected_header if tmp else '' }}"
+        placeholder="data,valor,identificador,descricao">
+</div>
+
+<div class="form-section-title">🗺️ Mapeamento de Colunas (Índices)</div>
+<div class="form-grid-4">
+    <div class="form-group">
+        <label>Coluna Data</label>
+        <input type="number" name="date_column_index"
+            value="{{ tmp.date_column_index if tmp is defined and tmp.date_column_index is not none else 0 }}" required>
+    </div>
+    <div class="form-group">
+        <label>Coluna Valor</label>
+        <input type="number" name="amount_column_index"
+            value="{{ tmp.amount_column_index if tmp is defined and tmp.amount_column_index is not none else 1 }}"
+            required>
+    </div>
+    <div class="form-group">
+        <label>Coluna Descrição</label>
+        <input type="number" name="description_column_index"
+            value="{{ tmp.description_column_index if tmp is defined and tmp.description_column_index is not none else 2 }}"
+            required>
+    </div>
+    <div class="form-group">
+        <label>Coluna Contraparte</label>
+        <input type="number" name="counterpart_column_index"
+            value="{{ tmp.counterpart_column_index if tmp is defined and tmp.counterpart_column_index is not none else '' }}"
+            placeholder="Opcional">
+    </div>
+</div>

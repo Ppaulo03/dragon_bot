@@ -3,6 +3,7 @@
 {% block extra_head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static_finance', path='css/templates_manager.css') }}">
+<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 {% endblock %}
 
 {% block finance_content %}
@@ -47,4 +48,20 @@
         </section>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ super() }}
+<script>
+    document.body.addEventListener('change', function (evt) {
+        if (evt.target.id === 'sample_csv') {
+            const file = evt.target.files[0];
+            if (file && !file.name.endsWith('.csv')) {
+                alert('Por favor, selecione apenas arquivos .csv');
+                evt.target.value = ''; // Limpa o campo
+                evt.stopImmediatePropagation(); // Impede o HTMX de disparar
+            }
+        }
+    });
+</script>
 {% endblock %}

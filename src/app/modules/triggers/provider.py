@@ -2,7 +2,6 @@ from app.kernel import MessageData, BaseModule
 from .manager import trigger_manager
 from .web import web_router
 from .core.services.factory import service_factory
-from .manager import trigger_manager
 
 
 class TriggersModule(BaseModule):

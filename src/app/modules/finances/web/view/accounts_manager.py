@@ -149,7 +149,7 @@ async def delete_account(acc_id: str, db: AsyncSession = Depends(get_db_session)
     try:
         await db.execute(delete(Account).where(Account.id == account_id_int))
         await db.commit()
-    except Exception as e:
+    except Exception:
         await db.rollback()
         return Response(status_code=500, content="Erro ao excluir a conta.")
     return Response(headers={"HX-Redirect": "/finance/accounts"})

@@ -1,5 +1,14 @@
-from fastapi import APIRouter, Request, Form, Depends, HTTPException, Response
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import (
+    APIRouter,
+    File,
+    Request,
+    Form,
+    Depends,
+    HTTPException,
+    Response,
+    UploadFile,
+)
+from fastapi.responses import RedirectResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Optional
@@ -9,7 +18,8 @@ from sqlalchemy import delete
 from app.modules.finances.database.client import get_db_session
 
 from app.modules.finances.database.models import Template
-from app.modules.finances.database.client import get_db_session
+import pandas as pd
+import io
 
 router = APIRouter(prefix="/templates")
 
@@ -116,9 +126,65 @@ async def delete_template(tmp_id: int, db: AsyncSession = Depends(get_db_session
         await db.execute(delete(Template).where(Template.id == tmp_id))
         await db.commit()
         return Response(headers={"HX-Redirect": "/finance/templates"})
-    except Exception as e:
+    except Exception:
         await db.rollback()
         return Response(
             status_code=500,
             content="Erro ao deletar template. Verifique se há contas usando ele.",
         )
+
+
+@router.post("/analyze-csv")
+async def analyze_csv(request: Request, sample_csv: UploadFile = File(...)):
+    # 1. Ler o início do arquivo para detectar estrutura
+    content = await sample_csv.read()
+    # Tenta detectar o delimitador (pode ser expandido com csv.Sniffer)
+    text_content = content.decode("utf-8", errors="ignore")
+    first_line = text_content.split("\n")[0]
+    delimiter = ";" if ";" in first_line else ","
+
+    # 2. Carregar no Pandas para análise (apenas as primeiras 5 linhas)
+    df = pd.read_csv(io.BytesIO(content), sep=delimiter, nrows=5)
+
+    # 3. Lógica de Inferência (A "mágica")
+    mapping = {
+        "date_idx": 0,
+        "amount_idx": 1,
+        "desc_idx": 2,
+        "header": delimiter.join(df.columns),
+    }
+
+    for i, col in enumerate(df.columns):
+        col_name = str(col).lower()
+
+        # Tenta achar Data
+        if any(x in col_name for x in ["data", "date", "vencimento"]):
+            mapping["date_idx"] = i
+        # Tenta achar Valor
+        elif any(x in col_name for x in ["valor", "amount", "preço", "total"]):
+            mapping["amount_idx"] = i
+        # Tenta achar Descrição
+        elif any(
+            x in col_name for x in ["desc", "histórico", "detalhe", "estabelecimento"]
+        ):
+            mapping["desc_idx"] = i
+
+    # Criamos um objeto "fake" de Template para preencher o formulário
+    # Os campos que não detectamos, o user ajusta na mão
+    temp_tmp = {
+        "name": sample_csv.filename,
+        "delimiter": delimiter,
+        "expected_header": mapping["header"],
+        "date_column_index": mapping["date_idx"],
+        "amount_column_index": mapping["amount_idx"],
+        "description_column_index": mapping["desc_idx"],
+        "skip_rows": 1,  # Padrão
+        "date_format": "%d/%m/%Y",  # Padrão
+        "decimal_separator": "," if delimiter == ";" else ".",
+    }
+
+    # 4. Retorna o formulário preenchido
+    return request.app.state.templates.TemplateResponse(
+        "partials/template_fields.j2",  # Vamos quebrar o form em pedaços para o HTMX
+        {"request": request, "tmp": temp_tmp},
+    )

@@ -1,7 +1,7 @@
 import re
 from sqlalchemy import insert, delete, select, update
 from fastapi import APIRouter, Body, Form, Depends, status
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.finances.database import get_db_session
 from app.modules.finances.database.models import (
@@ -38,17 +38,6 @@ async def api_add_user(
         return RedirectResponse(
             url=f"/finance?error={str(e)}", status_code=status.HTTP_303_SEE_OTHER
         )
-
-
-@router.delete("/users/{user_id}")
-async def api_delete_user(user_id: str, db: AsyncSession = Depends(get_db_session)):
-    """API para deletar usuário"""
-    user = await db.get(User, user_id)
-    if user:
-        await db.delete(user)
-        await db.commit()
-        return {"message": "Usuário removido"}
-    return JSONResponse(status_code=404, content={"message": "Não encontrado"})
 
 
 @router.post("/user/{user_id}/link/{account_id}")
