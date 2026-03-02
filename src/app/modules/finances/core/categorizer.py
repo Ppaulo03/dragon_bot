@@ -1,14 +1,16 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 import joblib
-from sqlalchemy import select  # Para salvar o modelo treinado
+from sqlalchemy import select
 from .csv_parser import Transaction
 import os
+import re
+import random
 
 
 class CategorizerService:
@@ -22,98 +24,138 @@ class CategorizerService:
         except:
             return None
 
-    async def train_from_db(self, db_session):
-        """Busca dados históricos e treina o modelo."""
-        # Busca transações que já foram categorizadas (exemplo: pelo usuário)
-        stmt = select(Transaction).where(Transaction.category_id.is_not(None))
-        result = await db_session.execute(stmt)
-        txs = result.scalars().all()
+    def clean_description(self, text: str) -> str:
+        """Limpa uma única string de descrição."""
+        if not text:
+            return ""
+        text = text.lower()
+        text = re.sub(r"\d{1,2}[/-]\d{1,2}([/-]\d{2,4})?", " ", text)
+        text = re.sub(r"\b\d+\b", " ", text)
+        text = re.sub(r"[^\w\s]", " ", text)
+        tokens = [t for t in text.split() if len(t) > 2]
+        return " ".join(tokens)
 
-        if len(txs) < 10:  # Mínimo de amostras para não dar overfit
-            print("⚠️ Dados insuficientes para treinamento.")
-            return
+    def preprocess_dataset(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Aplica a limpeza em massa e remove categorias com poucos exemplos."""
+        df = df.copy()
+        df["desc_clean"] = df["desc"].apply(self.clean_description)
+        df = df[df["desc_clean"].str.strip() != ""]
+        counts = df["category_id"].value_counts()
+        valid_cats = counts[counts >= 5].index
+        df = df[df["category_id"].isin(valid_cats)]
+        return df
 
-        # Prepara o DataFrame
-        data = [
-            {"desc": t.description, "cat": t.category_id, "ent": t.entity} for t in txs
-        ]
-        df = pd.DataFrame(data)
+    async def train_from_db(self, db_session, df_raw: pd.DataFrame = None):
+        if df_raw is None:
+            # Busca dados brutos do banco
+            stmt = select(Transaction).where(Transaction.category_id.is_not(None))
+            result = await db_session.execute(stmt)
+            txs = result.scalars().all()
+            df_raw = pd.DataFrame(
+                [{"desc": t.description, "category_id": t.category_id} for t in txs]
+            )
 
-        # Pipeline: Vetorização -> Classificação
-        pipeline = Pipeline(
+        df_clean = self.preprocess_dataset(df_raw)
+        if df_clean.empty:
+            print("⚠️ Dataset vazio após limpeza.")
+            return False
+
+        df_enriched = self.apply_augmentation(df_clean, target_count=15)
+        df_enriched["desc_clean"] = df_enriched["desc"].apply(self.clean_description)
+        self.model = Pipeline(
             [
-                ("tfidf", TfidfVectorizer(ngram_range=(1, 2))),
-                ("clf", RandomForestClassifier(n_estimators=100)),
+                ("tfidf", TfidfVectorizer(ngram_range=(1, 3))),
+                ("clf", GradientBoostingClassifier(n_estimators=100)),
             ]
         )
+        self.model.fit(df_enriched["desc_clean"], df_enriched["category_id"])
+        joblib.dump(self.model, self.model_path)
+        return True
 
-        # Treino para Categoria
-        pipeline.fit(df["desc"], df["cat"])
-        os.makedirs(os.path.dirname(self.model_path), exist_ok=True)
-        joblib.dump(pipeline, self.model_path)
-        self.model = pipeline
-        print("🎯 Modelo treinado e salvo com sucesso!")
-
-    def predict(self, description: str):
-        """Retorna a predição se o modelo existir e tiver confiança."""
-        if not self.model or not description:
+    def predict(self, description: str, min_confidence: float = 0.7):
+        if not self.model:
             return None
 
-        try:
-            # Você pode usar model.predict_proba para checar a confiança
-            prediction = self.model.predict([description])[0]
-            return prediction
-        except:
+        desc_clean = self.clean_description(description)
+        probs = self.model.predict_proba([desc_clean])[0]
+        max_prob = max(probs)
+        if max_prob < min_confidence:
             return None
+
+        return self.model.predict([desc_clean])[0]
 
     async def evaluate_model(self, db_session):
-        """Treina temporariamente e exibe métricas detalhadas."""
+        """Usa os métodos oficiais para validar a performance."""
+
         stmt = select(Transaction).where(Transaction.category_id.is_not(None))
         result = await db_session.execute(stmt)
         txs = result.scalars().all()
-
-        if len(txs) < 20:
-            print("⚠️ Dados insuficientes para avaliação.")
-            return
-
-        df = pd.DataFrame([{"desc": t.description, "cat": t.category_id} for t in txs])
-
-        counts = df["cat"].value_counts()
-
-        # Mantém apenas categorias que tenham pelo menos 2 exemplos
-        valid_categories = counts[counts >= 2].index
-        df_filtered = df[df["cat"].isin(valid_categories)].copy()
-
-        if df_filtered.empty:
-            print(
-                "⚠️ Nenhuma categoria possui exemplos suficientes (min: 2) para avaliação estratificada."
-            )
-            return
-        # 1. Split: 80% treino, 20% teste
-        X_train, X_test, y_train, y_test = train_test_split(
-            df_filtered["desc"],
-            df_filtered["cat"],
-            test_size=0.2,
-            random_state=42,
-            stratify=df_filtered["cat"],
+        df_raw = pd.DataFrame(
+            [{"desc": t.description, "category_id": t.category_id} for t in txs]
         )
 
-        # 2. Treino rápido para validação
-        pipeline = Pipeline(
-            [
-                ("tfidf", TfidfVectorizer(ngram_range=(1, 2))),
-                (
-                    "clf",
-                    RandomForestClassifier(n_estimators=100, class_weight="balanced"),
-                ),
-            ]
+        train_df, test_df = train_test_split(df_raw, test_size=0.2, random_state=42)
+        await self.train_from_db(db_session, df_raw=train_df)
+        y_true, y_pred = [], []
+        for _, row in test_df.iterrows():
+            pred = self.predict(row["desc"])
+            if pred:
+                y_pred.append(pred)
+                y_true.append(row["category_id"])
+
+        # 5. Relatório
+        print(
+            f"📊 Cobertura com threshold de 0.7: {(len(y_pred)/len(test_df))*100:.1f}%"
         )
-        pipeline.fit(X_train, y_train)
+        print(classification_report(y_true, y_pred, zero_division=0))
 
-        # 3. Predição no set de teste
-        y_pred = pipeline.predict(X_test)
+    def augment_description(self, text: str) -> list[str]:
+        """Gera variações sintéticas de uma descrição real."""
+        variations = [text]
+        words = text.split()
 
-        # 4. Relatório
-        print("\n📊 --- RELATÓRIO DE PERFORMANCE DO MODELO ---")
-        print(classification_report(y_test, y_pred))
-        print("---------------------------------------------\n")
+        if not words:
+            return variations
+
+        # Técnica 1: Injeção de ruído numérico (simulando IDs de transação)
+        for _ in range(2):
+            fake_id = str(random.randint(100, 9999))
+            variations.append(f"{text} {fake_id}")
+
+        # Técnica 2: Variação de prefixos bancários comuns
+        prefixes = ["pix", "compra", "pagto", "venda"]
+        for pref in prefixes:
+            # Se a descrição já começa com um prefixo, tenta trocar
+            if words[0].lower() in prefixes:
+                new_text = f"{pref} {' '.join(words[1:])}"
+                variations.append(new_text)
+            else:
+                variations.append(f"{pref} {text}")
+
+        return list(set(variations))  # Remove duplicatas
+
+    def apply_augmentation(
+        self, df: pd.DataFrame, target_count: int = 10
+    ) -> pd.DataFrame:
+        """Faz o 'Oversampling' inteligente de classes minoritárias."""
+        augmented_data = []
+
+        for cat_id, group in df.groupby("category_id"):
+            current_count = len(group)
+            augmented_data.append(group)
+
+            # Se a categoria tem poucos exemplos, geramos mais
+            if current_count < target_count:
+                needed = target_count - current_count
+                for _ in range(needed):
+                    # Escolhe um exemplo real aleatório para servir de base
+                    source_row = group.sample(1).iloc[0]
+                    new_desc = random.choice(
+                        self.augment_description(source_row["desc"])
+                    )
+
+                    new_row = source_row.copy()
+                    new_row["desc"] = new_desc
+                    augmented_data.append(pd.DataFrame([new_row]))
+
+        return pd.concat(augmented_data).reset_index(drop=True)
