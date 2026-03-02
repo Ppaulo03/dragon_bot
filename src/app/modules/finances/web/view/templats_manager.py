@@ -189,7 +189,6 @@ async def analyze_csv(request: Request, sample_csv: UploadFile = File(...)):
         "is_income_positive": is_income_pos,
         "delimiter": delimiter,
     }
-    print(temp_tmp)
     return request.app.state.templates.TemplateResponse(
         "partials/template_fields.j2",
         {"request": request, "tmp": temp_tmp},
