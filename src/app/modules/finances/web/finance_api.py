@@ -1,4 +1,5 @@
 import uuid
+from time import time
 from typing import List, Optional
 from fastapi import APIRouter, Body, Depends, Header, HTTPException
 from sqlalchemy import insert, delete, select, update
@@ -88,67 +89,138 @@ async def pair_device(
     return {"access_token": user.access_token, "server_id": user.id}
 
 
+@router.post("/sync/templates/batch")
+async def sync_batch_templates(
+    payload: List[dict] = Body(...),
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db_session),
+):
+    results = []
+    for data in payload:
+        local_id = data.get("id")
+        name = data.get("name")
+
+        query = select(Template).where(Template.local_id == local_id)
+        result = await db.execute(query)
+        template = result.scalar_one_or_none()
+        if not template:
+            template = Template(
+                name=name,
+                local_id=local_id,
+                delimiter=data.get("delimiter", ";"),
+                skip_rows=data.get("skip_rows", 1),
+                csv_name_pattern=data.get("csv_name_pattern"),
+                expected_header=data.get("expected_header"),
+                date_column_index=data.get("date_column_index", 0),
+                description_column_index=data.get("description_column_index", 1),
+                amount_column_index=data.get("amount_column_index", 2),
+                counterpart_column_index=data.get("counterpart_column_index"),
+                date_format=data.get("date_format", "dd/MM/yyyy"),
+                decimal_separator=data.get("decimal_separator", "."),
+                is_income_positive=data.get("is_income_positive", True),
+                is_deleted=data.get("is_deleted", False),
+            )
+            db.add(template)
+        else:
+            template.name = name
+            template.delimiter = data.get("delimiter", template.delimiter)
+            template.skip_rows = data.get("skip_rows", template.skip_rows)
+            template.csv_name_pattern = data.get(
+                "csv_name_pattern", template.csv_name_pattern
+            )
+            template.expected_header = data.get(
+                "expected_header", template.expected_header
+            )
+            template.date_column_index = data.get(
+                "date_column_index", template.date_column_index
+            )
+            template.description_column_index = data.get(
+                "description_column_index", template.description_column_index
+            )
+            template.amount_column_index = data.get(
+                "amount_column_index", template.amount_column_index
+            )
+            template.counterpart_column_index = data.get(
+                "counterpart_column_index", template.counterpart_column_index
+            )
+            template.date_format = data.get("date_format", template.date_format)
+            template.decimal_separator = data.get(
+                "decimal_separator", template.decimal_separator
+            )
+            template.is_income_positive = data.get(
+                "is_income_positive", template.is_income_positive
+            )
+            template.is_deleted = data.get("is_deleted", template.is_deleted)
+        results.append({"local_id": local_id, "server_id": local_id})
+
+    await db.commit()
+    return {"results": results}
+
+
 @router.post("/sync/templates")
 async def sync_templates(
     data: dict = Body(...),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session),
 ):
-    local_id = data.get("id")
-    name = data.get("name")
+    res = await sync_batch_templates([data], user, db)
+    return {"server_id": res["results"][0]["server_id"]}
 
-    query = select(Template).where(Template.local_id == local_id)
-    result = await db.execute(query)
-    template = result.scalar_one_or_none()
-    if not template:
-        template = Template(
-            name=name,
-            local_id=local_id,
-            delimiter=data.get("delimiter", ";"),
-            skip_rows=data.get("skip_rows", 1),
-            csv_name_pattern=data.get("csv_name_pattern"),
-            expected_header=data.get("expected_header"),
-            date_column_index=data.get("date_column_index", 0),
-            description_column_index=data.get("description_column_index", 1),
-            amount_column_index=data.get("amount_column_index", 2),
-            counterpart_column_index=data.get("counterpart_column_index"),
-            date_format=data.get("date_format", "dd/MM/yyyy"),
-            decimal_separator=data.get("decimal_separator", "."),
-            is_income_positive=data.get("is_income_positive", True),
-            is_deleted=data.get("is_deleted", False),
+
+@router.post("/sync/accounts/batch")
+async def sync_batch_accounts(
+    payload: List[dict] = Body(...),
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db_session),
+):
+    results = []
+    for data in payload:
+        local_id = data.get("id")
+        name = data.get("name")
+        balance = data.get("initial_balance_cents", 0)
+        local_template_id = data.get("default_template_id")
+
+        # Resolve Template ID
+        template_id = None
+        if local_template_id:
+            t_query = select(Template).where(Template.local_id == local_template_id)
+            t_result = await db.execute(t_query)
+            template = t_result.scalar_one_or_none()
+            if template:
+                template_id = template.id
+
+        # Search for existing account by local_id for this user
+        query = (
+            select(Account)
+            .join(user_accounts)
+            .where(user_accounts.c.user_id == user.id, Account.local_id == local_id)
         )
-        db.add(template)
-    else:
-        template.name = name
-        template.delimiter = data.get("delimiter", template.delimiter)
-        template.skip_rows = data.get("skip_rows", template.skip_rows)
-        template.csv_name_pattern = data.get(
-            "csv_name_pattern", template.csv_name_pattern
-        )
-        template.expected_header = data.get("expected_header", template.expected_header)
-        template.date_column_index = data.get(
-            "date_column_index", template.date_column_index
-        )
-        template.description_column_index = data.get(
-            "description_column_index", template.description_column_index
-        )
-        template.amount_column_index = data.get(
-            "amount_column_index", template.amount_column_index
-        )
-        template.counterpart_column_index = data.get(
-            "counterpart_column_index", template.counterpart_column_index
-        )
-        template.date_format = data.get("date_format", template.date_format)
-        template.decimal_separator = data.get(
-            "decimal_separator", template.decimal_separator
-        )
-        template.is_income_positive = data.get(
-            "is_income_positive", template.is_income_positive
-        )
-        template.is_deleted = data.get("is_deleted", template.is_deleted)
+        result = await db.execute(query)
+        account = result.scalar_one_or_none()
+
+        if not account:
+            account = Account(
+                name=name,
+                initial_balance_cents=balance,
+                local_id=local_id,
+                default_template_id=template_id,
+                is_deleted=data.get("is_deleted", False),
+            )
+            db.add(account)
+            await db.flush()  # Get the ID
+
+            # Link to user
+            stmt = insert(user_accounts).values(user_id=user.id, account_id=account.id)
+            await db.execute(stmt)
+        else:
+            account.name = name
+            account.initial_balance_cents = balance
+            account.default_template_id = template_id
+            account.is_deleted = data.get("is_deleted", account.is_deleted)
+        results.append({"local_id": local_id, "server_id": account.id})
 
     await db.commit()
-    return {"server_id": template.id}
+    return {"results": results}
 
 
 @router.post("/sync/accounts")
@@ -157,51 +229,49 @@ async def sync_accounts(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session),
 ):
-    local_id = data.get("id")
-    name = data.get("name")
-    balance = data.get("initial_balance_cents", 0)
-    local_template_id = data.get("default_template_id")
+    res = await sync_batch_accounts([data], user, db)
+    return {"server_id": res["results"][0]["server_id"]}
 
-    # Resolve Template ID
-    template_id = None
-    if local_template_id:
-        t_query = select(Template).where(Template.local_id == local_template_id)
-        t_result = await db.execute(t_query)
-        template = t_result.scalar_one_or_none()
-        if template:
-            template_id = template.id
 
-    # Search for existing account by local_id for this user
-    query = (
-        select(Account)
-        .join(user_accounts)
-        .where(user_accounts.c.user_id == user.id, Account.local_id == local_id)
-    )
-    result = await db.execute(query)
-    account = result.scalar_one_or_none()
+@router.post("/sync/categories/batch")
+async def sync_batch_categories(
+    payload: List[dict] = Body(...),
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db_session),
+):
+    results = []
+    for data in payload:
+        cat_id = data.get("id")
+        name = data.get("name")
 
-    if not account:
-        account = Account(
-            name=name,
-            initial_balance_cents=balance,
-            local_id=local_id,
-            default_template_id=template_id,
-            is_deleted=data.get("is_deleted", False),
-        )
-        db.add(account)
-        await db.flush()  # Get the ID
+        category = await db.get(Category, cat_id)
+        if not category:
+            category = Category(
+                id=cat_id,
+                name=name,
+                color_hex=data.get("color_hex", 0),
+                icon_name=data.get("icon_name", "category"),
+                transaction_type=data.get("transaction_type", "expense"),
+                level=data.get("level", 1),
+                parent_id=data.get("parent_id"),
+                is_deleted=data.get("is_deleted", False),
+            )
+            db.add(category)
+        else:
+            category.name = name
+            category.color_hex = data.get("color_hex", category.color_hex)
+            category.icon_name = data.get("icon_name", category.icon_name)
+            category.transaction_type = data.get(
+                "transaction_type", category.transaction_type
+            )
+            category.level = data.get("level", category.level)
+            category.parent_id = data.get("parent_id", category.parent_id)
+            category.is_deleted = data.get("is_deleted", category.is_deleted)
 
-        # Link to user
-        stmt = insert(user_accounts).values(user_id=user.id, account_id=account.id)
-        await db.execute(stmt)
-    else:
-        account.name = name
-        account.initial_balance_cents = balance
-        account.default_template_id = template_id
-        account.is_deleted = data.get("is_deleted", account.is_deleted)
+        results.append({"local_id": cat_id, "server_id": cat_id})
 
     await db.commit()
-    return {"server_id": account.id}
+    return {"results": results}
 
 
 @router.post("/sync/categories")
@@ -210,29 +280,62 @@ async def sync_categories(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session),
 ):
-    cat_id = data.get("id")
-    name = data.get("name")
+    res = await sync_batch_categories([data], user, db)
+    return {"server_id": res["results"][0]["server_id"]}
 
-    category = await db.get(Category, cat_id)
-    if not category:
-        category = Category(
-            id=cat_id,
-            name=name,
-            color_hex=data.get("color_hex", 0),
-            icon_name=data.get("icon_name", "category"),
-            transaction_type=data.get("transaction_type", "expense"),
-            level=data.get("level", 1),
-            parent_id=data.get("parent_id"),
-            is_deleted=data.get("is_deleted", False),
-        )
-        db.add(category)
-    else:
-        category.name = name
-        category.color_hex = data.get("color_hex", category.color_hex)
-        category.is_deleted = data.get("is_deleted", category.is_deleted)
+
+@router.post("/sync/transactions/batch")
+async def sync_batch_transactions(
+    payload: List[dict] = Body(...),
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db_session),
+):
+    results = []
+    for data in payload:
+        tx_id = data.get("id")
+        local_account_id = data.get("account_id")
+        category_id = data.get("category_id")
+
+        # Resolve Account
+        acc_query = select(Account).where(Account.local_id == local_account_id)
+        acc_result = await db.execute(acc_query)
+        account = acc_result.scalar_one_or_none()
+
+        if not account:
+            results.append({"id": tx_id, "error": f"Account {local_account_id} not found"})
+            continue
+
+        transaction = await db.get(Transaction, tx_id)
+        if not transaction:
+            transaction = Transaction(
+                id=tx_id,
+                entity=data.get("entity", ""),
+                description=data.get("description", ""),
+                amount_cents=data.get("amount_cents", 0),
+                date_timestamp=data.get("date_timestamp", 0),
+                account_id=account.id,
+                category_id=category_id,
+                is_deleted=data.get("is_deleted", False),
+                importation_id=data.get("importation_id", "cloud_sync"),
+                import_timestamp=data.get("import_timestamp", int(time())),
+            )
+            db.add(transaction)
+        else:
+            transaction.entity = data.get("entity", transaction.entity)
+            transaction.description = data.get("description", transaction.description)
+            transaction.amount_cents = data.get("amount_cents", transaction.amount_cents)
+            transaction.category_id = category_id
+            transaction.is_deleted = data.get("is_deleted", transaction.is_deleted)
+            transaction.importation_id = data.get(
+                "importation_id", transaction.importation_id
+            )
+            transaction.import_timestamp = data.get(
+                "import_timestamp", transaction.import_timestamp
+            )
+        results.append({"local_id": tx_id, "server_id": transaction.id})
 
     await db.commit()
-    return {"server_id": category.id}
+    return {"results": results}
 
 
 @router.post("/sync/transactions")
@@ -241,43 +344,8 @@ async def sync_transactions(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session),
 ):
-    tx_id = data.get("id")
-    local_account_id = data.get("account_id")
-    category_id = data.get("category_id")
-
-    # Resolve Account
-    acc_query = select(Account).where(Account.local_id == local_account_id)
-    acc_result = await db.execute(acc_query)
-    account = acc_result.scalar_one_or_none()
-
-    if not account:
-        raise HTTPException(
-            status_code=400, detail=f"Account {local_account_id} not found"
-        )
-
-    transaction = await db.get(Transaction, tx_id)
-    if not transaction:
-        transaction = Transaction(
-            id=tx_id,
-            entity=data.get("entity", ""),
-            description=data.get("description", ""),
-            amount_cents=data.get("amount_cents", 0),
-            date_timestamp=data.get("date_timestamp", 0),
-            account_id=account.id,
-            category_id=category_id,
-            is_deleted=data.get("is_deleted", False),
-            importation_id="cloud_sync",
-        )
-        db.add(transaction)
-    else:
-        transaction.entity = data.get("entity", transaction.entity)
-        transaction.description = data.get("description", transaction.description)
-        transaction.amount_cents = data.get("amount_cents", transaction.amount_cents)
-        transaction.category_id = category_id
-        transaction.is_deleted = data.get("is_deleted", transaction.is_deleted)
-
-    await db.commit()
-    return {"server_id": transaction.id}
+    res = await sync_batch_transactions([data], user, db)
+    return {"server_id": res["results"][0]["server_id"]}
 
 
 @router.get("/sync/delta")
@@ -381,6 +449,8 @@ async def sync_delta(
                 "account_id": accounts[account_ids.index(t.account_id)].local_id
                 or str(t.account_id),
                 "category_id": t.category_id,
+                "importation_id": t.importation_id,
+                "import_timestamp": t.import_timestamp,
                 "is_deleted": t.is_deleted,
             }
             for t in transactions
