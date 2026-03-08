@@ -38,6 +38,9 @@ class Settings(BaseSettings):
     EVOLUTION_WEBHOOK_BASE64: bool = False
     EVOLUTION_WEBHOOK_EVENTS: str = "MESSAGES_UPSERT"
 
+    # --- SYNC CONFIG ---
+    SYNC_API_URL: str = "http://localhost:8001"
+
     SETTINGS_PATH: str = "config"
 
 

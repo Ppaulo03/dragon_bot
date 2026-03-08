@@ -26,7 +26,9 @@ class TemplateRepository:
             raise ValueError("Usuário não encontrado.")
 
         account_template_pairs = [
-            (acc.id, acc.template) for acc in user.accounts if acc.template is not None
+            (acc.id, acc.template)
+            for acc in user.accounts
+            if acc.template is not None and not acc.is_deleted
         ]
 
         return account_template_pairs

@@ -14,13 +14,13 @@ class AccountRepository:
 
     async def get(self, account_id: int) -> Account:
         account = await self.db.get(Account, account_id)
-        if not account:
+        if not account or account.is_deleted:
             raise ValueError("Conta não encontrada.")
         return account
 
     async def edit(self, account_id: int, update_fields: Dict[str, Any]) -> Account:
         account = await self.db.get(Account, account_id)
-        if not account:
+        if not account or account.is_deleted:
             raise ValueError("Conta não encontrada.")
 
         for field, value in update_fields.items():

@@ -1,0 +1,73 @@
+{% extends "layout.j2" %}
+
+{% block extra_stylesheets %}
+<style>
+    .sync-card {
+        max-width: 500px;
+        margin: 2rem auto;
+        text-align: center;
+        padding: 2rem;
+        background: var(--card-background-color);
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .qr-container {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 8px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .sync-info {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--secondary);
+    }
+    .api-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        background: var(--code-background-color);
+        border-radius: 4px;
+        font-family: monospace;
+        margin-top: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block finance_content %}
+<div class="sync-card">
+    <header>
+        <h3>Sincronizar Dispositivo</h3>
+        <p>Aponte a câmera do Dragon App para o código abaixo para vincular sua conta ao celular.</p>
+    </header>
+
+    <div class="qr-container" id="qrcode"></div>
+
+    <div class="sync-info">
+        <p><strong>URL da API detectada:</strong></p>
+        <span class="api-badge">{{ api_url }}</span>
+    </div>
+
+    <footer>
+        <a href="/finance" class="contrast">Voltar para Início</a>
+    </footer>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<script>
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: '{{ payload | safe }}',
+        width: 256,
+        height: 256,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
+{% endblock %}

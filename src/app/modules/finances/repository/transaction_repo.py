@@ -20,7 +20,7 @@ class TransactionRepository:
         stmt = (
             select(Account)
             .join(user_accounts)
-            .where(user_accounts.c.user_id == user_id)
+            .where(user_accounts.c.user_id == user_id, Account.is_deleted == False)
         )
         result = await self.db.execute(stmt)
         return result.scalars().all()
@@ -35,7 +35,7 @@ class TransactionRepository:
         query = (
             select(Transaction)
             .options(joinedload(Transaction.account))
-            .where(Transaction.account_id.in_(acc_ids))
+            .where(Transaction.account_id.in_(acc_ids), Transaction.is_deleted == False)
         )
 
         # 2. Filtros Dinâmicos
@@ -82,6 +82,6 @@ class TransactionRepository:
 
     async def get_all_categories(self):
         """Busca categorias para os selects do template."""
-        stmt = select(Category).order_by(Category.name)
+        stmt = select(Category).where(Category.is_deleted == False).order_by(Category.name)
         result = await self.db.execute(stmt)
         return result.scalars().all()

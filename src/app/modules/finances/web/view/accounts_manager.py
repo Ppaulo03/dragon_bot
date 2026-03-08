@@ -15,13 +15,13 @@ router = APIRouter(prefix="/accounts")
 @router.get("/", response_class=HTMLResponse)
 async def manage_finance(request: Request, db: AsyncSession = Depends(get_db_session)):
 
-    accounts_result = await db.execute(select(Account).order_by(Account.name))
+    accounts_result = await db.execute(select(Account).where(Account.is_deleted == False).order_by(Account.name))
     accounts = accounts_result.scalars().all()
 
     profiles_result = await db.execute(select(User).order_by(User.name))
     profiles = profiles_result.scalars().all()
 
-    templates_result = await db.execute(select(Template).order_by(Template.name))
+    templates_result = await db.execute(select(Template).where(Template.is_deleted == False).order_by(Template.name))
     templates = templates_result.scalars().all()
     return request.app.state.templates.TemplateResponse(
         "accounts.j2",
@@ -48,7 +48,7 @@ async def edit_account_form(
         raise HTTPException(status_code=404, detail="Conta não encontrada")
 
     # 3. Buscamos os dados auxiliares para o formulário
-    templates_res = await db.execute(select(Template))
+    templates_res = await db.execute(select(Template).where(Template.is_deleted == False))
     templates = templates_res.scalars().all()
 
     users_res = await db.execute(select(User).order_by(User.name))
@@ -69,7 +69,7 @@ async def new_account_form(
     request: Request, db: AsyncSession = Depends(get_db_session)
 ):
     # Buscamos as opções para preencher os selects/checkboxes
-    templates_res = await db.execute(select(Template))
+    templates_res = await db.execute(select(Template).where(Template.is_deleted == False))
     templates = templates_res.scalars().all()
 
     users_res = await db.execute(select(User).order_by(User.name))

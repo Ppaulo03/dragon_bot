@@ -48,7 +48,14 @@ async def transactions_view(
     cat_lv1 = [c for c in all_cats if c.level == 1]
     categories_json = json.dumps(
         [
-            {"id": c.id, "name": c.name, "parent_id": c.parent_id, "level": c.level}
+            {
+                "id": c.id,
+                "name": c.name,
+                "parent_id": c.parent_id,
+                "level": c.level,
+                "transaction_type": c.transaction_type,
+                "color": "#" + format(c.color_hex, "06x") if c.color_hex else None,
+            }
             for c in all_cats
         ]
     )

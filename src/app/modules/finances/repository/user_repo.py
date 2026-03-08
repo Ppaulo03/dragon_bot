@@ -41,13 +41,13 @@ class UserRepository:
         if not user:
             raise ValueError("Usuário não encontrado.")
 
-        owned_ids = [acc.id for acc in user.accounts]
-        avaiable = select(Account).order_by(Account.name)
+        owned_ids = [acc.id for acc in user.accounts if not acc.is_deleted]
+        avaiable = select(Account).where(Account.is_deleted == False).order_by(Account.name)
         if owned_ids:
             avaiable = avaiable.where(~Account.id.in_(owned_ids))
         available_accounts = (await self.db.execute(avaiable)).scalars().all()
 
-        return (user, user.accounts, available_accounts)
+        return (user, [acc for acc in user.accounts if not acc.is_deleted], available_accounts)
 
     async def add_account(self, user_id: str, account_id: int) -> Tuple[User, Account]:
         stmt = select(User).options(joinedload(User.accounts)).where(User.id == user_id)

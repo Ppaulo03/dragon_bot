@@ -9,6 +9,7 @@ from sqlalchemy import (
     Boolean,
     Table,
     Column,
+    and_,
 )
 
 
@@ -21,6 +22,7 @@ class Template(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
+    local_id: Mapped[Optional[str]] = mapped_column(String(50), nullable=True, index=True)
 
     delimiter: Mapped[str] = mapped_column(String(5), nullable=False)
     skip_rows: Mapped[int] = mapped_column(Integer, default=1)
@@ -38,6 +40,8 @@ class Template(Base):
     date_format: Mapped[str] = mapped_column(String(50), default="dd/MM/yyyy")
     decimal_separator: Mapped[str] = mapped_column(String(5), default=".")
     is_income_positive: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 
     accounts: Mapped[List["Account"]] = relationship(back_populates="template")
 
@@ -63,12 +67,16 @@ user_accounts = Table(
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[str] = mapped_column(String(50), primary_key=True)  # JID do WhatsApp
+    id: Mapped[str] = mapped_column(String(50), primary_key=True)  # JID ou Device ID
     name: Mapped[str] = mapped_column(String(100))
+    access_token: Mapped[Optional[str]] = mapped_column(String(100), nullable=True, index=True)
 
     # Relação N x N com Account
     accounts: Mapped[List["Account"]] = relationship(
-        secondary=user_accounts, back_populates="users"
+        secondary=user_accounts,
+        primaryjoin="User.id == user_accounts.c.user_id",
+        secondaryjoin="and_(Account.id == user_accounts.c.account_id, Account.is_deleted == False)",
+        back_populates="users",
     )
 
 
@@ -78,12 +86,19 @@ class Account(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     initial_balance_cents: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    local_id: Mapped[Optional[str]] = mapped_column(String(50), nullable=True, index=True)
     default_template_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("templates.id", ondelete="SET NULL")
     )
     users: Mapped[List["User"]] = relationship(
-        "User", secondary=user_accounts, back_populates="accounts", lazy="selectin"
+        "User",
+        secondary=user_accounts,
+        primaryjoin="and_(Account.id == user_accounts.c.account_id, Account.is_deleted == False)",
+        secondaryjoin="User.id == user_accounts.c.user_id",
+        back_populates="accounts",
+        lazy="selectin",
     )
+    is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     template: Mapped[Optional["Template"]] = relationship(back_populates="accounts")
     transactions: Mapped[List["Transaction"]] = relationship(back_populates="account")
 
@@ -104,7 +119,7 @@ class Transaction(Base):
         ForeignKey("categories.id", ondelete="SET NULL"), nullable=True
     )
     import_timestamp: Mapped[int] = mapped_column(
-        BigInteger, default=lambda: int(time.time()), nullable=False
+        BigInteger, default=lambda: int(time()), nullable=False
     )
 
     importation_id: Mapped[str] = mapped_column(
@@ -112,6 +127,8 @@ class Transaction(Base):
         index=True,
         nullable=False,
     )
+
+    is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 
     category: Mapped[Optional["Category"]] = relationship()
     account: Mapped["Account"] = relationship(back_populates="transactions")
@@ -122,7 +139,7 @@ class Category(Base):
 
     id: Mapped[str] = mapped_column(String(50), primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
-    color_hex: Mapped[int] = mapped_column(Integer, nullable=False)
+    color_hex: Mapped[int] = mapped_column(BigInteger, nullable=False)
     icon_name: Mapped[str] = mapped_column(String(50), default="category")
     transaction_type: Mapped[str] = mapped_column(String(50), nullable=False)
     level: Mapped[int] = mapped_column(Integer, default=1)
@@ -134,6 +151,8 @@ class Category(Base):
     subcategories: Mapped[List["Category"]] = relationship(
         back_populates="parent", cascade="all, delete-orphan"
     )
+
+    is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 
     parent: Mapped[Optional["Category"]] = relationship(
         back_populates="subcategories", remote_side=[id]

@@ -35,10 +35,10 @@
             <div class="classification-selects">
                 <select id="lv1-{{ tx.id }}" class="cat-select" data-level="1"
                     onchange="filterLevels('{{ tx.id }}', 1)">
-                    <option value="">Raiz</option>
-                    {% for c in cat_lv1 %}
-                    <option value="{{ c.id }}">{{ c.name }}</option>
-                    {% endfor %}
+                    {% set tx_type = 'Entrada' if tx.amount_cents > 0 else 'Saída' %}
+                    <option value="Entrada" {% if tx_type == 'Entrada' %}selected{% endif %}>Entrada</option>
+                    <option value="Saída" {% if tx_type == 'Saída' %}selected{% endif %}>Saída</option>
+                    <option value="Transferência" {% if tx_type == 'Transferência' %}selected{% endif %}>Transferência</option>
                 </select>
 
                 <select id="lv2-{{ tx.id }}" class="cat-select" data-level="2" onchange="filterLevels('{{ tx.id }}', 2)"

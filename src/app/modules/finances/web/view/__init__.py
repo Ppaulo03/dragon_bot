@@ -7,6 +7,7 @@ from .transactions_view import router as transactions_router
 from .user_view import router as user_router
 from .accounts_manager import router as accounts_manager_router
 from .templats_manager import router as templates_manager_router
+from .sync_view import router as sync_router
 
 
 router = APIRouter(prefix="/finance", tags=["Finance Management"])
@@ -20,6 +21,7 @@ router.include_router(user_router)
 router.include_router(transactions_router)
 router.include_router(accounts_manager_router)
 router.include_router(templates_manager_router)
+router.include_router(sync_router)
 
 
 __all__ = ["router"]

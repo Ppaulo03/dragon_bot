@@ -30,7 +30,7 @@ router = APIRouter(prefix="/templates")
 
 @router.get("/")
 async def list_templates(request: Request, db: AsyncSession = Depends(get_db_session)):
-    res = await db.execute(select(Template).order_by(Template.name))
+    res = await db.execute(select(Template).where(Template.is_deleted == False).order_by(Template.name))
     templates = res.scalars().all()
     return request.app.state.templates.TemplateResponse(
         "templates.j2", {"request": request, "templates": templates}
